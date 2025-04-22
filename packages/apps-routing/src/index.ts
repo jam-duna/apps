@@ -22,6 +22,7 @@ import extrinsics from './extrinsics.js';
 import fellowship from './fellowship.js';
 import files from './files.js';
 import gilt from './gilt.js';
+import jam from './jam.js'
 import js from './js.js';
 import membership from './membership.js';
 import nfts from './nfts.js';
@@ -101,6 +102,7 @@ export default function create (t: TFunction): Routes {
     files(t),
     js(t),
     utilities(t),
+    jam(t),
     settings(t)
   ];
 }
