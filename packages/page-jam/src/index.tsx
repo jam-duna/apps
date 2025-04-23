@@ -7,6 +7,11 @@ import { Route, Routes } from 'react-router';
 import { Tabs } from '@polkadot/react-components';
 
 import Home from './Home.js';
+import RpcApp from './rpc/index.js';
+import JsApp from './javascript/index.js'
+import Utilities from './Utilities.js';
+import Network from './Network.js';
+import CoreEVM from './CoreEVM.js';
 import { useTranslation } from './translate.js';
 
 interface Props {
@@ -14,7 +19,9 @@ interface Props {
   className?: string;
 }
 
-function JamApp ({ basePath, className }: Props): React.ReactElement<Props> {
+function JamApp (props: Props): React.ReactElement<Props> {
+  const { basePath, className } = props;
+
   const { t } = useTranslation();
 
   const tabsRef = useRef([
@@ -22,6 +29,26 @@ function JamApp ({ basePath, className }: Props): React.ReactElement<Props> {
       isRoot: true,
       name: 'home',
       text: t('Home')
+    },
+    {
+      name: 'rpc',
+      text: t('RPC Calls')
+    },
+    {
+      name: 'javascript',
+      text: t('Javascript')
+    },
+    {
+      name: 'utilities',
+      text: t('Utilities')
+    },
+    {
+      name: 'network',
+      text: t('Network')
+    },
+    {
+      name: 'coreevm',
+      text: t('CoreEVM')
     },
   ]);
 
@@ -39,6 +66,11 @@ function JamApp ({ basePath, className }: Props): React.ReactElement<Props> {
               }
               index
             />
+            <Route path="rpc" element={<RpcApp />} />
+            <Route path="javascript" element={<JsApp {...props} />} />
+            <Route path="utilities" element={<Utilities />} />
+            <Route path="network" element={<Network />} />
+          <Route path="coreevm" element={<CoreEVM />} />
           </Route>
         </Routes>
       </main>
