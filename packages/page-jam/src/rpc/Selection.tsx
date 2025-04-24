@@ -7,10 +7,14 @@ import type { DefinitionRpcExt } from '@polkadot/types/types';
 
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { Button, InputRpc } from '@polkadot/react-components';
+// import { Button, InputRpc } from '@polkadot/react-components';
+import { Button } from '@polkadot/react-components';
+import MockInputRpc from './mockTemp/MockInputRpc.js'
 import Params from '@polkadot/react-params';
 import { getTypeDef } from '@polkadot/types/create';
-import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
+// import jsonrpc from './mock/jsonrpc.js';
+import { jsonrpc } from './mockTemp/jsonRpc.js';
+
 import { isNull } from '@polkadot/util';
 
 import { useTranslation } from '../translate.js';
@@ -25,7 +29,8 @@ interface State {
   values: RawParam[];
 }
 
-const defaultMethod = jsonrpc.author.submitExtrinsic;
+console.log(jsonrpc)
+const defaultMethod = jsonrpc.jam.block;
 
 function Selection ({ queueRpc }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
@@ -80,11 +85,22 @@ function Selection ({ queueRpc }: Props): React.ReactElement<Props> {
 
   return (
     <section className='rpc--Selection'>
+  
+      {/*
       <InputRpc
         defaultValue={defaultMethod}
         label={t('call the selected endpoint')}
         onChange={_onChangeMethod}
       />
+      */}
+      <MockInputRpc
+        jsonrpc={{ jam: jsonrpc.jam }}
+        defaultSection='jam'
+        defaultMethod={rpc.method}
+        className='input-rpc'
+        onChange={_onChangeMethod}
+      />
+
       <Params
         key={`${rpc.section}.${rpc.method}:params` /* force re-render on change */}
         onChange={_onChangeValues}
