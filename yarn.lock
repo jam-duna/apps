@@ -2512,7 +2512,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@polkadot/react-components@npm:0.154.2-4-x, @polkadot/react-components@npm:^0.154.2-4-x, @polkadot/react-components@workspace:packages/react-components":
+"@polkadot/react-components@npm:0.154.2-4-x, @polkadot/react-components@npm:^0.154.2-0-x, @polkadot/react-components@npm:^0.154.2-4-x, @polkadot/react-components@workspace:packages/react-components":
   version: 0.0.0-use.local
   resolution: "@polkadot/react-components@workspace:packages/react-components"
   dependencies:
@@ -2601,7 +2601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/react-params@npm:^0.154.2-4-x, @polkadot/react-params@workspace:packages/react-params":
+"@polkadot/react-params@npm:^0.154.2-0-x, @polkadot/react-params@npm:^0.154.2-4-x, @polkadot/react-params@workspace:packages/react-params":
   version: 0.0.0-use.local
   resolution: "@polkadot/react-params@workspace:packages/react-params"
   dependencies:

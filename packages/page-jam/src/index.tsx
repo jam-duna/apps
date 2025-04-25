@@ -9,9 +9,10 @@ import { Tabs } from '@polkadot/react-components';
 import Home from './Home.js';
 import RpcApp from './rpc/index.js';
 import JsApp from './javascript/index.js'
-import Utilities from './Utilities.js';
-import Network from './Network.js';
-import CoreEVM from './CoreEVM.js';
+import CodecApp from './codec/index.js';
+import StorageApp from './storage/index.js';
+import BlockMain from './BlockMain/index.js';
+import BlockInfo from './BlockMain/BlockInfo/index.js';
 import { useTranslation } from './translate.js';
 
 interface Props {
@@ -39,16 +40,21 @@ function JamApp (props: Props): React.ReactElement<Props> {
       text: t('Javascript')
     },
     {
-      name: 'utilities',
-      text: t('Utilities')
+      name: 'codec',
+      text: t('Codec')
     },
     {
-      name: 'network',
-      text: t('Network')
+      name: 'storage',
+      text: t('Storage')
     },
     {
       name: 'coreevm',
-      text: t('CoreEVM')
+      text: t('Block info')
+    },
+    {
+      hasParams: true,
+      name: '1/query',
+      text: t('Block details')
     },
   ]);
 
@@ -68,9 +74,10 @@ function JamApp (props: Props): React.ReactElement<Props> {
             />
             <Route path="rpc" element={<RpcApp />} />
             <Route path="javascript" element={<JsApp {...props} />} />
-            <Route path="utilities" element={<Utilities />} />
-            <Route path="network" element={<Network />} />
-          <Route path="coreevm" element={<CoreEVM />} />
+            <Route path="codec" element={<CodecApp {...props} />} />
+            <Route path="storage" element={<StorageApp {...props} />} />
+            <Route path="coreevm" element={<BlockMain  />} />
+            <Route path='1/query/:value?' element={<BlockInfo />}/>
           </Route>
         </Routes>
       </main>
