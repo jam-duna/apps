@@ -43,6 +43,7 @@
       "@polkadot/app-files": ["page-files/src/index.tsx"],
       "@polkadot/app-gilt": ["page-gilt/src/index.tsx"],
       "@polkadot/app-i18n": ["page-i18n/src/index.tsx"],
+      "@polkadot/app-jam": ["page-jam/src/index.tsx"],
       "@polkadot/app-js": ["page-js/src/index.tsx"],
       "@polkadot/app-membership": ["page-membership/src/index.tsx"],
       "@polkadot/app-nfts": ["page-nfts/src/index.tsx"],
