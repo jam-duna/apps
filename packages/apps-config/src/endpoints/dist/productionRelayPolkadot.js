@@ -1,0 +1,1055 @@
+"use strict";
+// Copyright 2017-2025 @polkadot/apps-config authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+exports.__esModule = true;
+exports.prodRelayPolkadot = exports.prodParasPolkadotCommon = exports.prodParasPolkadot = void 0;
+var constants_js_1 = require("../api/constants.js");
+var index_js_1 = require("../ui/logos/chains/index.js");
+var index_js_2 = require("../ui/logos/nodes/index.js");
+var util_js_1 = require("./util.js");
+// The available endpoints that will show in the dropdown. For the most part (with the exception of
+// Polkadot) we try to keep this to live chains only, with RPCs hosted by the community/chain vendor
+//   info: The chain logo name as defined in ../ui/logos/index.ts in namedLogos (this also needs to align with @polkadot/networks)
+//   text: The text to display on the dropdown
+//   providers: The actual hosted secure websocket endpoint
+//
+// IMPORTANT: Alphabetical based on text
+exports.prodParasPolkadot = [
+    {
+        homepage: 'https://acala.network/',
+        info: 'acala',
+        paraId: 2000,
+        providers: {
+            'Acala Foundation 0': 'wss://acala-rpc-0.aca-api.network',
+            'Acala Foundation 1': 'wss://acala-rpc-1.aca-api.network',
+            // 'Acala Foundation 2': 'wss://acala-rpc-2.aca-api.network/ws', // https://github.com/polkadot-js/apps/issues/6965
+            'Acala Foundation 3': 'wss://acala-rpc-3.aca-api.network/ws',
+            Dwellir: 'wss://acala-rpc.dwellir.com',
+            IBP1: 'wss://acala.ibp.network',
+            IBP2: 'wss://acala.dotters.network',
+            // LuckyFriday: 'wss://rpc-acala.luckyfriday.io', // https://github.com/polkadot-js/apps/issues/10728
+            // 'Automata 1RPC': 'wss://1rpc.io/aca' // https://github.com/polkadot-js/apps/issues/8648
+            OnFinality: 'wss://acala-polkadot.api.onfinality.io/public-ws'
+            // 'Polkawallet 0': 'wss://acala.polkawallet.io' // https://github.com/polkadot-js/apps/issues/9760
+        },
+        text: 'Acala',
+        ui: {
+            color: '#645AFF',
+            logo: index_js_1.chainsAcalaSVG
+        }
+    },
+    {
+        homepage: 'https://ajuna.io',
+        info: 'ajuna',
+        paraId: 2051,
+        providers: {
+            AjunaNetwork: 'wss://rpc-para.ajuna.network',
+            IBP1: 'wss://ajuna.ibp.network',
+            IBP2: 'wss://ajuna.dotters.network'
+            // OnFinality: 'wss://ajuna.api.onfinality.io/public-ws'
+            // RadiumBlock: 'wss://ajuna.public.curie.radiumblock.co/ws' https://github.com/polkadot-js/apps/issues/10990
+        },
+        text: 'Ajuna Network',
+        ui: {
+            color: '#161212',
+            logo: index_js_2.nodesAjunaPNG
+        }
+    },
+    {
+        homepage: 'https://www.aresprotocol.io/',
+        info: 'odyssey',
+        paraId: 2028,
+        providers: {
+        // AresProtocol: 'wss://wss.odyssey.aresprotocol.io' // https://github.com/polkadot-js/apps/issues/9059
+        },
+        text: 'Ares Odyssey',
+        ui: {
+            color: '#1295F0',
+            logo: index_js_2.nodesAresOdysseySVG
+        }
+    },
+    {
+        homepage: 'https://astar.network',
+        info: 'astar',
+        paraId: 2006,
+        providers: {
+            Astar: 'wss://rpc.astar.network',
+            'Automata 1RPC': 'wss://1rpc.io/astr',
+            Blast: 'wss://astar.public.blastapi.io',
+            Dwellir: 'wss://astar-rpc.dwellir.com',
+            OnFinality: 'wss://astar.api.onfinality.io/public-ws',
+            RadiumBlock: 'wss://astar.public.curie.radiumblock.co/ws',
+            'light client': 'light://substrate-connect/polkadot/astar'
+        },
+        text: 'Astar',
+        ui: {
+            color: '#1b6dc1d9',
+            logo: index_js_2.nodesAstarPNG
+        }
+    },
+    {
+        homepage: 'https://www.aventus.io/',
+        info: 'aventus',
+        paraId: 2056,
+        providers: {
+            Aventus: 'wss://public-rpc.mainnet.aventus.io'
+        },
+        text: 'Aventus',
+        ui: {
+            color: '#1d2733',
+            logo: index_js_2.nodesAventusSVG
+        }
+    },
+    {
+        homepage: 'https://crowdloan.bifrost.app',
+        info: 'bifrost',
+        paraId: 2030,
+        providers: {
+            IBP1: 'wss://bifrost-polkadot.ibp.network',
+            IBP2: 'wss://bifrost-polkadot.dotters.network',
+            Liebi: 'wss://hk.p.bifrost-rpc.liebi.com/ws',
+            LiebiEU: 'wss://eu.bifrost-polkadot-rpc.liebi.com/ws'
+            // OnFinality: 'wss://bifrost-polkadot.api.onfinality.io/public-ws',
+            // RadiumBlock: 'wss://bifrost.public.curie.radiumblock.co/ws' // https://github.com/polkadot-js/apps/issues/11098
+        },
+        text: 'Bifrost',
+        ui: {
+            color: '#5a25f0',
+            logo: index_js_2.nodesBifrostSVG
+        }
+    },
+    {
+        homepage: 'https://www.bitgreen.org',
+        info: 'bitgreen',
+        paraId: 2048,
+        providers: {
+            Bitgreen: 'wss://mainnet.bitgreen.org'
+            // OnFinality: 'wss://bitgreen.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/9993
+        },
+        text: 'Bitgreen',
+        ui: {
+            color: '#224851',
+            logo: index_js_1.chainsBitgreenPNG
+        }
+    },
+    {
+        homepage: 'https://centrifuge.io',
+        info: 'centrifuge',
+        paraId: 2031,
+        providers: {
+            Centrifuge: 'wss://fullnode.centrifuge.io',
+            Dwellir: 'wss://centrifuge-rpc.dwellir.com',
+            LuckyFriday: 'wss://rpc-centrifuge.luckyfriday.io',
+            OnFinality: 'wss://centrifuge-parachain.api.onfinality.io/public-ws'
+        },
+        text: 'Centrifuge',
+        ui: {
+            color: '#fcc367',
+            logo: index_js_2.nodesCentrifugePNG
+        }
+    },
+    {
+        homepage: 'https://clover.finance',
+        info: 'clover',
+        paraId: 2002,
+        providers: {
+        // Clover: 'wss://rpc-para.clover.finance' // https://github.com/polkadot-js/apps/issues/10172
+        // OnFinality: 'wss://clover.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/9986
+        },
+        text: 'Clover',
+        ui: {
+            color: 'linear-gradient(to right, #52ad75, #7cc773)',
+            logo: index_js_2.nodesCloverSVG
+        }
+    },
+    {
+        homepage: 'http://www.coinversation.io/',
+        info: 'coinversation',
+        paraId: 2027,
+        providers: {
+        // Coinversation: 'wss://rpc.coinversation.io/' // https://github.com/polkadot-js/apps/issues/6635
+        },
+        text: 'Coinversation',
+        ui: {
+            color: '#e6017a',
+            logo: index_js_2.nodesCoinversationPNG
+        }
+    },
+    {
+        homepage: 'https://composable.finance/',
+        info: 'composable',
+        paraId: 2019,
+        providers: {
+            Composable: 'wss://rpc.composable.finance',
+            Dwellir: 'wss://composable-rpc.dwellir.com'
+            // OnFinality: 'wss://composable.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/9986
+        },
+        text: 'Composable Finance',
+        ui: {
+            color: '#C90E8A',
+            logo: index_js_1.chainsComposableFinancePNG
+        }
+    },
+    {
+        homepage: 'https://mnet.io/?ref=polkadotjs',
+        info: 'continuum',
+        paraId: 3346,
+        providers: {
+            MNet: 'wss://continuum-rpc-1.metaverse.network/wss'
+        },
+        text: 'Continuum',
+        ui: {
+            color: 'linear-gradient(94deg, #2B388F 2.95%, #DB126E 97.18%)',
+            logo: index_js_2.nodesContinuumPNG
+        }
+    },
+    {
+        homepage: 'https://crust.network',
+        info: 'crustParachain',
+        paraId: 2008,
+        providers: {
+            Crust: 'wss://crust-parachain.crustapps.net',
+            'Crust APP': 'wss://crust-parachain.crustnetwork.app',
+            'Crust CC': 'wss://crust-parachain.crustnetwork.cc',
+            'Crust XYZ': 'wss://crust-parachain.crustnetwork.xyz'
+            // OnFinality: 'wss://crust-polkadot.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/10013
+        },
+        text: 'Crust',
+        ui: {
+            logo: index_js_2.nodesCrustParachainSVG
+        }
+    },
+    {
+        homepage: 'https://darwinia.network/',
+        info: 'darwinia',
+        paraId: 2046,
+        providers: {
+            Darwinia: 'wss://rpc.darwinia.network',
+            // Dcdao: 'wss://darwinia-rpc.dcdao.box', https://github.com/polkadot-js/apps/issues/11157
+            Dwellir: 'wss://darwinia-rpc.dwellir.com',
+            Subquery: 'wss://darwinia.rpc.subquery.network/public/ws'
+        },
+        text: 'Darwinia',
+        ui: {
+            color: '#FF0083',
+            logo: index_js_2.nodesDarwiniaSVG
+        }
+    },
+    {
+        homepage: 'https://efinity.io',
+        info: 'efinity',
+        paraId: 2021,
+        providers: {
+        // NOTE We don't support connections to this parachain at all.
+        //
+        // 1. The chain is migrated away from the parachain with all balances
+        // 2. There is a forked relay-involved which we don't support
+        //
+        // Additional details in original removal at
+        // https://github.com/polkadot-js/apps/pull/9555/files#r1225095086
+        },
+        text: 'Efinity',
+        ui: {
+            color: '#496ddb',
+            logo: index_js_2.nodesEfinitySVG
+        }
+    },
+    {
+        homepage: 'https://energywebx.com/',
+        info: 'ewx',
+        paraId: 3345,
+        providers: {
+            'Energy Web': 'wss://public-rpc.mainnet.energywebx.com/'
+        },
+        text: 'Energy Web X',
+        ui: {
+            color: '#53B1FF',
+            logo: index_js_2.nodesEwxSVG
+        }
+    },
+    {
+        homepage: 'https://equilibrium.io/',
+        info: 'equilibrium',
+        paraId: 2011,
+        providers: {
+        // Dwellir: 'wss://equilibrium-rpc.dwellir.com'
+        // OnFinality: 'wss://equilibrium.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/9977
+        // Equilibrium: 'wss://node.equilibrium.io' // https://github.com/polkadot-js/apps/issues/10174
+        },
+        text: 'Equilibrium',
+        ui: {
+            color: '#1792ff',
+            logo: index_js_1.chainsEquilibriumSVG
+        }
+    },
+    {
+        homepage: 'https://frequency.xyz',
+        info: 'frequency',
+        paraId: 2091,
+        providers: {
+            Dwellir: 'wss://frequency-rpc.dwellir.com',
+            'Frequency 0': 'wss://0.rpc.frequency.xyz',
+            'Frequency 1': 'wss://1.rpc.frequency.xyz',
+            OnFinality: 'wss://frequency-polkadot.api.onfinality.io/public-ws'
+        },
+        text: 'Frequency',
+        ui: {
+            color: '#00b6af',
+            logo: index_js_1.chainsFrequencySVG
+        }
+    },
+    {
+        homepage: 'https://geminis.network/',
+        info: 'geminis',
+        isUnreachable: true,
+        paraId: 2038,
+        providers: {
+            Geminis: 'wss://rpc.geminis.network'
+        },
+        text: 'Geminis',
+        ui: {
+            logo: index_js_1.chainsGeminisPNG
+        }
+    },
+    {
+        homepage: 'https://hashed.network/',
+        info: 'hashed',
+        paraId: 2093,
+        providers: {
+        // 'Hashed Systems 1': 'wss://c1.hashed.network' // https://github.com/polkadot-js/apps/issues/11423
+        // 'Hashed Systems 2': 'wss://c2.hashed.network', // https://github.com/polkadot-js/apps/issues/10912
+        // 'Hashed Systems 3': 'wss://c3.hashed.network' // https://github.com/polkadot-js/apps/issues/10912
+        },
+        text: 'Hashed Network',
+        ui: {
+            color: '#9199A9',
+            logo: index_js_2.nodesHashedPNG
+        }
+    },
+    {
+        homepage: 'https://heima.network/',
+        info: 'heima',
+        paraId: 2013,
+        providers: {
+            Dwellir: 'wss://heima-rpc.n.dwellir.com',
+            Heima: 'wss://rpc.heima-parachain.heima.network'
+        },
+        text: 'Heima',
+        ui: {
+            color: '#7ed495',
+            logo: index_js_2.nodesHeimaSVG
+        }
+    },
+    {
+        homepage: 'https://hydration.net/',
+        info: 'hydradx',
+        paraId: 2034,
+        providers: {
+            Dwellir: 'wss://hydration-rpc.n.dwellir.com',
+            'Galactic Council': 'wss://rpc.hydradx.cloud',
+            Helikon: 'wss://rpc.helikon.io/hydradx',
+            IBP1: 'wss://hydration.ibp.network',
+            IBP2: 'wss://hydration.dotters.network'
+            // OnFinality: 'wss://hydradx.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/9986
+            // ZeePrime: 'wss://rpc-lb.data6.zp-labs.net:8443/hydradx/ws/?token=2ZGuGivPJJAxXiT1hR1Yg2MXGjMrhEBYFjgbdPi' // https://github.com/polkadot-js/apps/issues/9760
+        },
+        text: 'Hydration',
+        ui: {
+            color: '#240E32',
+            logo: index_js_1.chainsHydrationSVG
+        }
+    },
+    {
+        homepage: 'https://hyperbridge.network',
+        info: 'hyperbridge',
+        paraId: 3367,
+        providers: {
+            BlockOps: 'wss://hyperbridge-nexus-rpc.blockops.network',
+            IBP1: 'wss://nexus.ibp.network',
+            IBP2: 'wss://nexus.dotters.network'
+        },
+        text: 'Hyperbridge (Nexus)',
+        ui: {
+            color: '#ED6FF1',
+            logo: index_js_2.nodesHyperbridgePNG
+        }
+    },
+    {
+        homepage: 'https://dot.crowdloan.integritee.network/',
+        info: 'integritee',
+        paraId: 3359,
+        providers: {
+            Dwellir: 'wss://integritee-rpc.dwellir.com',
+            Integritee: 'wss://polkadot.api.integritee.network'
+        },
+        text: 'Integritee Network',
+        ui: {
+            color: '#658ea9',
+            logo: index_js_2.nodesIntegriteeSVG
+        }
+    },
+    {
+        homepage: 'https://integritee.network',
+        info: 'integritee',
+        paraId: 2039,
+        providers: {
+        // Dwellir: 'wss://integritee-rpc.dwellir.com',
+        // Integritee: 'wss://polkadot.api.integritee.network'
+        },
+        text: 'Integritee Network',
+        ui: {
+            color: '#2e154b',
+            logo: index_js_2.nodesIntegriteeSVG
+        }
+    },
+    {
+        homepage: 'https://interlay.io/',
+        info: 'interlay',
+        paraId: 2032,
+        providers: {
+            Dwellir: 'wss://interlay-rpc.dwellir.com',
+            'Kintsugi Labs': 'wss://api.interlay.io/parachain',
+            LuckyFriday: 'wss://rpc-interlay.luckyfriday.io/'
+            // OnFinality: 'wss://interlay.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/9986
+        },
+        text: 'Interlay',
+        ui: {
+            color: '#3E96FF',
+            logo: index_js_2.nodesInterlaySVG
+        }
+    },
+    {
+        homepage: 'https://invarch.network/',
+        info: 'invarch',
+        paraId: 3340,
+        providers: {
+            // Dwellir: 'wss://invarch-rpc.dwellir.com', // https://github.com/polkadot-js/apps/issues/11477
+            IBP1: 'wss://invarch.ibp.network',
+            IBP2: 'wss://invarch.dotters.network'
+        },
+        text: 'InvArch',
+        ui: {
+            color: 'linear-gradient(278deg, #f7d365 5.74%, #ff408a 99.41%)',
+            logo: index_js_1.chainsInvarchJPEG
+        }
+    },
+    {
+        homepage: 'https://jamton.network/',
+        info: 'jamton',
+        paraId: 3397,
+        providers: {
+            Jamton: 'wss://rpc.jamton.network'
+        },
+        text: 'JAMTON',
+        ui: {
+            color: '#D33AD6',
+            logo: index_js_2.nodesJamtonSVG
+        }
+    },
+    {
+        homepage: 'https://totemaccounting.com/',
+        info: 'kapex',
+        paraId: 2007,
+        providers: {
+        // Dwellir: 'wss://kapex-rpc.dwellir.com'
+        // OnFinality: 'wss://kapex-parachain.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/9986
+        // Totem: 'wss://k-ui.kapex.network' // https://github.com/polkadot-js/apps/issues/9616
+        },
+        text: 'Kapex',
+        ui: {
+            color: 'linear-gradient(158deg, rgba(226,157,0,1) 0%, rgba(234,55,203,1) 100%)',
+            logo: index_js_1.chainsTotemSVG
+        }
+    },
+    {
+        homepage: 'https://www.kilt.io/',
+        info: 'kilt',
+        paraId: 2086,
+        providers: {
+            Dwellir: 'wss://kilt-rpc.dwellir.com',
+            IBP1: 'wss://kilt.ibp.network',
+            IBP2: 'wss://kilt.dotters.network',
+            'KILT Foundation': 'wss://spiritnet.kilt.io/'
+        },
+        text: 'KILT Spiritnet',
+        ui: {
+            color: 'linear-gradient(45deg, #161B3B 0%, #D73D80 100%)',
+            logo: index_js_2.nodesKiltIconSVG
+        }
+    },
+    {
+        homepage: 'https://kylin.network/',
+        info: 'kylin',
+        paraId: 2052,
+        providers: {
+        // 'Kylin Network': 'wss://polkadot.kylin-node.co.uk' // https://github.com/polkadot-js/apps/issues/10030
+        },
+        text: 'Kylin',
+        ui: {
+            color: '#ed007e',
+            logo: index_js_2.nodesKylinPNG
+        }
+    },
+    {
+        homepage: 'https://laosnetwork.io/',
+        info: 'laos',
+        paraId: 3370,
+        providers: {
+            // Dwellir: 'wss://laos-rpc.n.dwellir.com', // https://github.com/polkadot-js/apps/issues/11495
+            'laosfoundation.io': 'wss://rpc.laos.laosfoundation.io',
+            'light client': 'light://substrate-connect/polkadot/laos'
+        },
+        text: 'Laos',
+        ui: {
+            color: 'linear-gradient(90deg, #25143B 0%, #613D93 29.69%, #EF9365 69.79%, #E2CF61 100%)',
+            logo: index_js_1.chainsLaosPNG
+        }
+    },
+    {
+        homepage: 'https://logion.network/',
+        info: 'logion',
+        paraId: 3354,
+        providers: {
+            'Logion 1': 'wss://para-rpc01.logion.network'
+            // 'Logion 2': 'wss://para-rpc02.logion.network' // https://github.com/polkadot-js/apps/issues/10890
+        },
+        text: 'Logion',
+        ui: {
+            color: 'rgb(21, 38, 101)',
+            logo: index_js_1.chainsLogionPNG
+        }
+    },
+    {
+        homepage: 'https://manta.network',
+        info: 'manta',
+        paraId: 2104,
+        providers: {
+            'Manta Network': 'wss://ws.manta.systems'
+            // OnFinality: 'wss://manta.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/9977
+        },
+        text: 'Manta',
+        ui: {
+            color: '#2070a6',
+            logo: index_js_2.nodesMantaPNG
+        }
+    },
+    {
+        homepage: 'https://moonbeam.network/networks/moonbeam/',
+        info: 'moonbeam',
+        paraId: 2004,
+        providers: {
+            Allnodes: 'wss://moonbeam-rpc.publicnode.com',
+            // 'Automata 1RPC': 'wss://1rpc.io/glmr', // https://github.com/polkadot-js/apps/issues/10566
+            Blast: 'wss://moonbeam.public.blastapi.io',
+            Dwellir: 'wss://moonbeam-rpc.n.dwellir.com',
+            IBP1: 'wss://moonbeam.ibp.network',
+            IBP2: 'wss://moonbeam.dotters.network',
+            'Moonbeam Foundation': 'wss://wss.api.moonbeam.network',
+            OnFinality: 'wss://moonbeam.api.onfinality.io/public-ws',
+            RadiumBlock: 'wss://moonbeam.public.curie.radiumblock.co/ws',
+            UnitedBloc: 'wss://moonbeam.unitedbloc.com'
+        },
+        text: 'Moonbeam',
+        ui: {
+            color: '#000000',
+            logo: index_js_2.nodesMoonbeamSVG
+        }
+    },
+    {
+        homepage: 'https://moonsama.com',
+        info: 'moonsama',
+        paraId: 3334,
+        providers: {
+        // Moonsama: 'wss://rpc.moonsama.com/ws' // https://github.com/polkadot-js/apps/issues/10289
+        },
+        text: 'Moonsama',
+        ui: {
+            color: '#1a202c',
+            logo: index_js_2.nodesMoonsamaSVG
+        }
+    },
+    {
+        homepage: 'https://mythos.foundation/',
+        info: 'mythos',
+        paraId: 3369,
+        providers: {
+            Helikon: 'wss://rpc.helikon.io/mythos',
+            IBP1: 'wss://mythos.ibp.network',
+            IBP2: 'wss://mythos.dotters.network',
+            parity: 'wss://polkadot-mythos-rpc.polkadot.io'
+        },
+        text: 'Mythos',
+        ui: {
+            color: '#262528',
+            logo: index_js_2.nodesMythosPNG
+        }
+    },
+    {
+        homepage: 'https://neuroweb.ai',
+        info: 'neuroweb',
+        paraId: 2043,
+        providers: {
+            // Dwellir: 'wss://neuroweb-rpc.dwellir.com', // https://github.com/polkadot-js/apps/issues/11495
+            TraceLabs: 'wss://parachain-rpc.origin-trail.network'
+        },
+        text: 'NeuroWeb',
+        ui: {
+            color: '#000000',
+            logo: index_js_1.chainsNeurowebPNG
+        }
+    },
+    {
+        homepage: 'https://nodle.com',
+        info: 'nodle',
+        paraId: 2026,
+        providers: {
+            Dwellir: 'wss://nodle-rpc.dwellir.com',
+            OnFinality: 'wss://nodle-parachain.api.onfinality.io/public-ws'
+        },
+        text: 'Nodle',
+        ui: {
+            color: '#1ab394',
+            logo: index_js_2.nodesNodleSVG
+        }
+    },
+    {
+        homepage: 'https://oak.tech',
+        info: 'oak',
+        isUnreachable: true,
+        paraId: 2090,
+        providers: {
+            OAK: 'wss://rpc.oak.tech'
+        },
+        text: 'OAK Network',
+        ui: {
+            color: '#A8278C',
+            logo: index_js_1.chainsOakPNG
+        }
+    },
+    {
+        homepage: 'https://www.omnibtc.finance',
+        info: 'omnibtc',
+        isUnreachable: true,
+        paraId: 2053,
+        providers: {
+            OmniBTC: 'wss://psc-parachain.coming.chat'
+        },
+        text: 'OmniBTC',
+        ui: {
+            color: '#6759E9',
+            logo: index_js_2.nodesOmnibtcSVG
+        }
+    },
+    {
+        homepage: 'https://parallel.fi',
+        info: 'parallel',
+        paraId: 2012,
+        providers: {
+            // Dwellir: 'wss://parallel-rpc.dwellir.com' , https://github.com/polkadot-js/apps/issues/10997
+            Gatotech: 'wss://parallel.gatotech.network'
+            // Parallel: 'wss://polkadot-parallel-rpc.parallel.fi' // https://github.com/polkadot-js/apps/issues/11221
+            // OnFinality: 'wss://parallel.api.onfinality.io/public-ws', // https://github.com/polkadot-js/apps/issues/9986
+        },
+        text: 'Parallel',
+        ui: {
+            color: '#ef18ac',
+            logo: index_js_2.nodesParallelSVG
+        }
+    },
+    {
+        homepage: 'https://peaq.network/',
+        info: 'peaq',
+        paraId: 3338,
+        providers: {
+        // OnFinality: 'wss://peaq.api.onfinality.io/public-ws'
+        },
+        text: 'peaq',
+        ui: {
+            color: '#281C66',
+            logo: index_js_1.chainsPeaqPNG
+        }
+    },
+    {
+        homepage: 'https://pendulumchain.org/',
+        info: 'pendulum',
+        paraId: 2094,
+        providers: {
+            // Dwellir: 'wss://pendulum-rpc.dwellir.com',
+            PendulumChain: 'wss://rpc-pendulum.prd.pendulumchain.tech'
+        },
+        text: 'Pendulum',
+        ui: {
+            color: '#49E2FD',
+            logo: index_js_1.chainsPendulumSVG
+        }
+    },
+    {
+        homepage: 'https://phala.network',
+        info: 'phala',
+        paraId: 2035,
+        providers: {
+            Dwellir: 'wss://phala-rpc.dwellir.com',
+            Helikon: 'wss://rpc.helikon.io/phala',
+            OnFinality: 'wss://phala.api.onfinality.io/public-ws',
+            // Phala: 'wss://api.phala.network/ws', // https://github.com/polkadot-js/apps/issues/11251
+            RadiumBlock: 'wss://phala.public.curie.radiumblock.co/ws'
+            // Rockx: 'wss://rockx-phala.w3node.com/polka-public-phala/ws' // https://github.com/polkadot-js/apps/issues/10728
+        },
+        text: 'Phala Network',
+        ui: {
+            color: '#c6fa4c',
+            logo: index_js_2.nodesPhalaSVG
+        }
+    },
+    {
+        homepage: 'https://www.polimec.org/',
+        info: 'polimec',
+        paraId: 3344,
+        providers: {
+            Amforc: 'wss://polimec.rpc.amforc.com',
+            Helikon: 'wss://rpc.helikon.io/polimec',
+            IBP1: 'wss://polimec.ibp.network',
+            IBP2: 'wss://polimec.dotters.network',
+            'Polimec Foundation': 'wss://rpc.polimec.org'
+        },
+        text: 'Polimec',
+        ui: {
+            color: '#25311C',
+            logo: index_js_2.nodesPolimecSVG
+        }
+    },
+    {
+        homepage: 'https://polkadex.trade/crowdloans',
+        info: 'polkadex',
+        paraId: 3363,
+        providers: {
+        // Dwellir: 'wss://polkadex-parachain-rpc.dwellir.com',
+        // OnFinality: 'wss://polkadex-parachain.api.onfinality.io/public-ws',
+        // RadiumBlock: 'wss://polkadex-parachain.public.curie.radiumblock.co/ws'
+        },
+        text: 'Polkadex',
+        ui: {
+            color: '#7C30DD',
+            logo: index_js_2.nodesPolkadexSVG
+        }
+    },
+    {
+        homepage: 'https://polkadex.trade/',
+        info: 'polkadex',
+        paraId: 2040,
+        providers: {
+            // Dwellir: 'wss://polkadex-parachain-rpc.dwellir.com', // https://github.com/polkadot-js/apps/issues/11460
+            // OnFinality: 'wss://polkadex-parachain.api.onfinality.io/public-ws',
+            RadiumBlock: 'wss://polkadex-parachain.public.curie.radiumblock.co/ws'
+        },
+        text: 'Polkadex',
+        ui: {
+            color: '#7C30DD',
+            logo: index_js_2.nodesPolkadexSVG
+        }
+    },
+    {
+        homepage: 'http://robonomics.network/',
+        info: 'robonomics',
+        paraId: 3388,
+        providers: {
+            Airalab: 'wss://polkadot.rpc.robonomics.network/'
+        },
+        text: 'Robonomics',
+        ui: {
+            color: '#e6007a',
+            logo: index_js_2.nodesRobonomicsSVG
+        }
+    },
+    {
+        homepage: 'https://sora.org/',
+        info: 'sora',
+        paraId: 2025,
+        providers: {
+            Soramitsu: 'wss://ws.parachain-collator-3.pc3.sora2.soramitsu.co.jp'
+        },
+        text: 'SORA',
+        ui: {
+            color: '#2D2926',
+            logo: index_js_2.nodesSoraSubstrateSVG
+        }
+    },
+    {
+        homepage: 'https://subdao.network/',
+        info: 'subdao',
+        isUnreachable: true,
+        paraId: 2018,
+        providers: {
+            SubDAO: 'wss://parachain-rpc.subdao.org'
+        },
+        text: 'SubDAO',
+        ui: {
+            color: 'linear-gradient(50deg, #F20092 0%, #FF4D5D 100%)',
+            logo: index_js_2.nodesSubdaoPNG
+        }
+    },
+    {
+        homepage: 'http://subgame.org/',
+        info: 'subgame',
+        paraId: 2017,
+        providers: {
+        // SubGame: 'wss://gamma.subgame.org/' // https://github.com/polkadot-js/apps/pull/6761
+        },
+        text: 'SubGame Gamma',
+        ui: {
+            color: '#EB027D',
+            logo: index_js_2.nodesSubgameSVG
+        }
+    },
+    {
+        homepage: 'https://subsocial.network/',
+        info: 'subsocial',
+        paraId: 2101,
+        providers: {
+            Dappforce: 'wss://para.subsocial.network',
+            Dwellir: 'wss://subsocial-rpc.dwellir.com'
+            // OnFinality: 'wss://subsocial-polkadot.api.onfinality.io/public-ws' // https://github.com/polkadot-js/apps/issues/9977
+        },
+        text: 'Subsocial',
+        ui: {
+            color: '#b9018c',
+            logo: index_js_2.nodesSubsocialSVG
+        }
+    },
+    {
+        homepage: 'https://www.t3rn.io/',
+        info: 't3rn',
+        paraId: 3333,
+        providers: {
+        // t3rn: 'wss://ws.t3rn.io' https://github.com/polkadot-js/apps/issues/11157
+        },
+        text: 't3rn',
+        ui: {
+            color: '#6f3bb2',
+            logo: index_js_2.nodesT3rnPNG
+        }
+    },
+    {
+        homepage: 'https://unique.network/',
+        info: 'unique',
+        paraId: 2037,
+        providers: {
+            Dwellir: 'wss://unique-rpc.n.dwellir.com',
+            'Geo Load Balancer': 'wss://ws.unique.network',
+            IBP1: 'wss://unique.ibp.network',
+            IBP2: 'wss://unique.dotters.network',
+            // OnFinality: 'wss://unique.api.onfinality.io/public-ws', // https://github.com/polkadot-js/apps/issues/10030
+            'Unique America': 'wss://us-ws.unique.network',
+            'Unique Asia': 'wss://asia-ws.unique.network',
+            'Unique Europe': 'wss://eu-ws.unique.network'
+        },
+        text: 'Unique Network',
+        ui: {
+            color: '#40BCFF',
+            logo: index_js_2.nodesUniqueSVG
+        }
+    },
+    {
+        homepage: 'https://www.watr.org/',
+        info: 'watr',
+        paraId: 2058,
+        providers: {
+        // Watr: 'wss://watr-rpc.watr-api.network' // https://github.com/polkadot-js/apps/issues/10890
+        },
+        text: 'Watr Network',
+        ui: {
+            color: '#373b39',
+            logo: index_js_1.chainsWatrPNG
+        }
+    },
+    {
+        homepage: 'https://xcavate.io/',
+        info: 'xcavate',
+        paraId: 3413,
+        providers: {
+            Xcavate: 'wss://rpc1-polkadot.xcavate.io'
+        },
+        relayName: 'polkadot',
+        text: 'Xcavate',
+        ui: {
+            color: '#FF0083',
+            logo: index_js_1.chainsMyxcavPNG
+        }
+    },
+    {
+        homepage: 'https://xode.net',
+        info: 'xode',
+        paraId: 3417,
+        providers: {
+            XodeCommunity: 'wss://polkadot-bootnode03.xode.net/rpc'
+        },
+        text: 'Xode',
+        ui: {
+            color: '#ed1f7a',
+            logo: index_js_2.nodesXodePNG
+        }
+    },
+    {
+        homepage: 'https://zeitgeist.pm',
+        info: 'zeitgeist',
+        paraId: 2092,
+        providers: {
+            OnFinality: 'wss://zeitgeist.api.onfinality.io/public-ws'
+            // ZeitgeistPM: 'wss://main.rpc.zeitgeist.pm/ws' // https://github.com/polkadot-js/apps/issues/11215
+        },
+        text: 'Zeitgeist',
+        ui: {
+            color: 'linear-gradient(180deg, rgba(32,90,172,1) 0%, rgba(26,72,138,1) 50%, rgba(13,36,69,1) 100%)',
+            logo: index_js_2.nodesZeitgeistPNG
+        }
+    }
+];
+exports.prodParasPolkadotCommon = [
+    {
+        info: 'PolkadotAssetHub',
+        isPeopleForIdentity: true,
+        paraId: 1000,
+        providers: {
+            Blockops: 'wss://polkadot-assethub-rpc.blockops.network/ws',
+            Dwellir: 'wss://asset-hub-polkadot-rpc.dwellir.com',
+            'Dwellir Tunisia': 'wss://statemint-rpc-tn.dwellir.com',
+            IBP1: 'wss://sys.ibp.network/asset-hub-polkadot',
+            IBP2: 'wss://asset-hub-polkadot.dotters.network',
+            LuckyFriday: 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
+            OnFinality: 'wss://statemint.api.onfinality.io/public-ws',
+            Parity: 'wss://polkadot-asset-hub-rpc.polkadot.io',
+            RadiumBlock: 'wss://statemint.public.curie.radiumblock.co/ws',
+            Stakeworld: 'wss://dot-rpc.stakeworld.io/assethub'
+        },
+        relayName: 'polkadot',
+        teleport: [-1],
+        text: 'AssetHub',
+        ui: {
+            color: '#86e62a',
+            logo: index_js_2.nodesAssetHubSVG
+        }
+    },
+    {
+        info: 'polkadotBridgeHub',
+        isPeopleForIdentity: true,
+        paraId: 1002,
+        providers: {
+            Dwellir: 'wss://bridge-hub-polkadot-rpc.dwellir.com',
+            'Dwellir Tunisia': 'wss://polkadot-bridge-hub-rpc-tn.dwellir.com',
+            IBP1: 'wss://sys.ibp.network/bridgehub-polkadot',
+            IBP2: 'wss://bridge-hub-polkadot.dotters.network',
+            LuckyFriday: 'wss://rpc-bridge-hub-polkadot.luckyfriday.io',
+            OnFinality: 'wss://bridgehub-polkadot.api.onfinality.io/public-ws',
+            Parity: 'wss://polkadot-bridge-hub-rpc.polkadot.io',
+            RadiumBlock: 'wss://bridgehub-polkadot.public.curie.radiumblock.co/ws',
+            Stakeworld: 'wss://dot-rpc.stakeworld.io/bridgehub'
+        },
+        relayName: 'polkadot',
+        teleport: [-1],
+        text: 'BridgeHub',
+        ui: {
+            logo: index_js_2.nodesBridgeHubSVG
+        }
+    },
+    {
+        info: 'polkadotCollectives',
+        isPeopleForIdentity: true,
+        paraId: 1001,
+        providers: {
+            Dwellir: 'wss://collectives-polkadot-rpc.dwellir.com',
+            'Dwellir Tunisia': 'wss://polkadot-collectives-rpc-tn.dwellir.com',
+            IBP1: 'wss://sys.ibp.network/collectives-polkadot',
+            IBP2: 'wss://collectives-polkadot.dotters.network',
+            LuckyFriday: 'wss://rpc-collectives-polkadot.luckyfriday.io',
+            OnFinality: 'wss://collectives.api.onfinality.io/public-ws',
+            Parity: 'wss://polkadot-collectives-rpc.polkadot.io',
+            RadiumBlock: 'wss://collectives.public.curie.radiumblock.co/ws',
+            Stakeworld: 'wss://dot-rpc.stakeworld.io/collectives'
+        },
+        relayName: 'polkadot',
+        teleport: [-1],
+        text: 'Collectives',
+        ui: {
+            color: '#e6777a',
+            logo: index_js_2.nodesCollectivesSVG
+        }
+    },
+    {
+        info: 'polkadotCoretime',
+        isPeopleForIdentity: true,
+        paraId: 1005,
+        providers: {
+            IBP1: 'wss://sys.ibp.network/coretime-polkadot',
+            IBP2: 'wss://coretime-polkadot.dotters.network',
+            LuckyFriday: 'wss://rpc-coretime-polkadot.luckyfriday.io',
+            OnFinality: 'wss://coretime-polkadot.api.onfinality.io/public-ws',
+            Parity: 'wss://polkadot-coretime-rpc.polkadot.io'
+        },
+        relayName: 'polkadot',
+        teleport: [-1],
+        text: 'Coretime',
+        ui: {}
+    },
+    {
+        info: 'polkadotPeople',
+        isPeople: true,
+        isPeopleForIdentity: false,
+        paraId: 1004,
+        providers: {
+            IBP1: 'wss://sys.ibp.network/people-polkadot',
+            IBP2: 'wss://people-polkadot.dotters.network',
+            LuckyFriday: 'wss://rpc-people-polkadot.luckyfriday.io',
+            OnFinality: 'wss://people-polkadot.api.onfinality.io/public-ws',
+            Parity: 'wss://polkadot-people-rpc.polkadot.io',
+            RadiumBlock: 'wss://people-polkadot.public.curie.radiumblock.co/ws'
+        },
+        relayName: 'polkadot',
+        teleport: [-1],
+        text: 'People',
+        ui: {
+            color: '#e84366',
+            logo: index_js_1.chainsPeoplePolkadotSVG
+        }
+    }
+];
+exports.prodRelayPolkadot = {
+    dnslink: 'polkadot',
+    genesisHash: constants_js_1.POLKADOT_GENESIS,
+    info: 'polkadot',
+    isPeopleForIdentity: true,
+    isRelay: true,
+    linked: __spreadArrays(exports.prodParasPolkadotCommon, exports.prodParasPolkadot),
+    providers: {
+        Allnodes: 'wss://polkadot-rpc.publicnode.com',
+        // 'Geometry Labs': 'wss://polkadot.geometry.io/websockets', // https://github.com/polkadot-js/apps/pull/6746
+        // 'Automata 1RPC': 'wss://1rpc.io/dot',
+        Blockops: 'wss://polkadot-public-rpc.blockops.network/ws',
+        Dwellir: 'wss://polkadot-rpc.dwellir.com',
+        'Dwellir Tunisia': 'wss://polkadot-rpc-tn.dwellir.com',
+        Helixstreet: 'wss://rpc-polkadot.helixstreet.io',
+        IBP1: 'wss://rpc.ibp.network/polkadot',
+        IBP2: 'wss://polkadot.dotters.network',
+        LuckyFriday: 'wss://rpc-polkadot.luckyfriday.io',
+        OnFinality: 'wss://polkadot.api.onfinality.io/public-ws',
+        'Permanence DAO EU': 'wss://polkadot.rpc.permanence.io',
+        RadiumBlock: 'wss://polkadot.public.curie.radiumblock.co/ws',
+        // RockX: 'wss://rockx-dot.w3node.com/polka-public-dot/ws', // https://github.com/polkadot-js/apps/issues/11439
+        Stakeworld: 'wss://dot-rpc.stakeworld.io',
+        SubQuery: 'wss://polkadot.rpc.subquery.network/public/ws',
+        'light client': 'light://substrate-connect/polkadot'
+    },
+    teleport: util_js_1.getTeleports(exports.prodParasPolkadotCommon),
+    text: 'Polkadot',
+    ui: {
+        color: '#e6007a',
+        identityIcon: 'polkadot',
+        logo: index_js_1.chainsPolkadotCircleSVG
+    }
+};

@@ -9,6 +9,7 @@ import { prodChains, prodRelayKusama, prodRelayPolkadot } from './production.js'
 import { testChains, testRelayWestend } from './testing.js';
 import { testRelayPaseo } from './testingRelayPaseo.js';
 import { expandEndpoints } from './util.js';
+import { jamChains } from './jam.js';
 
 export { CUSTOM_ENDPOINT_KEY } from './development.js';
 export * from './production.js';
@@ -83,6 +84,15 @@ export function createWsEndpoints (t: TFunction = defaultT, firstOnly = false, w
       value: ''
     },
     ...expandEndpoints(t, testChains, firstOnly, withSort),
+    {
+      isDisabled: false,
+      isHeader: true,
+      text: t('rpc.header.jam', 'JAM Implementers Testnets', { ns: 'apps-config' }),
+      textBy: '',
+      ui: {},
+      value: ''
+    },
+    ...expandEndpoints(t, jamChains, firstOnly, withSort),
     {
       isDevelopment: true,
       isDisabled: false,
