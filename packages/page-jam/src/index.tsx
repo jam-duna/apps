@@ -14,6 +14,7 @@ import StorageApp from './storage/index.js';
 import BlockMain from './BlockMain/index.js';
 import BlockInfo from './BlockMain/BlockInfo/index.js';
 import { useTranslation } from './translate.js';
+import { WsRpcProvider } from './contexts/WSRpcContext/index.js';
 
 interface Props {
   basePath: string;
@@ -59,7 +60,8 @@ function JamApp (props: Props): React.ReactElement<Props> {
   ]);
 
   return (
-      <main className={className}>
+    <main className={className}>
+      <WsRpcProvider>
         <Tabs
           basePath={basePath}
           items={tabsRef.current}
@@ -80,8 +82,9 @@ function JamApp (props: Props): React.ReactElement<Props> {
             <Route path='1/query/:value?' element={<BlockInfo />}/>
           </Route>
         </Routes>
-      </main>
-    );
+      </WsRpcProvider>
+    </main>
+  );
 }
 
 export default React.memo(JamApp);
