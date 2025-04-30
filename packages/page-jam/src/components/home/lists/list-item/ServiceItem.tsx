@@ -24,7 +24,7 @@ export default function ServiceListItem({ serviceItem }: ServiceListItemProps) {
 
   return (
     <Link
-      to={`/service/${code_hash}`}
+      to={`/jam/service/${code_hash}`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box

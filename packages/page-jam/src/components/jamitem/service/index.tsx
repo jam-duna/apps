@@ -69,7 +69,7 @@ export function Service(param: ServiceProps) {
           variant="subtitle2"
           fontSize="12px"
           onClick={() => {
-            navigate(`/service/${param.name}`);
+            navigate(`/jam/service/${param.name}`);
           }}
         >
           {param.service === undefined
@@ -118,7 +118,7 @@ export function Service(param: ServiceProps) {
           variant="subtitle2"
           fontSize="16px"
           onClick={() => {
-            navigate(`/service/${param.name}`);
+            navigate(`/jam/service/${param.name}`);
           }}
         >
           {param.service === undefined
@@ -168,7 +168,7 @@ export function Service(param: ServiceProps) {
           fontSize="12px"
           sx={{ maxWidth: "70px" }}
           onClick={() => {
-            navigate(`/service/${param.name}`);
+            navigate(`/jam/service/${param.name}`);
           }}
         >
           {param.service === undefined
@@ -198,7 +198,7 @@ export function Service(param: ServiceProps) {
   const mediumRender = (
     <Link
       key={param.name}
-      to={`/service/${param.name}/`}
+      to={`/jam/service/${param.name}/`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box

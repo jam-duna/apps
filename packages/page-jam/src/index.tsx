@@ -7,13 +7,17 @@ import { Route, Routes } from 'react-router';
 import { Tabs } from '@polkadot/react-components';
 
 import Home from './Home.js';
+import CoreDetailPage from './pages/core/index.js';
+import ServiceDetailPage from './pages/service/index.js';
+import WorkPackagedetailPage from './pages/workpackage/index.js';
+
 import RpcApp from './rpc/index.js';
 import JsApp from './javascript/index.js'
 import CodecApp from './codec/index.js';
 import StorageApp from './storage/index.js';
 import BlockMain from './BlockMain/index.js';
 import BlockInfo from './BlockMain/BlockInfo/index.js';
-import CoreDetailPage from './pages/core/index.js';
+
 import { useTranslation } from './translate.js';
 import { WsRpcProvider } from './contexts/WSRpcContext/index.js';
 
@@ -69,7 +73,7 @@ function JamApp (props: Props): React.ReactElement<Props> {
         />
         <Routes>
           <Route path={basePath}>
-          {/* route for explorer app */}
+            {/* route for explorer app start */}
             <Route
               element={
                 <Home />
@@ -77,6 +81,9 @@ function JamApp (props: Props): React.ReactElement<Props> {
               index
             />
             <Route path="core/:coreIndex" element={<CoreDetailPage/>} />
+            <Route path="service/:serviceId" element={<ServiceDetailPage />} />
+            <Route path="workpackage/:workPackageHash" element={<WorkPackagedetailPage />} />
+            {/* route for explorer app end */}
             <Route path="rpc" element={<RpcApp />} />
             <Route path="javascript" element={<JsApp {...props} />} />
             <Route path="codec" element={<CodecApp {...props} />} />

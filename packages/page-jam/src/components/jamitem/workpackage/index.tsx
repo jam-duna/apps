@@ -69,7 +69,7 @@ export function WorkPackage({
       }}
     >
       <Tooltip title={`WorkPackageHash: ${hash}`} placement="top" arrow>
-        <Link to={`/workpackage/${hash}`}>
+        <Link to={`/jam/workpackage/${hash}`}>
           <Typography variant="subtitle2" fontSize="16px">
             {hash}
           </Typography>
@@ -112,7 +112,7 @@ export function WorkPackage({
     >
       <WorkPackageIcon size={16} color={"#1b5e20"} />
       <Tooltip title={`WorkPackageHash: ${hash}`} placement="top" arrow>
-        <Link to={`/workpackage/${hash}`}>
+        <Link to={`/jam/workpackage/${hash}`}>
           <Typography variant="subtitle2" fontSize="12px">
             {truncateHash(hash, "short")}
           </Typography>
@@ -139,7 +139,7 @@ export function WorkPackage({
   const mediumRender = (
     <Link
       key={hash}
-      to={`/workpackage/${hash}/`}
+      to={`/jam/workpackage/${hash}/`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box

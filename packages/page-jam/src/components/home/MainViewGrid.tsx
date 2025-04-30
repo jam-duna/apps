@@ -210,7 +210,7 @@ export default function MainViewGrid({
                                     },
                                   }}
                                   onClick={() => {
-                                    navigate(`/service/${item}`);
+                                    navigate(`/jam/service/${item}`);
                                   }}
                                 >
                                   {truncateString(

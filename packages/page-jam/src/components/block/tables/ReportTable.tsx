@@ -123,7 +123,7 @@ function ResultDisplay({ result, index }: { result: Result; index: number }) {
   const navigate = useNavigate();
 
   const handleServiceRedirect = () => {
-    navigate(`/service/${result.service_id}`);
+    navigate(`/jam/service/${result.service_id}`);
   };
 
   return (

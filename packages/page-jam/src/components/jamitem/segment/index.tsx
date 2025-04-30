@@ -74,27 +74,17 @@ export function Segment(param: SegmentProps) {
     <Tooltip title={`Segment index : ${param.index}`} placement="top" arrow>
       <Link
         to={`/segment/${param.hash}/${param.index}`}
+        style={{
+          width: "40px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          cursor: "pointer",
+        }}
       >
-        <Box
-          display="flex"
-          justifyContent="start"
-          alignItems="center"
-          gap={1}
-          sx={{
-            cursor: "pointer",
-            paddingInline: "10px",
-            transition: "all 0.3s ease-in-out",
-            backgroundColor: "#ffffff",
-            color: "#444444",
-            ":hover": {
-              backgroundColor: "#ffffff",
-            },
-          }}
-        >
-          <Typography variant="subtitle2" fontSize={"16px"}>
-            {param.index}
-          </Typography>
-        </Box>
+        <Typography variant="subtitle2" fontSize={"14px"}>
+          {param.index}
+        </Typography>
       </Link>
     </Tooltip>
   );

@@ -64,7 +64,7 @@ function WorkPackageListItem({ state, coreIndex }: WorkPackageListItemProps) {
   return (
     <Link
       key={packageHash()}
-      to={`/workpackage/${packageHash()}/`}
+      to={`/jam/workpackage/${packageHash()}/`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box

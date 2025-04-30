@@ -23,7 +23,7 @@ function ServiceListItem({ result, createdAt }: ServiceListItemProps) {
   return (
     <Link
       key={result.service_id}
-      to={`/service/${result.service_id}/`}
+      to={`/jam/service/${result.service_id}/`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box
