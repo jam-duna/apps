@@ -14,6 +14,7 @@ import { BN, formatNumber } from '@polkadot/util';
 
 import Event from '../Event.js';
 import { useTranslation } from '../../translate.js';
+import { Link } from 'react-router-dom';
 
 interface Props {
   blockNumber?: BlockNumber;
@@ -130,11 +131,11 @@ function ExtrinsicDisplay ({ blockNumber, className = '', events, index, maxBloc
           withSignature
         />
         {link && (
-          <a
+          <Link
             className='isDecoded'
-            href={link}
+            to={link}
             rel='noreferrer'
-          >{link}</a>
+          >{link}</Link>
         )}
       </td>
       <td

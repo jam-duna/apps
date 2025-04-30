@@ -13,6 +13,7 @@ import CodecApp from './codec/index.js';
 import StorageApp from './storage/index.js';
 import BlockMain from './BlockMain/index.js';
 import BlockInfo from './BlockMain/BlockInfo/index.js';
+import CoreDetailPage from './pages/core/index.js';
 import { useTranslation } from './translate.js';
 import { WsRpcProvider } from './contexts/WSRpcContext/index.js';
 
@@ -68,12 +69,14 @@ function JamApp (props: Props): React.ReactElement<Props> {
         />
         <Routes>
           <Route path={basePath}>
+          {/* route for explorer app */}
             <Route
               element={
                 <Home />
               }
               index
             />
+            <Route path="core/:coreIndex" element={<CoreDetailPage/>} />
             <Route path="rpc" element={<RpcApp />} />
             <Route path="javascript" element={<JsApp {...props} />} />
             <Route path="codec" element={<CodecApp {...props} />} />

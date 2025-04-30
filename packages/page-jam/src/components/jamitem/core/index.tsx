@@ -12,7 +12,7 @@ interface CoreProps {
 export function Core(param: CoreProps) {
   const smallRender = (
     <Tooltip title={`Core index : ${param.index}`} placement="top" arrow>
-      <Link to={`/core/${param.index}`} style={{ textDecoration: 'none' }}>
+      <Link to={`/jam/core/${param.index}`} style={{ textDecoration: 'none' }}>
         <Box
           display="flex"
           justifyContent="center"
@@ -40,7 +40,7 @@ export function Core(param: CoreProps) {
   );
   const mediumRender = (
     <Tooltip title={`Core index : ${param.index}`} placement="top" arrow>
-      <a href={`/core/${param.index}`} style={{ textDecoration: 'none' }}>
+      <Link to={`/jam/core/${param.index}`} style={{ textDecoration: 'none' }}>
         <Box
           display="flex"
           justifyContent="start"
@@ -62,11 +62,11 @@ export function Core(param: CoreProps) {
             Core {param.index}
           </Typography>
         </Box>
-      </a>
+      </Link>
     </Tooltip>
   );
   const largeRender = (
-    <a href={`/core/${param.index}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/jam/core/${param.index}`} style={{ textDecoration: 'none' }}>
       <Box
         display="flex"
         justifyContent="center"
@@ -77,10 +77,10 @@ export function Core(param: CoreProps) {
           width: "100%",
           height: "100%",
           transition: "all 0.3s ease-in-out",
-          backgroundColor: "#ffffff",
+          backgroundColor: "#0000",
           color: "#444444",
           ":hover": {
-            backgroundColor: "#ffffff",
+            backgroundColor: "#0000",
           },
         }}
       >
@@ -89,7 +89,7 @@ export function Core(param: CoreProps) {
           Core {param.index}
         </Typography>
       </Box>
-    </a>
+    </Link>
   );
 
   return (
