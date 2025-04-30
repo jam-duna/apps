@@ -17,7 +17,11 @@ import ValidatorIndexDetailPage from './pages/validator/index.js';
 import ValidatorKeyDetailPage from './pages/validator-key/index.js';
 import BlockListPage from './pages/list-block/index.js';
 import ExtrinsicListPage from './pages/list-extrinsic/index.js';
-import WorkReportListPage from './pages/list-workreport/index.jsx';
+import WorkReportListPage from './pages/list-workreport/index.js';
+import BlockOverviewPage from './pages/block/index.js';
+import ExtrinsicDetailsPage from './pages/block-extrinsic/index.js';
+import BlockWorkReportsPage from './pages/block-workreports/index.js';
+import WorkReportDetailPage from './pages/block-workreport/index.js';
 import GameOfLifeViewer from './pages/game-of-life/index.js';
 
 import RpcApp from './rpc/index.js';
@@ -102,6 +106,10 @@ function JamApp (props: Props): React.ReactElement<Props> {
             <Route path="list/block" element={<BlockListPage />} />
             <Route path="list/extrinsic" element={<ExtrinsicListPage />} />
             <Route path="list/workreport" element={<WorkReportListPage />} />
+            <Route path="block/:headerhash" element={<BlockOverviewPage/>} />
+            <Route path="block/:headerhash/extrinsic" element={<ExtrinsicDetailsPage />} />
+            <Route path="block/:headerhash/workreport" element={<BlockWorkReportsPage />} />
+            <Route path="block/:headerhash/workreport/:workPackageHash" element={<WorkReportDetailPage />} />
             <Route path="game-of-life-viwer" element={<GameOfLifeViewer />} />
             {/* route for explorer app end */}
             <Route path="rpc" element={<RpcApp />} />

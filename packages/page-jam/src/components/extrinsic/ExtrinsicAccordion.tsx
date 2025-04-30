@@ -42,11 +42,6 @@ export default function ExtrinsicAccordion({
     totalExtrinsics,
   } = calculateExtrinsicCounts(extrinsic);
 
-  const tooltip = `This block contains ${totalExtrinsics} ${pluralize(
-    "extrinsic",
-    totalExtrinsics
-  )}`;
-
   // Main accordion expansion state.
   const [extrinsicExpanded, setExtrinsicExpanded] = React.useState<boolean>(
     initialExtrinsicExpanded
@@ -72,9 +67,7 @@ export default function ExtrinsicAccordion({
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flexShrink: 0, ml: 0.5 }}>
-          <Tooltip title={tooltip}>
-            <ExtrinsicIcon size={18} color={'#555'}/>
-          </Tooltip>
+          <ExtrinsicIcon size={18} color={'#555'}/>
 
           <Typography
             variant="body1"
@@ -84,11 +77,10 @@ export default function ExtrinsicAccordion({
           </Typography>
 
           <MuiLink
-            href="#"
             onClick={(e) => e.preventDefault()}
             sx={{
               color: "#1976d2",
-              textDecoration: "underline",
+              textDecoration: "none",
               cursor: "pointer",
               ml: -1,
             }}

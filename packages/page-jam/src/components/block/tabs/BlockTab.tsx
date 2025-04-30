@@ -52,10 +52,10 @@ export function BlockTab({
               prevHash={prevHash}
               nextHash={nextHash}
               onPrev={() => {
-                if (prevHash) navigate(`/block/${prevHash}?type=hash`);
+                if (prevHash) navigate(`/jam/block/${prevHash}?type=hash`);
               }}
               onNext={() => {
-                if (nextHash) navigate(`/block/${nextHash}?type=hash`);
+                if (nextHash) navigate(`/jam/block/${nextHash}?type=hash`);
               }}
             />
           )}
@@ -125,7 +125,7 @@ export function BlockTab({
               }}
             >
               {extrinsic.guarantees?.length ? (
-                <Link to={`/block/${headerHash}/workReport`}>
+                <Link to={`/jam/block/${headerHash}/workreport`}>
                   {extrinsic.guarantees.length}
                   {pluralize(" report", extrinsic.guarantees.length)} in this
                   block

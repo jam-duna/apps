@@ -77,7 +77,7 @@ function PackageSpecDisplay({
   const navigate = useNavigate();
 
   const handleWorkReportRedirect = () => {
-    navigate(`/block/${headerHash}/workReport/${packageSpec.hash}`);
+    navigate(`/jam/block/${headerHash}/workreport/${packageSpec.hash}`);
   };
 
   return (

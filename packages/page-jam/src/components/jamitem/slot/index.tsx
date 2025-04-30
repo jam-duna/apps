@@ -16,7 +16,7 @@ export function Slot(param: SlotProps) {
 
   return (
     <Tooltip title={`Slot index : ${param.slot}`} placement="top" arrow>
-      <Link to={`/block/${param.slot}`}>
+      <Link to={`/jam/block/${param.slot}`}>
         <Box
           display="flex"
           justifyContent="center"

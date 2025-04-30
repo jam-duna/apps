@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../db/db.js";
 import { fetchState } from "../../hooks/useFetchState.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
-import { BlockSearchIcon } from "../components/Icons/index.js";
+import { BlockSearchIcon } from "../Icons/index.js";
 
 interface SearchBarProps {
   wsEndpoint: string;
@@ -48,10 +48,10 @@ export default function SearchBar({ wsEndpoint }: SearchBarProps) {
           .first();
 
       if (foundBlock) {
-        navigate(`/block/${searchValue}?type=${searchType}`);
+        navigate(`/jam/block/${searchValue}?type=${searchType}`);
         return;
       }
-      navigate(`/block/${searchValue}?type=${searchType}`);
+      navigate(`/jam/block/${searchValue}?type=${searchType}`);
     } catch (error) {
       console.log("Error searching IndexedDB:", error);
     }
@@ -67,7 +67,7 @@ export default function SearchBar({ wsEndpoint }: SearchBarProps) {
           console.error("Error fetching state data:", stateError);
         }
       }
-      navigate(`/block/${searchValue}?type=${searchType}`);
+      navigate(`/jam/block/${searchValue}?type=${searchType}`);
     } catch (error) {
       console.error("Error fetching block data:", error);
       setOpenDialog(true);

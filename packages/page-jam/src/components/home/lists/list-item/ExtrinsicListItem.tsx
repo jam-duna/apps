@@ -45,7 +45,7 @@ export default function ExtrinsicListItem({
   return (
     <Link
       key={headerHash}
-      to={`/block/${headerHash}/extrinsic`}
+      to={`/jam/block/${headerHash}/extrinsic`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box

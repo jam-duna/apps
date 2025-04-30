@@ -1,5 +1,4 @@
 import React from 'react'
-import InlineSVG from './InlineSVG.js'
 
 interface IconProps {
     size: number;
@@ -8,6 +7,21 @@ interface IconProps {
 
 export function GuaranteeIcon({size, color}: IconProps) {
   return (
-    <InlineSVG src={'../../public/icons/Guarantee.svg'} size={size} color={color}/>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      stroke={color}>
+        <path d="M23.4615 8.92308V2H4.99999V26H23.4615V7.98154"></path>
+        <path d="M19.7691 5.69208L8.69221 5.69208" strokeMiterlimit="10"></path>
+        <path d="M19.7692 9.38446H8.69221" strokeMiterlimit="10"></path>
+        <path d="M20.2628 18.0844L16.963 21.3842L15.5942 20.0155"></path>
+        <path d="M13.0077 18.0844L9.70782 21.3842L8.3391 20.0155"></path>
+    </svg>
   )
 }
