@@ -33,7 +33,7 @@ import { fallbackCopyTextToClipboard } from "../../utils/clipboard.js";
 import { Link } from "react-router-dom";
 import Loading from "../../components/home/Loading.js";
 
-export default function WorkPackageDetail() {
+export default function WorkPackageDetailPage() {
   const params = useParams();
   const workPackageHash = params.workPackageHash as string;
 
@@ -229,7 +229,7 @@ export default function WorkPackageDetail() {
 
               {workPackageInfo.package_spec.exports_count === 9 && (
                 <Link
-                  to={`/game-of-life-viwer?hash=${workPackageHash}`}
+                  to={`/jam/game-of-life-viwer?hash=${workPackageHash}`}
                 >
                   <Typography
                     sx={{

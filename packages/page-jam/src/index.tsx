@@ -9,7 +9,11 @@ import { Tabs } from '@polkadot/react-components';
 import Home from './Home.js';
 import CoreDetailPage from './pages/core/index.js';
 import ServiceDetailPage from './pages/service/index.js';
-import WorkPackagedetailPage from './pages/workpackage/index.js';
+import WorkPackageDetailPage from './pages/workpackage/index.js';
+import PreimageDetailPage from './pages/preimage/index.js';
+import SegmentDetailPage from './pages/segment/index.js';
+import ServiceValueDetailPage from './pages/servicevalue/index.js';
+import GameOfLifeViewer from './pages/game-of-life/index.js';
 
 import RpcApp from './rpc/index.js';
 import JsApp from './javascript/index.js'
@@ -82,7 +86,11 @@ function JamApp (props: Props): React.ReactElement<Props> {
             />
             <Route path="core/:coreIndex" element={<CoreDetailPage/>} />
             <Route path="service/:serviceId" element={<ServiceDetailPage />} />
-            <Route path="workpackage/:workPackageHash" element={<WorkPackagedetailPage />} />
+            <Route path="workpackage/:workPackageHash" element={<WorkPackageDetailPage />} />
+            <Route path="preimage/:serviceId/:preimageHash" element={<PreimageDetailPage />} />
+            <Route path="segment/:workPackageHash/:index" element={<SegmentDetailPage />} />
+            <Route path="servicevalue/:service/:key/:headerhash" element={<ServiceValueDetailPage />} />
+            <Route path="game-of-life-viwer" element={<GameOfLifeViewer />} />
             {/* route for explorer app end */}
             <Route path="rpc" element={<RpcApp />} />
             <Route path="javascript" element={<JsApp {...props} />} />

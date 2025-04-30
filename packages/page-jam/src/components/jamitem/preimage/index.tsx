@@ -78,7 +78,7 @@ export function Preimage({ mode, hash, service }: PreimageProps) {
   const mediumRender = (
     <Link
       key={hash}
-      to={`/preimage/${service}/${hash}/`}
+      to={`/jam/preimage/${service}/${hash}/`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box
@@ -98,7 +98,7 @@ export function Preimage({ mode, hash, service }: PreimageProps) {
         }}
       >
         <Tooltip
-          title={`Link to: /preimage/${service}/${hash}/`}
+          title={`Link to: /jam/preimage/${service}/${hash}/`}
           placement="top"
           arrow
         >

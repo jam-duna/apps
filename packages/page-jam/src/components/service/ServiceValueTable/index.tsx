@@ -49,7 +49,7 @@ export function ServiceValueTable({
                 <TableCell component="th" scope="row">
                   {
                     <Link
-                      to={`/servicevalue/${serviceId}/${serviceValue.key}/${serviceValue.headerHash}`}
+                      to={`/jam/servicevalue/${serviceId}/${serviceValue.key}/${serviceValue.headerHash}`}
                     >
                       <Hash hash={serviceValue.key} />
                     </Link>

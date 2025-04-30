@@ -73,7 +73,7 @@ export function Segment(param: SegmentProps) {
   const mediumRender = (
     <Tooltip title={`Segment index : ${param.index}`} placement="top" arrow>
       <Link
-        to={`/segment/${param.hash}/${param.index}`}
+        to={`/jam/segment/${param.hash}/${param.index}`}
         style={{
           width: "40px",
           display: "flex",
@@ -90,7 +90,7 @@ export function Segment(param: SegmentProps) {
   );
   const largeRender = (
     <Link
-      to={`/segment/${param.hash}/${param.index}`}
+      to={`/jam/segment/${param.hash}/${param.index}`}
     >
       <Box
         display="flex"
