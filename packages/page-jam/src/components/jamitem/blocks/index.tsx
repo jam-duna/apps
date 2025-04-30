@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export function Blocks() {
   return (
     <Tooltip title="Link to all listed blocks" placement="top" arrow>
-      <Link to="/list/block">
+      <Link to="/jam/list/block">
         <Box
           display="flex"
           justifyContent="center"

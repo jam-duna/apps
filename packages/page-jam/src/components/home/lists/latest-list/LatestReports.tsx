@@ -34,7 +34,7 @@ export default function LatestReports({ latestBlocks }: LatestReportsProps) {
       })}
 
       <Link
-        to="/list/workReport"
+        to="/jam/list/workreport"
         style={{
           textDecoration: "none",
           color: "inherit",

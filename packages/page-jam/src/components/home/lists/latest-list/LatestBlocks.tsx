@@ -27,7 +27,7 @@ export default function LatestBlocks({ latestBlocks }: LatestBlocksProps) {
       ))}
 
       <Link
-        to={`/list/block`}
+        to={`/jam/list/block`}
         style={{
           textDecoration: "none",
           color: "inherit",

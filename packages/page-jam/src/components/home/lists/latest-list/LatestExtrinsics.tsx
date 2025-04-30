@@ -33,7 +33,7 @@ export default function ExtrinsicLists({ latestBlocks }: ExtrinsicListsProps) {
       ))}
 
       <Link
-        to="/list/extrinsic"
+        to="/jam/list/extrinsic"
         style={{
           textDecoration: "none",
           color: "inherit",

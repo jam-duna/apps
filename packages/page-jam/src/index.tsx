@@ -15,6 +15,9 @@ import SegmentDetailPage from './pages/segment/index.js';
 import ServiceValueDetailPage from './pages/servicevalue/index.js';
 import ValidatorIndexDetailPage from './pages/validator/index.js';
 import ValidatorKeyDetailPage from './pages/validator-key/index.js';
+import BlockListPage from './pages/list-block/index.js';
+import ExtrinsicListPage from './pages/list-extrinsic/index.js';
+import WorkReportListPage from './pages/list-workreport/index.jsx';
 import GameOfLifeViewer from './pages/game-of-life/index.js';
 
 import RpcApp from './rpc/index.js';
@@ -96,6 +99,9 @@ function JamApp (props: Props): React.ReactElement<Props> {
             <Route path="validator/:index/:hash" element={<ValidatorIndexDetailPage />} />
             <Route path="validator/key/:key" element={<ValidatorKeyDetailPage />} />
             <Route path="validator/key/:key/:hash" element={<ValidatorKeyDetailPage />} />
+            <Route path="list/block" element={<BlockListPage />} />
+            <Route path="list/extrinsic" element={<ExtrinsicListPage />} />
+            <Route path="list/workreport" element={<WorkReportListPage />} />
             <Route path="game-of-life-viwer" element={<GameOfLifeViewer />} />
             {/* route for explorer app end */}
             <Route path="rpc" element={<RpcApp />} />
