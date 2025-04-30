@@ -105,7 +105,7 @@ export function BlockTab({
           tooltip={basicInfoMapping.authorIndex.tooltip}
           icon="author"
           value={
-            <Link to={`/validator/${header.author_index}/${hash}`}>
+            <Link to={`/jam/validator/${header.author_index}/${hash}`}>
               <Typography variant="body1">{header.author_index}</Typography>
             </Link>
           }

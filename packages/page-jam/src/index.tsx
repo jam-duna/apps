@@ -13,6 +13,8 @@ import WorkPackageDetailPage from './pages/workpackage/index.js';
 import PreimageDetailPage from './pages/preimage/index.js';
 import SegmentDetailPage from './pages/segment/index.js';
 import ServiceValueDetailPage from './pages/servicevalue/index.js';
+import ValidatorIndexDetailPage from './pages/validator/index.js';
+import ValidatorKeyDetailPage from './pages/validator-key/index.js';
 import GameOfLifeViewer from './pages/game-of-life/index.js';
 
 import RpcApp from './rpc/index.js';
@@ -90,6 +92,10 @@ function JamApp (props: Props): React.ReactElement<Props> {
             <Route path="preimage/:serviceId/:preimageHash" element={<PreimageDetailPage />} />
             <Route path="segment/:workPackageHash/:index" element={<SegmentDetailPage />} />
             <Route path="servicevalue/:service/:key/:headerhash" element={<ServiceValueDetailPage />} />
+            <Route path="validator/:index" element={<ValidatorIndexDetailPage />} />
+            <Route path="validator/:index/:hash" element={<ValidatorIndexDetailPage />} />
+            <Route path="validator/key/:key" element={<ValidatorKeyDetailPage />} />
+            <Route path="validator/key/:key/:hash" element={<ValidatorKeyDetailPage />} />
             <Route path="game-of-life-viwer" element={<GameOfLifeViewer />} />
             {/* route for explorer app end */}
             <Route path="rpc" element={<RpcApp />} />

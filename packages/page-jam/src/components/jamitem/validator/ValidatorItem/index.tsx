@@ -35,7 +35,7 @@ export function Validator(param: ValidatorProps) {
   const mediumRender = (
     <Link
       key={param.validator.index}
-      to={`/validator/${param.validator.index}/${param.validator.hash}`}
+      to={`/jam/validator/${param.validator.index}/${param.validator.hash}`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box

@@ -101,12 +101,7 @@ export function Segment(param: SegmentProps) {
           cursor: "pointer",
           width: "100%",
           height: "100%",
-          transition: "all 0.3s ease-in-out",
-          backgroundColor: "#ffffff",
           color: "#444444",
-          ":hover": {
-            backgroundColor: "#ffffff",
-          },
         }}
       >
         <SegmentIcon size={24} color={"#444"} />

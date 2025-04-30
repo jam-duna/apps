@@ -94,8 +94,8 @@ export function ValidatorTable({ validator, title, badge, hash }: Props) {
             <Link
               to={
                 hash === "latest"
-                  ? `/validator/key/${validator.bandersnatch}`
-                  : `/validator/key/${validator.bandersnatch}/${hash}`
+                  ? `/jam/validator/key/${validator.bandersnatch}`
+                  : `/jam/validator/key/${validator.bandersnatch}/${hash}`
               }
             >
               <Hash hash={validator.bandersnatch} />
@@ -109,8 +109,8 @@ export function ValidatorTable({ validator, title, badge, hash }: Props) {
             <Link
               to={
                 hash === "latest"
-                  ? `/validator/key/${validator.ed25519}`
-                  : `/validator/key/${validator.ed25519}/${hash}`
+                  ? `/jam/validator/key/${validator.ed25519}`
+                  : `/jam/validator/key/${validator.ed25519}/${hash}`
               }
             >
               <Hash hash={validator.ed25519} />
@@ -124,8 +124,8 @@ export function ValidatorTable({ validator, title, badge, hash }: Props) {
             <Link
               to={
                 hash === "latest"
-                  ? `/validator/key/${validator.bls}`
-                  : `/validator/key/${validator.bls}/${hash}`
+                  ? `/jam/validator/key/${validator.bls}`
+                  : `/jam/validator/key/${validator.bls}/${hash}`
               }
             >
               <Hash hash={validator.bls} />

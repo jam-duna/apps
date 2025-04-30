@@ -69,7 +69,7 @@ export default function GuaranteeItem({
           {guarantee.signatures.map((sig, i) => (
             <Link
               key={`signature-${i}`}
-              to={`/validator/${sig.validator_index}/${headerHash}`}
+              to={`/jam/validator/${sig.validator_index}/${headerHash}`}
             >
               <Typography
                 key={`signature-${i}`}
