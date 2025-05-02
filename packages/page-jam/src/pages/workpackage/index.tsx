@@ -17,7 +17,6 @@ import { Report } from "../../types/index.js";
 import {fetchAuditWorkPackage} from "../../hooks/useFetchAuditWorkpackage.js";
 import {fetchWorkPackage} from "../../hooks/useFetchWorkpackage.js";
 import {useSubscribeWorkpackage} from "../../hooks/subscribeWorkpackage.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 import { LabeledRow } from "../../components/display/LabeledRow.js";
 import { githubLightTheme, JsonEditor } from "json-edit-react";
 import {
@@ -61,7 +60,7 @@ export default function WorkPackageDetailPage() {
     (async () => {
       const data = await fetchWorkPackage(
         workPackageHash,
-        getRpcUrlFromWs(DEFAULT_WS_URL)
+        getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
       );
       if (!!data) {
         setWorkPackageInfo(data);
@@ -72,13 +71,13 @@ export default function WorkPackageDetailPage() {
   const fetchAudit = async () => {
     const data = await fetchAuditWorkPackage(
       workPackageHash,
-      getRpcUrlFromWs(DEFAULT_WS_URL)
+      getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
     );
     setAuditData(data);
   };
 
   useSubscribeWorkpackage({
-    endpoint: DEFAULT_WS_URL,
+    endpoint: localStorage.getItem("jamUrl") || "dot-0.jamduna.org",
     hash: workPackageHash,
     setStatus: (status: string) => {
       setWorkPackageStatus(status);

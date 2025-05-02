@@ -18,10 +18,10 @@ import {useNavigate} from "react-router";
 import { useParams, Link } from "react-router-dom";
 import { Block } from "../../db/db.js";
 import { Guarantee } from "../../types/index.js";
-import { DEFAULT_WS_URL, pluralize, truncateHash } from "../../utils/helper.js";
 import { useWorkReportStatuses } from "../../hooks/useWorkReportStatuses.js";
 import { fetchBlock } from "../../hooks/useFetchBlock.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
+import { pluralize, truncateHash } from "../../utils/helper.js";
 
 export default function BlockWorkReportsPage() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ export default function BlockWorkReportsPage() {
       const prepareData = async () => {
         const data = await fetchBlock(
           headerHash,
-          getRpcUrlFromWs(DEFAULT_WS_URL),
+          getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"),
           "hash"
         );
         setBlockRecord(data);

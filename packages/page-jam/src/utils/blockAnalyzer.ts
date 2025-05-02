@@ -9,9 +9,9 @@ import {
   ServiceStatistics,
   ValidatorShowCase,
 } from "../types/index.js";
-import { DEFAULT_WS_URL, formatDate } from "./helper.js";
 import { fetchState } from "../hooks/useFetchState.js"
 import { getRpcUrlFromWs } from "./ws.js";
+import { formatDate } from "./helper.js";
 
 export const sortBlocks = async (): Promise<Block[]> => {
   const data = db.blocks
@@ -459,7 +459,7 @@ export const getValidator = async (
   index: number,
   hash: string
 ): Promise<ValidatorResult | null> => {
-  const state = await fetchState(hash, getRpcUrlFromWs(DEFAULT_WS_URL));
+  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
 
   let result = null;
 
@@ -484,7 +484,7 @@ export const fetchValidatorStatistics = async (
   index: number,
   hash: string
 ): Promise<ValidatorStatistics | null> => {
-  const state = await fetchState(hash, getRpcUrlFromWs(DEFAULT_WS_URL));
+  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
 
   let result: ValidatorStatistics | null = null;
 
@@ -510,7 +510,7 @@ export const fetchValidatorFromKey = async (
   key: string,
   hash: string
 ): Promise<ValidatorKey | null> => {
-  const state = await fetchState(hash, getRpcUrlFromWs(DEFAULT_WS_URL));
+  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
 
   let result: ValidatorKey | null = null;
 

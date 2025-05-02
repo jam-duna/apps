@@ -11,7 +11,6 @@ import { Block, State, db, DB_LIMIT, Statistics } from "../../db/db.js";
 import { fetchBlock } from "../../hooks/useFetchBlock.js";
 import { fetchState } from "../../hooks/useFetchState.js";
 import { getRpcUrlFromWs, normalizeEndpoint } from "../../utils/ws.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 import { Overview } from "../../types/index.js";
 import { fetchStatistics } from "../../hooks/useFetchStatistics.js";
 
@@ -41,7 +40,7 @@ export const WsRpcProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentStatistics, setCurrentStatistics] = useState<Statistics | null>(
     null
   );
-  const [wsEndpoint, setWsEndpoint] = useState<string>(DEFAULT_WS_URL);
+  const [wsEndpoint, setWsEndpoint] = useState<string>(localStorage.getItem("jamUrl") || "dot-0.jamduna.org");
   const [now, setNow] = useState(Date.now());
   const [savedEndpoints, setSavedEndpoints] = useState<string[]>([]);
 
@@ -131,7 +130,6 @@ export const WsRpcProvider = ({ children }: { children: React.ReactNode }) => {
                 }
               }
             }
-            setNow(nowTimestamp);
           }
 
           if (msg.method === "subscribeFinalizedBlock" && msg.result) {
@@ -181,6 +179,13 @@ export const WsRpcProvider = ({ children }: { children: React.ReactNode }) => {
 
     return ws;
   };
+
+  const resetDB = async() => {
+    await db.blocks.clear();
+    await db.states.clear();
+    await db.statistics.clear();
+    setNow(Date.now());
+  }
 
   const fetchLatestBlocks = async (count: number) => {
     console.log("[WS-LOG] fetch latest blocks", Date.now());
@@ -237,10 +242,18 @@ export const WsRpcProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if (!wsRef.current) {
-      wsRef.current = createWS();
-      console.log("[WS-LOG] initialize websocket");
-    }
+    (async() => {
+      if (!wsRef.current) {
+        const isReset = localStorage.getItem("jamReset") === "true";
+        console.log("DeepLook ws rpc context", isReset);
+        if (isReset) {
+          await resetDB();
+          localStorage.setItem("jamReset", "false");
+        }
+        wsRef.current = createWS();
+        console.log("[WS-LOG] initialize websocket");
+      }
+    })();
   }, [wsEndpoint]);
 
   useEffect(() => {

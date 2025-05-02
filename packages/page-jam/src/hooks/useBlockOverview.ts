@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { db, Block, State } from "../db/db.js";
 import { fetchBlock } from "./useFetchBlock.js";
 import { fetchState } from "./useFetchState.js";
-import { DEFAULT_WS_URL } from "../utils/helper.js";
 import { getRpcUrlFromWs } from "../utils/ws.js";
 
 export function useBlockOverview(input: string, type: "hash" | "slot") {
@@ -11,7 +10,7 @@ export function useBlockOverview(input: string, type: "hash" | "slot") {
   const [prevHash, setPrevHash] = useState<string | null>(null);
   const [nextHash, setNextHash] = useState<string | null>(null);
   const wsEndpoint = localStorage.getItem("customWsEndpoint") || null;
-  const rpcUrl = getRpcUrlFromWs(wsEndpoint || DEFAULT_WS_URL);
+  const rpcUrl = getRpcUrlFromWs(wsEndpoint || localStorage.getItem("jamUrl") || "dot-0.jamduna.org");
 
   async function fetchDbData(input: string, type: "hash" | "slot") {
     try {

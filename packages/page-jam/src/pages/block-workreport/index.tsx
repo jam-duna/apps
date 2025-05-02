@@ -13,7 +13,6 @@ import { WorkReportIcon } from "../../components/Icons/index.js";
 import { Hash } from "../../components/jamitem/index.js";
 import { fetchBlock } from "../../hooks/useFetchBlock.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 
 export default function WorkReportDetailPage() {
   const params = useParams();
@@ -29,7 +28,7 @@ export default function WorkReportDetailPage() {
       const prepareData = async () => {
         const data = await fetchBlock(
           headerHash,
-          getRpcUrlFromWs(DEFAULT_WS_URL),
+          getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"),
           "hash"
         );
         setBlockRecord(data);

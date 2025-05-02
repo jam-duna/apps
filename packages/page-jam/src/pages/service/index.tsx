@@ -16,7 +16,6 @@ import { fetchListServices } from "../../hooks/useFetchListServices.js";
 import { useSubscribeServiceInfo } from "../../hooks/subscribeServiceInfo.js";
 import { useSubscribeServiceValue } from "../../hooks/subscribeServiceValue.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 import { GridData, parseBlocksToGridData } from "../../utils/parseBlocksToGridData.js";
 import {
   fetchServiceStatisticsFromId,
@@ -128,7 +127,7 @@ export default function ServiceDetailPage() {
 
     // fetch using rpc calls
     const fetchListService = async () => {
-      const services = await fetchListServices(getRpcUrlFromWs(DEFAULT_WS_URL));
+      const services = await fetchListServices(getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
       setServiceList(services);
       setIsLoadingServiceList(false);
     };
@@ -166,12 +165,12 @@ export default function ServiceDetailPage() {
       const fetchService = async () => {
         const info = await fetchServiceInfo(
           serviceId,
-          getRpcUrlFromWs(DEFAULT_WS_URL)
+          getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
         );
         // const value = await fetchServiceValue(
         //   serviceId,
         //   "",
-        //   getRpcUrlFromWs(DEFAULT_WS_URL)
+        //   getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
         // ); //todo-
         setServiceInfo(info);
         setIsLoadingServiceInfo(false);
@@ -183,14 +182,14 @@ export default function ServiceDetailPage() {
 
   // subscribe service info and value
   useSubscribeServiceInfo({
-    endpoint: DEFAULT_WS_URL,
+    endpoint: localStorage.getItem("jamUrl") || "dot-0.jamduna.org",
     serviceID: serviceId,
     setStatus: (status: ServiceInfo) => {
       setServiceInfo(status);
     },
   });
   useSubscribeServiceValue({
-    endpoint: DEFAULT_WS_URL,
+    endpoint: localStorage.getItem("jamUrl") || "dot-0.jamduna.org",
     serviceID: serviceId,
     setStatus: (status: ServiceValue) => {
       let data = serviceValue;

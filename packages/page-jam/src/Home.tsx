@@ -12,7 +12,6 @@ import {
 import LatestBlocks from "./components/home/lists/latest-list/LatestBlocks.js";
 import { Block, State, DB_LIMIT } from "./db/db.js";
 import MainViewGrid from "./components/home/MainViewGrid.js";
-import { DEFAULT_WS_URL } from "./utils/helper.js";
 import { CustomToggle } from "./components/display/CustomToggle.js";
 import { GridData, parseBlocksToGridData } from "./utils/parseBlocksToGridData.js";
 import {
@@ -66,7 +65,7 @@ function Home () {
   const [isServicesLoaded, setIsServicesLoaded] = useState(false);
   const [isStatsLoaded, setIsStatsLoaded] = useState(false);
 
-  const { currentBlock, currentState, currentStatistics } = useWsRpcContext();
+  const { currentBlock, currentState, currentStatistics, now } = useWsRpcContext();
 
   useEffect(() => {
     const fetchBlocks = async () => {
@@ -88,7 +87,7 @@ function Home () {
     };
 
     const fetchListService = async () => {
-      const services = await fetchListServices(getRpcUrlFromWs(DEFAULT_WS_URL));
+      const services = await fetchListServices(getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
       setServiceList(services);
       setIsServicesLoaded(true);
     };
@@ -97,7 +96,7 @@ function Home () {
     fetchStates();
     fetchWorkPackages();
     fetchListService();
-  }, [currentBlock, currentState]);
+  }, [currentBlock, currentState, now]);
 
   useEffect(() => {
     const fetchAggregateStatistics = async () => {

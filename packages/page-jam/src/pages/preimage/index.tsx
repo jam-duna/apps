@@ -15,7 +15,6 @@ import Loading from "../../components/home/Loading.js";
 import { useSubscribeServicePreimage } from "../../hooks/subscribeServicePreimage.js";
 import { fetchServicePreimage } from "../../hooks/useFetchServicePreimage.js";
 import { fetchServiceRequest } from "../../hooks/useFetchServiceRequest.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
 import { ServicePreimage } from "../../types/index.js";
 
@@ -35,7 +34,7 @@ export default function PreimageDetailPage() {
       const data = await fetchServicePreimage(
         serviceId,
         preimageHash,
-        getRpcUrlFromWs(DEFAULT_WS_URL)
+        getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
       );
       setPreimage(data);
       setLoadingP(false);
@@ -51,7 +50,7 @@ export default function PreimageDetailPage() {
           serviceId,
           preimageHash,
           (preimage?.length || 0).toString(),
-          getRpcUrlFromWs(DEFAULT_WS_URL)
+          getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
         );
         if (data.length === 0) setStatus("solicited but not available");
         else if (data.length === 1) setStatus("available");
@@ -64,7 +63,7 @@ export default function PreimageDetailPage() {
   }, [preimage]);
 
   useSubscribeServicePreimage({
-    endpoint: DEFAULT_WS_URL,
+    endpoint: localStorage.getItem("jamUrl") || "dot-0.jamduna.org",
     serviceID: serviceId,
     hash: preimageHash,
     setPreimage: (preimage: ServicePreimage) => {

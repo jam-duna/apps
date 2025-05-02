@@ -3,7 +3,6 @@
 import { Link } from "react-router-dom";
 import { Box, Container } from "@mui/material";
 import SearchBar from "../home/SearchBar.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 
 export default function Navbar() {
   return (
@@ -48,7 +47,7 @@ export default function Navbar() {
             paddingInline: "25px",
           }}
         >
-          <SearchBar wsEndpoint={DEFAULT_WS_URL} />
+          <SearchBar />
         </Box>
       </Container>
     </Box>

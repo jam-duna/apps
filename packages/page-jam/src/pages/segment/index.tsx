@@ -11,7 +11,6 @@ import {
 } from "../../components/jamitem/index.js";
 import { LabeledRow } from "../../components/display/LabeledRow.js";
 import Loading from "../../components/home/Loading.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
 import { fetchSegment } from "../../hooks/useFetchSegment.js";
 
@@ -28,7 +27,7 @@ export default function SegmentDetailPage() {
       const data = await fetchSegment(
         hash,
         Number.parseInt(index),
-        getRpcUrlFromWs(DEFAULT_WS_URL)
+        getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
       );
       setSegmentData(data || "0x___");
       setLoading(false);

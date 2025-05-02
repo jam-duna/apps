@@ -21,7 +21,6 @@ import { ValidatorStatisticsTable } from "../../components/jamitem/validator/Val
 import { RecentWorkPackages, ReportWithTime } from "../../components/jamitem/index.js";
 import { fetchListServices } from "../../hooks/useFetchListServices.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 import LatestBlocks from "../../components/home/lists/latest-list/LatestBlocks.js";
 import Loading from "../../components/home/Loading.js";
 
@@ -106,7 +105,7 @@ export default function ValidatorIndexDetailPage() {
 
     const fetchService = async () => {
       try {
-        const services = await fetchListServices(getRpcUrlFromWs(DEFAULT_WS_URL));
+        const services = await fetchListServices(getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
         setServiceList(services);
       } catch (err) {
         console.error("Error loading services:", err);

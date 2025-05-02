@@ -13,8 +13,8 @@ import { useSubscribeServiceValue } from "../../hooks/subscribeServiceValue.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
 import { getTimeFromSlot } from "../../utils/blockAnalyzer.js";
 import { bytesToHex, hexToBytes, ServiceStorageKey } from "../../utils/blake2.js";
-import { DEFAULT_WS_URL, getRelativeTime } from "../../utils/helper.js";
 import { ServiceInfoDetail, ServiceValue } from "../../types/index.js";
+import { getRelativeTime } from "../../utils/helper.js";
 
 export default function ServiceValueDetailPage() {
   const params = useParams();
@@ -41,7 +41,7 @@ export default function ServiceValueDetailPage() {
         const value = await fetchServiceValue(
           serviceId,
           hash,
-          getRpcUrlFromWs(DEFAULT_WS_URL)
+          getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
         );
         let data = serviceValue;
         if (data === null) {
@@ -60,7 +60,7 @@ export default function ServiceValueDetailPage() {
         setVLoading(false);
       };
       const fetchListService = async () => {
-        const services = await fetchListServices(getRpcUrlFromWs(DEFAULT_WS_URL));
+        const services = await fetchListServices(getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
         setServiceList(services);
         setLLoading(false);
       };
@@ -81,7 +81,7 @@ export default function ServiceValueDetailPage() {
   }, [serviceValue]);
 
   useSubscribeServiceValue({
-    endpoint: DEFAULT_WS_URL,
+    endpoint: localStorage.getItem("jamUrl") || "dot-0.jamduna.org",
     serviceID: serviceId,
     setStatus: (status: ServiceValue) => {
       if (status.key === key) setServiceValue(status);

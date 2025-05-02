@@ -20,11 +20,8 @@ import { fetchState } from "../../hooks/useFetchState.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
 import { BlockSearchIcon } from "../Icons/index.js";
 
-interface SearchBarProps {
-  wsEndpoint: string;
-}
 
-export default function SearchBar({ wsEndpoint }: SearchBarProps) {
+export default function SearchBar() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const [searchType, setSearchType] = useState<"hash" | "slot">("hash");
@@ -33,7 +30,7 @@ export default function SearchBar({ wsEndpoint }: SearchBarProps) {
 
   const handleSearch = async () => {
     if (!searchValue) return;
-    const rpcUrl = getRpcUrlFromWs(wsEndpoint);
+    const rpcUrl = getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org");
 
     // Check IndexedDB for a matching block by headerHash
     try {

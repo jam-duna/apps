@@ -21,7 +21,6 @@ import { useBlockOverview } from "../../hooks/useBlockOverview.js";
 import { BlockIcon } from "../../components/Icons/index.js";
 import { fetchTraceBlock } from "../../hooks/useFetchTraceBlock.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 import { fallbackCopyTextToClipboard } from "../../utils/clipboard.js";
 
 export default function BlockOverviewPage() {
@@ -41,7 +40,7 @@ export default function BlockOverviewPage() {
   const fetchTrace = async () => {
     const data = await fetchTraceBlock(
       headerHash,
-      getRpcUrlFromWs(DEFAULT_WS_URL)
+      getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
     );
     setTraceData(data);
   };

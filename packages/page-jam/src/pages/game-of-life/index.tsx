@@ -6,7 +6,6 @@ import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, CircularProgress, Box } from "@mui/material";
 import { fetchSegment } from "../../hooks/useFetchSegment.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 import { getRpcUrlFromWs } from "../../utils/ws.js";
 
 const PAGE_DIM = 64; // 64×64 = 4096 bytes per page
@@ -52,7 +51,7 @@ export default function GameOfLifeViewer() {
       try {
         const raws = await Promise.all(
           Array.from({ length: 9 }, (_, i) =>
-            fetchSegment(hash, i, getRpcUrlFromWs(DEFAULT_WS_URL))
+            fetchSegment(hash, i, getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"))
           )
         );
         setPages(raws.map((r) => (r ? segmentToPage(r) : null)));

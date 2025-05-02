@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Box, Grid, FormControlLabel } from "@mui/material";
 import { Block, DB_LIMIT, State } from "../../db/db.js";
-import { DEFAULT_WS_URL } from "../../utils/helper.js";
 import {
     filterActiveValidators,
     filterBlocks,
@@ -84,7 +83,7 @@ export default function CoreDetailPage() {
             setIsLoadingActiveStates(false);
         };
         const fetchListService = async () => {
-            const services = await fetchListServices(getRpcUrlFromWs(DEFAULT_WS_URL));
+            const services = await fetchListServices(getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
             setServiceList(services);
             setIsLoadingServices(false);
         };
