@@ -47,7 +47,7 @@ export default function ValidatorIndexDetailPage() {
     loadingStates ||
     loadingServices;
 
-  const { currentBlock, currentState } = useWsRpcContext();
+  const { currentBlock, currentState, now } = useWsRpcContext();
 
   const isValidatorSame = (key1: KeyedItem, key2: KeyedItem) => {
     if (key1.bandersnatch !== key2.bandersnatch) return false;
@@ -116,7 +116,7 @@ export default function ValidatorIndexDetailPage() {
     fetchBlocks();
     fetchStates();
     fetchService();
-  }, [currentBlock, currentState]);
+  }, [currentBlock, currentState, now]);
 
   if (isLoading()) return <Loading />;
 

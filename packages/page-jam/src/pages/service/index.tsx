@@ -95,7 +95,7 @@ export default function ServiceDetailPage() {
   const [showOnlyWorkPackages, setShowOnlyWorkPackages] = useState(true);
 
   // ws context hook for fetching basic jam data (block, state, statistics)
-  const { currentBlock, currentState, currentStatistics } = useWsRpcContext();
+  const { currentBlock, currentState, currentStatistics, now } = useWsRpcContext();
 
   // useffect hook for fetching and filtering basic jam data need in service page
   useEffect(() => {
@@ -137,7 +137,7 @@ export default function ServiceDetailPage() {
     fetchActiveStates();
     fetchRecentPreimages();
     fetchListService();
-  }, [currentBlock, currentState]);
+  }, [currentBlock, currentState, now]);
 
   // useffect hook for fetching service statistics dynamically using subscribe functionality
   useEffect(() => {

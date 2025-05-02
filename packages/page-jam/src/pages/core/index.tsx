@@ -64,7 +64,7 @@ export default function CoreDetailPage() {
 
     const [showOnlyWorkPackages, setShowOnlyWorkPackages] = useState(true);
 
-    const { currentBlock, currentState, currentStatistics } = useWsRpcContext();
+    const { currentBlock, currentState, currentStatistics, now } = useWsRpcContext();
 
     useEffect(() => {
         const fetchBlocks = async () => {
@@ -100,7 +100,7 @@ export default function CoreDetailPage() {
         fetchActiveStates();
         fetchListService();
         fetchActiveValidators();
-    }, [currentBlock, currentState]);
+    }, [currentBlock, currentState, now]);
 
     useEffect(() => {
         const fetchCoreStatistics = async () => {
