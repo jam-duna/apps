@@ -18,7 +18,7 @@ interface Props {
   value: Network;
 }
 
-function NetworkDisplay ({ apiUrl, className = '', setApiUrl, value: { isChild, isRelay, isUnreachable, name, nameRelay: relay, paraId, providers, ui } }: Props): React.ReactElement<Props> {
+function NetworkDisplay({ apiUrl, className = '', setApiUrl, value: { isChild, isRelay, isUnreachable, name, nameRelay: relay, paraId, providers, ui } }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const isSelected = useMemo(
     () => providers.some(({ url }) => url === apiUrl),
@@ -26,11 +26,9 @@ function NetworkDisplay ({ apiUrl, className = '', setApiUrl, value: { isChild, 
   );
 
   const isJamUrl = () => {
-    const currentJamUrl = localStorage.getItem("jamUrl");
+    const currentJamUrl = localStorage.getItem('jamUrl');
 
-    const matchProvider = providers.find(provider => provider.url === currentJamUrl);
-
-    console.log("DeepLook jamUrl", currentJamUrl, name, providers, matchProvider);
+    const matchProvider = providers.find((provider) => provider.url === currentJamUrl);
 
     return matchProvider !== undefined;
   };

@@ -9,23 +9,23 @@ export const jamChains: Omit<EndpointOption, 'teleport'>[] = [
   {
     info: 'jam duna',
     providers: {
-      'jam': 'wss://jam-0.jamduna.org/ws'
+      jam: 'wss://jam-0.jamduna.org/ws'
     },
     text: 'JAM DUNA',
     ui: {
       color: '#F23232',
-      logo: chainsJamdunaPNG,
+      logo: chainsJamdunaPNG
     }
   },
   {
     info: 'colorful notion',
     providers: {
-      'dot': 'wss://dot-0.jamduna.org/ws'
+      dot: 'wss://dot-0.jamduna.org/ws'
     },
     text: 'Colorful Notion',
     ui: {
       color: '#F23232',
-      logo: chainsColorfulnotionPNG,
+      logo: chainsColorfulnotionPNG
     }
-  },
+  }
 ];

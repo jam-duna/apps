@@ -31,12 +31,12 @@ import { CoreStatistics, ServiceInfoDetail, ServiceStatistics } from "./types/in
 import { useWsRpcContext } from "./contexts/WSRpcContext/index.js"
 import { CoreStatsGrid } from "./components/core/index.js";
 import { ServiceStatsGrid } from "./components/service/index.js";
- import { HomeIcon } from "./components/Icons/index.js";
+import { HomeIcon } from "./components/Icons/index.js";
 import { getRpcUrlFromWs } from "./utils/ws.js";
 import Loading from "./components/home/Loading.js";
 
 
-function Home () {
+function Home() {
   const [filteredBlocks, setFilteredBlocks] = useState<Block[]>([]);
   const [filteredStates, setFilteredStates] = useState<State[]>([]);
   const [workPackages, setWorkPackages] = useState<ReportWithTime[]>([]);
@@ -131,7 +131,11 @@ function Home () {
   if (!isLoaded()) return <Loading />;
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }} className="hasOwnMaxWidth">
+    <Container
+      className="hasOwnMaxWidth"
+      maxWidth="lg"
+      sx={{ mt: 4 }}
+    >
       {/* header display */}
       <Box
         sx={{
@@ -142,19 +146,27 @@ function Home () {
           gap: "10px",
         }}
       >
-        <HomeIcon size={24} color={"#444"} />
+        <HomeIcon
+          color={"#444"}
+          size={24}
+        />
         <Typography
-          variant="subtitle2"
-          fontSize="28px"
           color="#444"
+          fontSize="28px"
           fontWeight={"bold"}
+          variant="subtitle2"
         >
           Home
         </Typography>
       </Box>
 
       {/* grid display */}
-      <Box display={"flex"} flexDirection={"column"} alignItems={"end"} gap={1}>
+      <Box
+        alignItems={"end"}
+        display={"flex"}
+        flexDirection={"column"}
+        gap={1}
+      >
         <FormControlLabel
           control={
             <CustomToggle
@@ -167,13 +179,13 @@ function Home () {
           sx={{ paddingInline: "10px" }}
         />
         <MainViewGrid
-          timeslots={gridData.timeslots}
-          timestamps={gridData.timestamps}
           cores={gridData.cores}
           data={gridData.data}
-          showActive={showOnlyWorkPackages}
           serviceId={-1}
           services={serviceList}
+          showActive={showOnlyWorkPackages}
+          timeslots={gridData.timeslots}
+          timestamps={gridData.timestamps}
         />
       </Box>
 
