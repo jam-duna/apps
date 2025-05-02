@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { ItemMode } from "../index.js";
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import { Check, ContentCopy } from "@mui/icons-material";
-import { fallbackCopyTextToClipboard } from "../../../utils/clipboard.js";
-import { SegmentIcon } from "../../Icons/index.js";
-import {Link} from "react-router-dom";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
+
+import { Check, ContentCopy } from '@mui/icons-material';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { fallbackCopyTextToClipboard } from '../../../utils/clipboard.js';
+import { SegmentIcon } from '../../Icons/index.js';
+import { ItemMode } from '../index.js';
 
 interface SegmentProps {
   mode: ItemMode;
@@ -13,76 +17,89 @@ interface SegmentProps {
   data?: string;
 }
 
-export function Segment(param: SegmentProps) {
-
+export function Segment (param: SegmentProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (e: React.MouseEvent) => {
     e.preventDefault(); // prevent link navigation if used inside <Link>
+
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(param.data || "0x___");
+        await navigator.clipboard.writeText(param.data || '0x___');
       } else {
-        fallbackCopyTextToClipboard(param.data || "0x___");
+        fallbackCopyTextToClipboard(param.data || '0x___');
       }
+
       setCopied(true);
       setTimeout(() => setCopied(false), 1500); // Reset after 1.5s
     } catch (err) {
-      console.error("Failed to copy:", err);
+      console.error('Failed to copy:', err);
     }
   };
 
   const tableRender = (
     <Box
-      display="flex"
-      justifyContent="start"
-      alignItems="center"
-      paddingLeft="10px"
+      alignItems='center'
+      display='flex'
       gap={0.5}
+      justifyContent='start'
+      paddingLeft='10px'
       sx={{
-        cursor: "pointer",
-        color: "#444444",
+        cursor: 'pointer',
+        color: '#444444'
       }}
     >
       <Tooltip
-        title={`Segment data : ${param.data || "0x___"}`}
-        placement="top"
         arrow
+        placement='top'
+        title={`Segment data : ${param.data || '0x___'}`}
       >
-        <Typography variant="subtitle2" fontSize={"13px"}>
-          {param.data || "0x___"}
+        <Typography
+          fontSize={'13px'}
+          variant='subtitle2'
+        >
+          {param.data || '0x___'}
         </Typography>
       </Tooltip>
       <Tooltip
-        title={copied ? "Copied!" : "Copy segment data"}
-        placement="top"
         arrow
+        placement='top'
+        title={copied ? 'Copied!' : 'Copy segment data'}
       >
         <IconButton onClick={handleCopy}>
-          {!copied ? (
-            <ContentCopy
-              sx={{ width: "12px", height: "12px", color: "#444444" }}
-            />
-          ) : (
-            <Check sx={{ width: "12px", height: "12px", color: "#444444" }} />
-          )}
+          {!copied
+            ? (
+              <ContentCopy
+                sx={{ width: '12px', height: '12px', color: '#444444' }}
+              />
+            )
+            : (
+              <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+            )}
         </IconButton>
       </Tooltip>
     </Box>
   );
   const mediumRender = (
-    <Tooltip title={`Segment index : ${param.index}`} placement="top" arrow>
+    <Tooltip
+      arrow
+      placement='top'
+      title={`Segment index : ${param.index}`}
+    >
       <Link
-        to={`/jam/segment/${param.hash}/${param.index}`}
         style={{
-          width: "40px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          cursor: "pointer",
+          width: '40px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          cursor: 'pointer'
         }}
+        to={`/jam/segment/${param.hash}/${param.index}`}
       >
-        <Typography variant="subtitle2" fontSize={"14px"}>
+        <Typography
+          fontSize={'14px'}
+          variant='subtitle2'
+        >
           {param.index}
         </Typography>
       </Link>
@@ -93,19 +110,26 @@ export function Segment(param: SegmentProps) {
       to={`/jam/segment/${param.hash}/${param.index}`}
     >
       <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
+        alignItems='center'
+        display='flex'
         gap={0.5}
+        justifyContent='center'
         sx={{
-          cursor: "pointer",
-          width: "100%",
-          height: "100%",
-          color: "#444444",
+          cursor: 'pointer',
+          width: '100%',
+          height: '100%',
+          color: '#444444'
         }}
       >
-        <SegmentIcon size={24} color={"#444"} />
-        <Typography variant="subtitle2" fontSize={"32px"} fontWeight={"bold"}>
+        <SegmentIcon
+          color={'#444'}
+          size={24}
+        />
+        <Typography
+          fontSize={'32px'}
+          fontWeight={'bold'}
+          variant='subtitle2'
+        >
           Segment
         </Typography>
       </Box>

@@ -1,29 +1,23 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-} from "@mui/material";
-import { truncateHash } from "../../../utils/helper.js";
+'use client';
+
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import React, { useState } from 'react';
+
+import { truncateHash } from '../../../utils/helper.js';
 
 interface TableFormat2Props {
   data: string[][];
 }
 
 // Helper function to transpose a 2D array.
-function transpose<T>(matrix: T[][]): T[][] {
+function transpose<T> (matrix: T[][]): T[][] {
   return matrix[0].map((_, colIndex) => matrix.map((row) => row[colIndex]));
 }
 
-export default function TableFormat2({ data }: TableFormat2Props) {
+export default function TableFormat2 ({ data }: TableFormat2Props) {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   if (!data || data.length === 0) {
@@ -41,20 +35,26 @@ export default function TableFormat2({ data }: TableFormat2Props) {
 
   return (
     <Box sx={{ my: 4 }}>
-      <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
-        <Table stickyHeader size="small">
+      <TableContainer
+        component={Paper}
+        sx={{ maxHeight: 400 }}
+      >
+        <Table
+          size='small'
+          stickyHeader
+        >
           <TableHead>
             <TableRow>
               {/* Index header for transposed rows */}
               <TableCell
-                sx={{ fontWeight: "bold", backgroundColor: "#f5f5f5" }}
+                sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
               >
                 #
               </TableCell>
               {headerCells.map((header, idx) => (
                 <TableCell
                   key={idx}
-                  sx={{ fontWeight: "bold", backgroundColor: "#f5f5f5" }}
+                  sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
                 >
                   {header}
                 </TableCell>
@@ -64,20 +64,20 @@ export default function TableFormat2({ data }: TableFormat2Props) {
           <TableBody>
             {transposedData.map((row, rowIndex) => (
               <TableRow
-                key={rowIndex}
                 hover
-                sx={{ cursor: "pointer" }}
+                key={rowIndex}
                 onClick={() =>
                   setExpandedRow(expandedRow === rowIndex ? null : rowIndex)
                 }
+                sx={{ cursor: 'pointer' }}
               >
                 <TableCell>{rowIndex}</TableCell>
                 {row.map((cell, cellIndex) => (
                   <TableCell key={cellIndex}>
-                    {typeof cell === "string" && cell.startsWith("0x")
+                    {typeof cell === 'string' && cell.startsWith('0x')
                       ? expandedRow === rowIndex
                         ? cell
-                        : truncateHash(cell, "long")
+                        : truncateHash(cell, 'long')
                       : cell}
                   </TableCell>
                 ))}

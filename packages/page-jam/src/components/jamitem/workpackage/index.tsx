@@ -1,13 +1,18 @@
-import React, { useState } from "react";
-import { ItemMode } from "../index.js";
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import { getRelativeTime, truncateHash } from "../../../utils/helper.js";
-import { Check, ContentCopy } from "@mui/icons-material";
-import { Report, ServiceInfoDetail } from "../../../types/index.js";
-import { Service } from "../service/index.js";
-import { fallbackCopyTextToClipboard } from "../../../utils/clipboard.js";
-import { WorkPackageIcon } from "../../Icons/index.js";
-import {Link} from "react-router-dom";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
+
+import type { Report, ServiceInfoDetail } from '../../../types/index.js';
+
+import { Check, ContentCopy } from '@mui/icons-material';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { fallbackCopyTextToClipboard } from '../../../utils/clipboard.js';
+import { getRelativeTime, truncateHash } from '../../../utils/helper.js';
+import { WorkPackageIcon } from '../../Icons/index.js';
+import { ItemMode } from '../index.js';
+import { Service } from '../service/index.js';
 
 interface WorkPackageProps {
   mode: ItemMode;
@@ -17,77 +22,87 @@ interface WorkPackageProps {
   services?: ServiceInfoDetail[];
 }
 
-export function WorkPackage({
+export function WorkPackage ({ hash,
   mode,
-  hash,
   report,
-  timestamp = 0,
   services = [],
-}: WorkPackageProps) {
-
+  timestamp = 0 }: WorkPackageProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async (e: React.MouseEvent) => {
     e.preventDefault(); // prevent link navigation if used inside <Link>
+
     try {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(hash);
       } else {
         fallbackCopyTextToClipboard(hash);
       }
+
       setCopied(true);
       setTimeout(() => setCopied(false), 1500); // Reset after 1.5s
     } catch (err) {
-      console.error("Failed to copy:", err);
+      console.error('Failed to copy:', err);
     }
   };
 
   const getService = (name: number) => {
-    let result: ServiceInfoDetail | undefined = undefined;
+    let result: ServiceInfoDetail | undefined;
+
     services.forEach((service) => {
       if (service.service === name) {
         result = service;
       }
     });
+
     return result;
   };
 
   const gridRender = (
     <Box
-      display="flex"
-      justifyContent="start"
-      alignItems="center"
-      gap="2px"
+      alignItems='center'
+      display='flex'
+      gap='2px'
+      justifyContent='start'
       sx={{
-        cursor: "pointer",
-        paddingInline: "10px",
-        transition: "all 0.3s ease-in-out",
-        color: "#444444",
-        ":hover": {
-          color: "#444444",
-        },
+        cursor: 'pointer',
+        paddingInline: '10px',
+        transition: 'all 0.3s ease-in-out',
+        color: '#444444',
+        ':hover': {
+          color: '#444444'
+        }
       }}
     >
-      <Tooltip title={`WorkPackageHash: ${hash}`} placement="top" arrow>
+      <Tooltip
+        arrow
+        placement='top'
+        title={`WorkPackageHash: ${hash}`}
+      >
         <Link to={`/jam/workpackage/${hash}`}>
-          <Typography variant="subtitle2" fontSize="16px">
+          <Typography
+            fontSize='16px'
+            variant='subtitle2'
+          >
             {hash}
           </Typography>
         </Link>
       </Tooltip>
       <Tooltip
-        title={copied ? "Copied!" : "Copy workpackage hash"}
-        placement="top"
         arrow
+        placement='top'
+        title={copied ? 'Copied!' : 'Copy workpackage hash'}
       >
         <IconButton onClick={handleCopy}>
-          {!copied ? (
-            <ContentCopy
-              sx={{ width: "12px", height: "12px", color: "#444444" }}
-            />
-          ) : (
-            <Check sx={{ width: "12px", height: "12px", color: "#444444" }} />
-          )}
+          {!copied
+            ? (
+              <ContentCopy
+                sx={{ width: '12px', height: '12px', color: '#444444' }}
+              />
+            )
+            : (
+              <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+            )}
         </IconButton>
       </Tooltip>
     </Box>
@@ -95,42 +110,54 @@ export function WorkPackage({
 
   const smallRender = (
     <Box
-      display="flex"
-      justifyContent="start"
-      alignItems="center"
-      gap="2px"
+      alignItems='center'
+      display='flex'
+      gap='2px'
+      justifyContent='start'
       sx={{
-        cursor: "pointer",
-        paddingInline: "5px",
-        paddingBlock: "2px",
-        transition: "all 0.3s ease-in-out",
-        color: "#444444",
-        ":hover": {
-          color: "#1b5e20",
-        },
+        cursor: 'pointer',
+        paddingInline: '5px',
+        paddingBlock: '2px',
+        transition: 'all 0.3s ease-in-out',
+        color: '#444444',
+        ':hover': {
+          color: '#1b5e20'
+        }
       }}
     >
-      <WorkPackageIcon size={16} color={"#1b5e20"} />
-      <Tooltip title={`WorkPackageHash: ${hash}`} placement="top" arrow>
+      <WorkPackageIcon
+        color={'#1b5e20'}
+        size={16}
+      />
+      <Tooltip
+        arrow
+        placement='top'
+        title={`WorkPackageHash: ${hash}`}
+      >
         <Link to={`/jam/workpackage/${hash}`}>
-          <Typography variant="subtitle2" fontSize="12px">
-            {truncateHash(hash, "short")}
+          <Typography
+            fontSize='12px'
+            variant='subtitle2'
+          >
+            {truncateHash(hash, 'short')}
           </Typography>
         </Link>
       </Tooltip>
       <Tooltip
-        title={copied ? "Copied!" : "Copy workpackage hash"}
-        placement="top"
         arrow
+        placement='top'
+        title={copied ? 'Copied!' : 'Copy workpackage hash'}
       >
         <IconButton onClick={handleCopy}>
-          {!copied ? (
-            <ContentCopy
-              sx={{ width: "12px", height: "12px", color: "#444444" }}
-            />
-          ) : (
-            <Check sx={{ width: "12px", height: "12px", color: "#444444" }} />
-          )}
+          {!copied
+            ? (
+              <ContentCopy
+                sx={{ width: '12px', height: '12px', color: '#444444' }}
+              />
+            )
+            : (
+              <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+            )}
         </IconButton>
       </Tooltip>
     </Box>
@@ -139,18 +166,18 @@ export function WorkPackage({
   const mediumRender = (
     <Link
       key={hash}
+      style={{ textDecoration: 'none', color: 'inherit' }}
       to={`/jam/workpackage/${hash}/`}
-      style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
           p: 1.5,
           borderRadius: 1,
-          transition: "background-color 0.2s",
-          "&:hover": { backgroundColor: "#f9f9f9" },
-          borderBottom: "1px solid #ddd",
+          transition: 'background-color 0.2s',
+          '&:hover': { backgroundColor: '#f9f9f9' },
+          borderBottom: '1px solid #ddd'
         }}
       >
         {/* Left icon */}
@@ -159,27 +186,29 @@ export function WorkPackage({
             width: 40,
             height: 40,
             borderRadius: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#fff",
-            color: "#1b5e20",
-            border: "1px solid #ddd",
-            mr: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#fff',
+            color: '#1b5e20',
+            border: '1px solid #ddd',
+            mr: 2
           }}
         >
-          <WorkPackageIcon size={24} color={"#1b5e20"} />
+          <WorkPackageIcon
+            color={'#1b5e20'}
+            size={24}
+          />
         </Box>
-
         {/* Middle: Report count and relative time */}
         <Box sx={{ flex: 1 }}>
           <Box
-            display="flex"
-            flexDirection="row"
-            gap="2px"
-            justifyContent="start"
-            alignItems="center"
-            marginLeft="-5px"
+            alignItems='center'
+            display='flex'
+            flexDirection='row'
+            gap='2px'
+            justifyContent='start'
+            marginLeft='-5px'
           >
             {report?.results.map((item, itemIndex) => {
               return (
@@ -192,55 +221,67 @@ export function WorkPackage({
               );
             })}
           </Box>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            color='textSecondary'
+            variant='body2'
+          >
             {getRelativeTime(timestamp)} ago
           </Typography>
         </Box>
-
         {/* Right: truncated header hash */}
-        <Box sx={{ textAlign: "right" }}>
+        <Box sx={{ textAlign: 'right' }}>
           <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="end"
-            alignItems="center"
-            gap="2px"
-            marginRight="-5px"
+            alignItems='center'
+            display='flex'
+            flexDirection='row'
+            gap='2px'
+            justifyContent='end'
+            marginRight='-5px'
           >
-            <Tooltip title={`WorkPackageHash: ${hash}`} placement="top" arrow>
+            <Tooltip
+              arrow
+              placement='top'
+              title={`WorkPackageHash: ${hash}`}
+            >
               <Typography
-                variant="subtitle2"
-                fontSize="13px"
+                fontSize='13px'
                 sx={{
-                  color: "#444444",
-                  transition: "all 0.3s ease-in-out",
-                  ":hover": {
-                    color: "#1b5e20",
-                  },
+                  color: '#444444',
+                  transition: 'all 0.3s ease-in-out',
+                  ':hover': {
+                    color: '#1b5e20'
+                  }
                 }}
+                variant='subtitle2'
               >
-                hash {truncateHash(hash, "long")}
+                hash {truncateHash(hash, 'long')}
               </Typography>
             </Tooltip>
             <Tooltip
-              title={copied ? "Copied!" : "Copy workpackage hash"}
-              placement="top"
               arrow
+              placement='top'
+              title={copied ? 'Copied!' : 'Copy workpackage hash'}
             >
               <IconButton onClick={handleCopy}>
-                {!copied ? (
-                  <ContentCopy
-                    sx={{ width: "12px", height: "12px", color: "#444444" }}
-                  />
-                ) : (
-                  <Check
-                    sx={{ width: "12px", height: "12px", color: "#444444" }}
-                  />
-                )}
+                {!copied
+                  ? (
+                    <ContentCopy
+                      sx={{ width: '12px', height: '12px', color: '#444444' }}
+                    />
+                  )
+                  : (
+                    <Check
+                      sx={{ width: '12px', height: '12px', color: '#444444' }}
+                    />
+                  )}
               </IconButton>
             </Tooltip>
           </Box>
-          <Typography variant="body2" fontSize="12px" color="#444444">
+          <Typography
+            color='#444444'
+            fontSize='12px'
+            variant='body2'
+          >
             exports count {report?.package_spec.exports_count}
           </Typography>
         </Box>
@@ -250,26 +291,36 @@ export function WorkPackage({
 
   const largeRender = (
     <Box
-      display="flex"
-      justifyContent="start"
-      alignItems="center"
-      gap="10px"
+      alignItems='center'
+      display='flex'
+      gap='10px'
+      justifyContent='start'
       sx={{
-        cursor: "pointer",
-        paddingInline: "5px",
-        paddingBlock: "2px",
-        transition: "all 0.3s ease-in-out",
-        color: "#444444",
-        ":hover": {
-          color: "#444444",
-        },
+        cursor: 'pointer',
+        paddingInline: '5px',
+        paddingBlock: '2px',
+        transition: 'all 0.3s ease-in-out',
+        color: '#444444',
+        ':hover': {
+          color: '#444444'
+        }
       }}
     >
-      <WorkPackageIcon size={24} color={"#444"} />
-      <Typography variant="subtitle2" fontSize="28px">
+      <WorkPackageIcon
+        color={'#444'}
+        size={24}
+      />
+      <Typography
+        fontSize='28px'
+        variant='subtitle2'
+      >
         Work Package
       </Typography>
-      <Typography variant="subtitle2" fontSize="16px" mt={1}>
+      <Typography
+        fontSize='16px'
+        mt={1}
+        variant='subtitle2'
+      >
         {hash}
       </Typography>
     </Box>

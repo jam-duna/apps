@@ -1,30 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import TableFormat1 from "../tables/TableFormat1.js";
-import TableFormat2 from "../tables/TableFormat2.js";
-import XiTable from "../tables/XiTable.js";
-import BetaTable from "../tables/BetaTable.js";
-import ChiTable from "../tables/ChiTable.js";
-import EtaTable from "../tables/EtaTable.js";
-import GammaTable from "../tables/GammaTable.js";
-import PiTable from "../tables/PiTable.js";
-import PsiTable from "../tables/PsiTable.js";
-import RhoTable from "../tables/RhoTable.js";
-import ThetaTable from "../tables/ThetaTable.js";
-import AccountTable from "../tables/AccountsTable.js";
-import {
-  AccountItem,
-  BetaItem,
-  ChiItem,
-  GammaItem,
-  KeyedItem,
-  PiItem,
-  PsiItem,
-  RhoItem,
-  ThetaItem,
-} from "../../../types/index.js";
-import { State } from "../../../db/db.js";
-import { Typography } from "@mui/material";
+import type { State } from '../../../db/db.js';
+import type { AccountItem, BetaItem, ChiItem, GammaItem, KeyedItem, PiItem, PsiItem, RhoItem, ThetaItem } from '../../../types/index.js';
+
+import { Typography } from '@mui/material';
+import React from 'react';
+
+import AccountTable from '../tables/AccountsTable.js';
+import BetaTable from '../tables/BetaTable.js';
+import ChiTable from '../tables/ChiTable.js';
+import EtaTable from '../tables/EtaTable.js';
+import GammaTable from '../tables/GammaTable.js';
+import PiTable from '../tables/PiTable.js';
+import PsiTable from '../tables/PsiTable.js';
+import RhoTable from '../tables/RhoTable.js';
+import TableFormat1 from '../tables/TableFormat1.js';
+import TableFormat2 from '../tables/TableFormat2.js';
+import ThetaTable from '../tables/ThetaTable.js';
+import XiTable from '../tables/XiTable.js';
 
 // Define an interface for table configuration
 interface TableConfig<T> {
@@ -41,73 +33,79 @@ const getTableConfigs = (
 ): Partial<Record<keyof State, TableConfig<any>>> => ({
   alpha: {
     predicate: (data): data is string[][] =>
-      Array.isArray(data) && data.length > 0 && typeof data[0][0] === "string",
-    render: (data) => <TableFormat2 data={data} />,
+      Array.isArray(data) && data.length > 0 && typeof data[0][0] === 'string',
+    render: (data) => <TableFormat2 data={data} />
   },
   varphi: {
     predicate: (data): data is string[][] =>
-      Array.isArray(data) && data.length > 0 && typeof data[0][0] === "string",
-    render: (data) => <TableFormat2 data={data} />,
+      Array.isArray(data) && data.length > 0 && typeof data[0][0] === 'string',
+    render: (data) => <TableFormat2 data={data} />
   },
   iota: {
     predicate: (data): data is KeyedItem[] =>
       Array.isArray(data) && data.length > 0,
-    render: (data) => <TableFormat1 data={data} />,
+    render: (data) => <TableFormat1 data={data} />
   },
   kappa: {
     predicate: (data): data is KeyedItem[] =>
       Array.isArray(data) && data.length > 0,
-    render: (data) => <TableFormat1 data={data} />,
+    render: (data) => <TableFormat1 data={data} />
   },
   lambda: {
     predicate: (data): data is KeyedItem[] =>
       Array.isArray(data) && data.length > 0,
-    render: (data) => <TableFormat1 data={data} />,
+    render: (data) => <TableFormat1 data={data} />
   },
   beta: {
     predicate: (data): data is BetaItem[] =>
       Array.isArray(data) && data.length > 0,
-    render: (data) => <BetaTable data={data} />,
+    render: (data) => <BetaTable data={data} />
   },
   chi: {
     predicate: (data): data is ChiItem => data !== undefined && data !== null,
-    render: (data) => <ChiTable data={[data]} />,
+    render: (data) => <ChiTable data={[data]} />
   },
   eta: {
     predicate: (data): data is string[] => Array.isArray(data),
-    render: (data) => <EtaTable data={data} />,
+    render: (data) => <EtaTable data={data} />
   },
   gamma: {
     predicate: (data): data is GammaItem => data !== undefined && data !== null,
-    render: (data) => <GammaTable data={[data]} />,
+    render: (data) => <GammaTable data={[data]} />
   },
   pi: {
     predicate: (data): data is PiItem => data !== undefined && data !== null,
-    render: (data) => <PiTable data={data} />,
+    render: (data) => <PiTable data={data} />
   },
   psi: {
     predicate: (data): data is PsiItem => data !== undefined && data !== null,
-    render: (data) => <PsiTable data={data} />,
+    render: (data) => <PsiTable data={data} />
   },
   rho: {
     predicate: (data): data is RhoItem => data !== undefined && data !== null,
-    render: (data) => <RhoTable data={data} headerHash={headerHash} />,
+    render: (data) => <RhoTable
+      data={data}
+      headerHash={headerHash}
+                      />
   },
   theta: {
     predicate: (data): data is ThetaItem =>
       Array.isArray(data) && data.flat(Infinity).length > 0,
-    render: (data) => <ThetaTable data={data} headerHash={headerHash} />,
+    render: (data) => <ThetaTable
+      data={data}
+      headerHash={headerHash}
+                      />
   },
   xi: {
     predicate: (data): data is string[][] =>
       Array.isArray(data) && data.length > 0,
-    render: (data) => <XiTable data={data} />,
+    render: (data) => <XiTable data={data} />
   },
   accounts: {
     predicate: (data): data is AccountItem[] =>
       Array.isArray(data) && data.length > 0,
-    render: (data) => <AccountTable accounts={data} />,
-  },
+    render: (data) => <AccountTable accounts={data} />
+  }
 });
 
 export const renderTable = (
@@ -117,11 +115,16 @@ export const renderTable = (
 ) => {
   const tableConfigs = getTableConfigs(headerHash);
   const config = tableConfigs[key];
-  if (!config) return null;
+
+  if (!config) {
+    return null;
+  }
 
   const data = stateData[key];
+
   if (config.predicate(data)) {
     return config.render(data);
   }
-  return <Typography variant="body1">No data available.</Typography>;
+
+  return <Typography variant='body1'>No data available.</Typography>;
 };

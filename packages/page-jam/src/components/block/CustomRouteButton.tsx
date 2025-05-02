@@ -1,8 +1,12 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import { Button } from "@mui/material";
-import { NodeData } from "json-edit-react"; // Use the library's NodeData type
+'use client';
+
+import type { NodeData } from 'json-edit-react'; // Use the library's NodeData type
+
+import { Button } from '@mui/material';
+import React from 'react';
 
 interface RouteButtonValue {
   target: string;
@@ -11,29 +15,30 @@ interface RouteButtonValue {
 const RouteButton: React.FC<{ nodeData: NodeData }> = ({ nodeData }) => {
   const handleClick = () => {
     const target =
-      typeof nodeData.value === "string" && nodeData.value.startsWith("http")
+      typeof nodeData.value === 'string' && nodeData.value.startsWith('http')
         ? nodeData.value
-        : "/";
+        : '/';
+
     window.location.href = target;
   };
 
   return (
-    <Button 
-      size="small" 
-      variant="outlined"
+    <Button
       onClick={handleClick}
+      size='small'
+      variant='outlined'
     >
-      {">"}
+      {'>'}
     </Button>
   );
 };
 
 export const CustomRouteButtonDefinition = {
   condition: (key: string, value: unknown): value is RouteButtonValue =>
-    typeof value === "object" && value !== null && "target" in value,
+    typeof value === 'object' && value !== null && 'target' in value,
   matches: (key: string, value: unknown): key is string => true,
   Element: RouteButton,
   onClick: (nodeData: NodeData, e: React.MouseEvent) => {
     // No-op because RouteButton handles its own onClick.
-  },
+  }
 };

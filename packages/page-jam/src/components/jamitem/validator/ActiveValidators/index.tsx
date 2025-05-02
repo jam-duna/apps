@@ -1,38 +1,46 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import { ValidatorShowCase } from "../../../../types/index.js";
-import { Paper, Typography } from "@mui/material";
-import { ItemMode } from "../../index.js";
-import { Validator } from "../ValidatorItem/index.js";
+'use client';
+
+import type { ValidatorShowCase } from '../../../../types/index.js';
+
+import { Paper, Typography } from '@mui/material';
+import React from 'react';
+
+import { ItemMode } from '../../index.js';
+import { Validator } from '../ValidatorItem/index.js';
 
 interface ActiveValidatorsProps {
-    validators: ValidatorShowCase[];
+  validators: ValidatorShowCase[];
 }
 
-export function ActiveValidators(param: ActiveValidatorsProps) {
-
-    return (
-        <Paper variant="outlined">
-            <Typography
-                variant="h6"
-                gutterBottom
-                sx={{ mb: 2, px: 1.5, py: 2, borderBottom: "1px solid #ccc", m: 0 }}
-            >
+export function ActiveValidators (param: ActiveValidatorsProps) {
+  return (
+    <Paper variant='outlined'>
+      <Typography
+        gutterBottom
+        sx={{ mb: 2, px: 1.5, py: 2, borderBottom: '1px solid #ccc', m: 0 }}
+        variant='h6'
+      >
                 Active Validators
-            </Typography>
-            {(param.validators.length > 0) ? 
-                (param.validators.map((item, itemIndex) => {
-                    return (
-                        <Validator key={itemIndex} mode={ItemMode.Medium} validator={item}/>
-                    );
-                })) : 
-                (<Typography
-                        variant="subtitle2"
-                        sx={{ p: 2, "&:hover": { backgroundColor: "#f9f9f9" } }}
-                    >
+      </Typography>
+      {(param.validators.length > 0)
+        ? (param.validators.map((item, itemIndex) => {
+          return (
+            <Validator
+              key={itemIndex}
+              mode={ItemMode.Medium}
+              validator={item}
+            />
+          );
+        }))
+        : (<Typography
+          sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+          variant='subtitle2'
+        >
                     No active validators
-                </Typography>)}
-        </Paper>
-    );
+        </Typography>)}
+    </Paper>
+  );
 }

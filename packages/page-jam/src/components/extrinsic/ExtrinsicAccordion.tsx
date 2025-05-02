@@ -1,24 +1,21 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Box,
-  Typography,
-  Tooltip,
-  Link as MuiLink,
-} from "@mui/material";
-import TicketItem from "./items/TicketItem.js"; // adjust path accordingly
-import AccordionSubsection from "./AccordionSubsection.js";
-import { Extrinsic } from "../../types/index.js";
-import PreimageItem from "./items/PreimageItem.js";
-import AssurancesItem from "./items/AssuranceItem.js";
-import GuaranteeItem from "./items/GuaranteeItem.js";
-import { calculateExtrinsicCounts } from "../../utils/extrinsics.js";
-import { pluralize } from "../../utils/helper.js";
-import { ExtrinsicIcon } from "../Icons/index.js";
+'use client';
+
+import type { Extrinsic } from '../../types/index.js';
+
+import { Accordion, AccordionDetails, AccordionSummary, Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import React from 'react';
+
+import { calculateExtrinsicCounts } from '../../utils/extrinsics.js';
+import { pluralize } from '../../utils/helper.js';
+import { ExtrinsicIcon } from '../Icons/index.js';
+import AssurancesItem from './items/AssuranceItem.js';
+import GuaranteeItem from './items/GuaranteeItem.js';
+import PreimageItem from './items/PreimageItem.js';
+import TicketItem from './items/TicketItem.js'; // adjust path accordingly
+import AccordionSubsection from './AccordionSubsection.js';
 
 export interface ExtrinsicAccordionProps {
   initialExtrinsicExpanded?: boolean;
@@ -26,21 +23,17 @@ export interface ExtrinsicAccordionProps {
   extrinsic: Extrinsic;
 }
 
-export default function ExtrinsicAccordion({
-  extrinsic,
+export default function ExtrinsicAccordion ({ extrinsic,
   headerHash,
-  initialExtrinsicExpanded = false,
-}: ExtrinsicAccordionProps) {
-  const { tickets, disputes, assurances, preimages, guarantees } = extrinsic;
+  initialExtrinsicExpanded = false }: ExtrinsicAccordionProps) {
+  const { assurances, disputes, guarantees, preimages, tickets } = extrinsic;
 
-  const {
-    ticketsCount,
+  const { assurancesCount,
     disputesCount,
-    assurancesCount,
     guaranteesCount,
     preimagesCount,
-    totalExtrinsics,
-  } = calculateExtrinsicCounts(extrinsic);
+    ticketsCount,
+    totalExtrinsics } = calculateExtrinsicCounts(extrinsic);
 
   // Main accordion expansion state.
   const [extrinsicExpanded, setExtrinsicExpanded] = React.useState<boolean>(
@@ -53,126 +46,122 @@ export default function ExtrinsicAccordion({
       expanded={extrinsicExpanded}
       onChange={(_, isExpanded) => setExtrinsicExpanded(isExpanded)}
       sx={{
-        border: "none",
-        boxShadow: "none",
-        "&:before": { display: "none" },
+        border: 'none',
+        boxShadow: 'none',
+        '&:before': { display: 'none' }
       }}
     >
       <AccordionSummary
         sx={{
           px: 0,
-          minHeight: "auto",
-          "& .MuiAccordionSummary-content": { m: 0, p: 0 },
-          cursor: "default",
+          minHeight: 'auto',
+          '& .MuiAccordionSummary-content': { m: 0, p: 0 },
+          cursor: 'default'
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flexShrink: 0, ml: 0.5 }}>
-          <ExtrinsicIcon size={18} color={'#555'}/>
-
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0, ml: 0.5 }}>
+          <ExtrinsicIcon
+            color={'#555'}
+            size={18}
+          />
           <Typography
-            variant="body1"
-            sx={{ whiteSpace: "nowrap", minWidth: "170px" }}
+            sx={{ whiteSpace: 'nowrap', minWidth: '170px' }}
+            variant='body1'
           >
             Extrinsic Count:
           </Typography>
-
           <MuiLink
             onClick={(e) => e.preventDefault()}
             sx={{
-              color: "#1976d2",
-              textDecoration: "none",
-              cursor: "pointer",
-              ml: -1,
+              color: '#1976d2',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              ml: -1
             }}
           >
-            <Typography variant="body1">
-              {totalExtrinsics} {pluralize("extrinsic", totalExtrinsics)}
+            <Typography variant='body1'>
+              {totalExtrinsics} {pluralize('extrinsic', totalExtrinsics)}
             </Typography>
           </MuiLink>
         </Box>
       </AccordionSummary>
-
       <AccordionDetails sx={{ mt: 1, p: 0, pl: 26 }}>
         <AccordionSubsection
-          title="Tickets"
-          icon="ticket"
           count={ticketsCount}
-          emptyMessage="No tickets"
+          emptyMessage='No tickets'
+          icon='ticket'
+          title='Tickets'
         >
           {tickets.map((ticket, idx) => (
             <TicketItem
+              expanded={extrinsicExpanded}
+              idx={idx}
               key={idx}
               ticket={ticket}
-              idx={idx}
-              expanded={extrinsicExpanded}
             />
           ))}
         </AccordionSubsection>
-
         <AccordionSubsection
-          title="Disputes"
-          icon="dispute"
           count={disputesCount}
-          emptyMessage="No disputes"
+          emptyMessage='No disputes'
+          icon='dispute'
+          title='Disputes'
         >
           <>
-            <Typography variant="body2">
+            <Typography variant='body2'>
               Verdicts: {disputes?.verdicts?.length || 0}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant='body2'>
               Culprits: {disputes?.culprits?.length || 0}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant='body2'>
               Faults: {disputes?.faults?.length || 0}
             </Typography>
           </>
         </AccordionSubsection>
-
         <AccordionSubsection
-          title="Assurances"
-          icon="assurance"
           count={assurancesCount}
-          emptyMessage="No assurances"
+          emptyMessage='No assurances'
+          icon='assurance'
+          title='Assurances'
         >
           {assurances.map((assurance, idx) => (
             <AssurancesItem
-              key={idx}
               assurances={assurance}
-              idx={idx}
               expanded={extrinsicExpanded}
+              idx={idx}
+              key={idx}
             />
           ))}
         </AccordionSubsection>
-
         <AccordionSubsection
-          title="Guarantees"
-          icon="guarantee"
           count={guaranteesCount}
-          emptyMessage="No guarantees"
+          emptyMessage='No guarantees'
+          icon='guarantee'
+          title='Guarantees'
         >
           {guarantees.map((guarantee, idx) => (
             <GuaranteeItem
-              key={idx}
+              expanded={extrinsicExpanded}
               guarantee={guarantee}
               headerHash={headerHash}
               idx={idx}
-              expanded={extrinsicExpanded}
+              key={idx}
             />
           ))}
         </AccordionSubsection>
-
         <AccordionSubsection
-          title="Preimages"
-          icon="preimage"
           count={preimagesCount}
-          emptyMessage="No preimages"
+          emptyMessage='No preimages'
+          icon='preimage'
+          title='Preimages'
         >
           {preimages.map((preimage, idx) => (
             <PreimageItem
+              expanded={extrinsicExpanded}
+              idx={idx}
               key={idx}
               preimage={preimage}
-              idx={idx}
-              expanded={extrinsicExpanded}
             />
           ))}
         </AccordionSubsection>

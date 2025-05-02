@@ -250,15 +250,15 @@ export interface PsiItem {
   offenders: string[];
 }
 
-export type RhoItem = Array<{
+export type RhoItem = ({
   report: Report;
   timeout: number;
-} | null>;
+} | null)[];
 
-export type ThetaItem = Array<{
+export type ThetaItem = ({
   report?: Report;
   dependencies?: string[];
-} | null>;
+} | null)[];
 
 //
 

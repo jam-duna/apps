@@ -1,7 +1,7 @@
 // src/utils/extrinsics.ts
 
-import { Block } from "../db/db.js"
-import { Extrinsic } from "../types/index.js"
+import type { Block } from '../db/db.js';
+import type { Extrinsic } from '../types/index.js';
 
 export interface ExtrinsicCounts {
   ticketsCount: number;
@@ -12,7 +12,7 @@ export interface ExtrinsicCounts {
   totalExtrinsics: number;
 }
 
-export function calculateExtrinsicCounts(
+export function calculateExtrinsicCounts (
   extrinsic: Extrinsic
 ): ExtrinsicCounts {
   const ticketsCount = Array.isArray(extrinsic.tickets)
@@ -38,30 +38,43 @@ export function calculateExtrinsicCounts(
     assurancesCount +
     guaranteesCount +
     preimagesCount;
+
   return {
     ticketsCount,
     disputesCount,
     assurancesCount,
     guaranteesCount,
     preimagesCount,
-    totalExtrinsics,
+    totalExtrinsics
   };
 }
 
-export function filterExtrinsicBlocks(blocks: Block[]): Block[] {
-  if (!blocks) return [];
+export function filterExtrinsicBlocks (blocks: Block[]): Block[] {
+  if (!blocks) {
+    return [];
+  }
+
   return blocks.filter((blockItem) => {
     const extrinsic = blockItem.extrinsic;
-    if (!extrinsic) return false;
+
+    if (!extrinsic) {
+      return false;
+    }
+
     const { totalExtrinsics } = calculateExtrinsicCounts(extrinsic);
+
     return totalExtrinsics > 0;
   });
 }
 
-export function filterWorkReportBlocks(blocks?: Block[]): Block[] {
-  if (!blocks) return [];
+export function filterWorkReportBlocks (blocks?: Block[]): Block[] {
+  if (!blocks) {
+    return [];
+  }
+
   return blocks.filter((blockItem) => {
     const extrinsic = blockItem.extrinsic;
+
     return (
       extrinsic &&
       Array.isArray(extrinsic.guarantees) &&

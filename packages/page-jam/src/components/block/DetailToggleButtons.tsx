@@ -1,33 +1,40 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import { Box, Button, Typography } from "@mui/material";
+'use client';
+
+import { Box, Button, Typography } from '@mui/material';
+import React from 'react';
 
 export interface DetailToggleButtonsProps {
-  selectedTab: "block" | "state";
-  onTabChange: (tab: "block" | "state") => void;
+  selectedTab: 'block' | 'state';
+  onTabChange: (tab: 'block' | 'state') => void;
 }
 
-export default function DetailToggleButtons({
-  selectedTab,
-  onTabChange,
-}: DetailToggleButtonsProps) {
+export default function DetailToggleButtons ({ onTabChange,
+  selectedTab }: DetailToggleButtonsProps) {
   return (
     <Box sx={{ mb: 2 }}>
       <Button
-        variant={selectedTab === "block" ? "contained" : "outlined"}
-        onClick={() => onTabChange("block")}
+        onClick={() => onTabChange('block')}
         sx={{ mr: 1 }}
+        variant={selectedTab === 'block' ? 'contained' : 'outlined'}
       >
-        <Typography variant="caption" fontWeight={600}>
+        <Typography
+          fontWeight={600}
+          variant='caption'
+        >
           Block
         </Typography>
       </Button>
       <Button
-        variant={selectedTab === "state" ? "contained" : "outlined"}
-        onClick={() => onTabChange("state")}
+        onClick={() => onTabChange('state')}
+        variant={selectedTab === 'state' ? 'contained' : 'outlined'}
       >
-        <Typography variant="caption" fontWeight={600}>
+        <Typography
+          fontWeight={600}
+          variant='caption'
+        >
           State
         </Typography>
       </Button>

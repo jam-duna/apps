@@ -1,48 +1,54 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import { Link } from "react-router-dom";
-import { Paper, Typography } from "@mui/material";
-import { Block } from "../../../../db/db.js"
-import ExtrinsicListItem from "../list-item/ExtrinsicListItem.js";
-import { filterExtrinsicBlocks } from "../../../../utils/extrinsics.js"; // Example icon
+'use client';
 
-type ExtrinsicListsProps = {
+import type { Block } from '../../../../db/db.js';
+
+import { Paper, Typography } from '@mui/material';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { filterExtrinsicBlocks } from '../../../../utils/extrinsics.js'; // Example icon
+import ExtrinsicListItem from '../list-item/ExtrinsicListItem.js';
+
+interface ExtrinsicListsProps {
   latestBlocks: Block[];
-};
+}
 
-export default function ExtrinsicLists({ latestBlocks }: ExtrinsicListsProps) {
+export default function ExtrinsicLists ({ latestBlocks }: ExtrinsicListsProps) {
   // Filter blocks that have at least one extrinsic event
 
   const filteredBlocks = filterExtrinsicBlocks(latestBlocks).slice(0, 5);
 
   return (
-    <Paper sx={{ px: 0 }} variant="outlined">
+    <Paper
+      sx={{ px: 0 }}
+      variant='outlined'
+    >
       <Typography
-        variant="h6"
-        sx={{ px: 1.5, py: 2, borderBottom: "1px solid #ccc" }}
+        sx={{ px: 1.5, py: 2, borderBottom: '1px solid #ccc' }}
+        variant='h6'
       >
         Extrinsic Lists
       </Typography>
-
       {filteredBlocks.map((blockItem) => (
         <ExtrinsicListItem
-          key={blockItem?.overview?.headerHash}
           blockItem={blockItem}
+          key={blockItem?.overview?.headerHash}
         />
       ))}
-
       <Link
-        to="/jam/list/extrinsic"
         style={{
-          textDecoration: "none",
-          color: "inherit",
-          textAlign: "center",
+          textDecoration: 'none',
+          color: 'inherit',
+          textAlign: 'center'
         }}
+        to='/jam/list/extrinsic'
       >
         <Typography
-          variant="subtitle2"
-          sx={{ p: 2, "&:hover": { backgroundColor: "#f9f9f9" } }}
+          sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+          variant='subtitle2'
         >
           View All Extrinsics
         </Typography>

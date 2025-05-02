@@ -1,9 +1,14 @@
-import React from "react";
-import { ItemMode } from "../index.js";
-import { Box, Tooltip, Typography } from "@mui/material";
-import { formatDate } from "../../../utils/helper.js";
-import { SlotIcon } from "../../Icons/index.js";
-import {Link} from "react-router-dom";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
+
+import type { ItemMode } from '../index.js';
+
+import { Box, Tooltip, Typography } from '@mui/material';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { formatDate } from '../../../utils/helper.js';
+import { SlotIcon } from '../../Icons/index.js';
 
 interface SlotProps {
   mode: ItemMode;
@@ -12,31 +17,40 @@ interface SlotProps {
   showmode: string;
 }
 
-export function Slot(param: SlotProps) {
-
+export function Slot (param: SlotProps) {
   return (
-    <Tooltip title={`Slot index : ${param.slot}`} placement="top" arrow>
+    <Tooltip
+      arrow
+      placement='top'
+      title={`Slot index : ${param.slot}`}
+    >
       <Link to={`/jam/block/${param.slot}`}>
         <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          gap="5px"
+          alignItems='center'
+          display='flex'
+          gap='5px'
+          justifyContent='center'
           sx={{
-            cursor: "pointer",
-            width: "100%",
-            height: "100%",
-            paddingInline: "10px",
-            transition: "all 0.3s ease-in-out",
-            color: "#ffffff",
-            backgroundColor: "#90caf9",
-            ":hover": {
-              backgroundColor: "#64b5f6",
-            },
+            cursor: 'pointer',
+            width: '100%',
+            height: '100%',
+            paddingInline: '10px',
+            transition: 'all 0.3s ease-in-out',
+            color: '#ffffff',
+            backgroundColor: '#90caf9',
+            ':hover': {
+              backgroundColor: '#64b5f6'
+            }
           }}
         >
-          <SlotIcon size={16} color={"#fff"} />
-          <Typography variant="subtitle2" paddingTop="2px">
+          <SlotIcon
+            color={'#fff'}
+            size={16}
+          />
+          <Typography
+            paddingTop='2px'
+            variant='subtitle2'
+          >
             {formatDate(param.timestamp, param.showmode)}
           </Typography>
         </Box>

@@ -1,30 +1,45 @@
-import React from "react";
-import { Box, Tooltip, Typography } from "@mui/material";
-import { BlockIcon } from "../../Icons/index.js";
-import { Link } from "react-router-dom";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-export function Blocks() {
+import { Box, Tooltip, Typography } from '@mui/material';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { BlockIcon } from '../../Icons/index.js';
+
+export function Blocks () {
   return (
-    <Tooltip title="Link to all listed blocks" placement="top" arrow>
-      <Link to="/jam/list/block">
+    <Tooltip
+      arrow
+      placement='top'
+      title='Link to all listed blocks'
+    >
+      <Link to='/jam/list/block'>
         <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
+          alignItems='center'
+          display='flex'
           gap={0.5}
+          justifyContent='center'
           sx={{
-            cursor: "pointer",
-            width: "100%",
-            height: "100%",
-            transition: "all 0.3s ease-in-out",
-            color: "#444444",
-            ":hover": {
-              color: "#224444D0",
-            },
+            cursor: 'pointer',
+            width: '100%',
+            height: '100%',
+            transition: 'all 0.3s ease-in-out',
+            color: '#444444',
+            ':hover': {
+              color: '#224444D0'
+            }
           }}
         >
-          <BlockIcon size={16} color={"#224444D0"} />
-          <Typography variant="subtitle1" fontWeight="bold" marginTop="5px">
+          <BlockIcon
+            color={'#224444D0'}
+            size={16}
+          />
+          <Typography
+            fontWeight='bold'
+            marginTop='5px'
+            variant='subtitle1'
+          >
             Blocks
           </Typography>
         </Box>

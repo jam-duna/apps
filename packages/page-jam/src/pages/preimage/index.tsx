@@ -1,30 +1,27 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Box, Container, Paper, Typography } from "@mui/material";
-import {
-  ItemMode,
-  Preimage,
-  PreimageRawbytes,
-  Service,
-} from "../../components/jamitem/index.js";
-import { LabeledRow } from "../../components/display/LabeledRow.js";
-import Loading from "../../components/home/Loading.js";
-import { useSubscribeServicePreimage } from "../../hooks/subscribeServicePreimage.js";
-import { fetchServicePreimage } from "../../hooks/useFetchServicePreimage.js";
-import { fetchServiceRequest } from "../../hooks/useFetchServiceRequest.js";
-import { getRpcUrlFromWs } from "../../utils/ws.js";
-import { ServicePreimage } from "../../types/index.js";
+import type { ServicePreimage } from '../../types/index.js';
 
-export default function PreimageDetailPage() {
+import { Box, Container, Paper, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { LabeledRow } from '../../components/display/LabeledRow.js';
+import Loading from '../../components/home/Loading.js';
+import { ItemMode, Preimage, PreimageRawbytes, Service } from '../../components/jamitem/index.js';
+import { useSubscribeServicePreimage } from '../../hooks/subscribeServicePreimage.js';
+import { fetchServicePreimage } from '../../hooks/useFetchServicePreimage.js';
+import { fetchServiceRequest } from '../../hooks/useFetchServiceRequest.js';
+import { getRpcUrlFromWs } from '../../utils/ws.js';
+
+export default function PreimageDetailPage () {
   const params = useParams();
-  const serviceId = params.service as string;
-  const preimageHash = params.hash as string;
+  const serviceId = params.service!;
+  const preimageHash = params.hash!;
 
   const [preimage, setPreimage] = useState<ServicePreimage | null>(null);
-  const [status, setStatus] = useState<string>("");
+  const [status, setStatus] = useState<string>('');
 
   const [loadingP, setLoadingP] = useState(true);
   const [loadingS, setLoadingS] = useState(true);
@@ -34,8 +31,9 @@ export default function PreimageDetailPage() {
       const data = await fetchServicePreimage(
         serviceId,
         preimageHash,
-        getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
+        getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')
       );
+
       setPreimage(data);
       setLoadingP(false);
     };
@@ -50,20 +48,28 @@ export default function PreimageDetailPage() {
           serviceId,
           preimageHash,
           (preimage?.length || 0).toString(),
-          getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
+          getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')
         );
-        if (data.length === 0) setStatus("solicited but not available");
-        else if (data.length === 1) setStatus("available");
-        else if (data.length === 2) setStatus("forgotten/not available");
-        else if (data.length === 3) setStatus("available again");
+
+        if (data.length === 0) {
+          setStatus('solicited but not available');
+        } else if (data.length === 1) {
+          setStatus('available');
+        } else if (data.length === 2) {
+          setStatus('forgotten/not available');
+        } else if (data.length === 3) {
+          setStatus('available again');
+        }
+
         setLoadingS(false);
       };
+
       fetchRequest();
     }
   }, [preimage]);
 
   useSubscribeServicePreimage({
-    endpoint: localStorage.getItem("jamUrl") || "dot-0.jamduna.org",
+    endpoint: localStorage.getItem('jamUrl') || 'dot-0.jamduna.org',
     serviceID: serviceId,
     hash: preimageHash,
     setPreimage: (preimage: ServicePreimage) => {
@@ -71,55 +77,71 @@ export default function PreimageDetailPage() {
     },
     setRequest: (request: string) => {
       setStatus(request);
-    },
+    }
   });
 
-  if (loadingP || loadingS) return <Loading />;
+  if (loadingP || loadingS) {
+    return <Loading />;
+  }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }} className="hasOwnMaxWidth">
-      <Box sx={{ display: "inline-flex", alignItems: "center", mb: 2 }}>
+    <Container
+      className='hasOwnMaxWidth'
+      maxWidth='lg'
+      sx={{ mt: 4 }}
+    >
+      <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 2 }}>
         <Preimage
-          mode={ItemMode.Large}
           hash={preimageHash}
+          mode={ItemMode.Large}
           service={serviceId}
         />
       </Box>
-
-      <Paper variant="outlined" sx={{ p: 3, marginBlock: 3 }}>
+      <Paper
+        sx={{ p: 3, marginBlock: 3 }}
+        variant='outlined'
+      >
         <LabeledRow
-          label="Service"
-          tooltip="Service"
-          icon="service"
-          value={<Service mode={ItemMode.Table} name={serviceId} />}
+          icon='service'
+          label='Service'
+          tooltip='Service'
+          value={<Service
+            mode={ItemMode.Table}
+            name={serviceId}
+                 />}
         />
         <LabeledRow
-          label="Status"
-          tooltip="Status of the Preimage"
-          icon="status"
+          icon='status'
+          label='Status'
+          tooltip='Status of the Preimage'
           value={
-            <Typography variant="body2" fontSize="16px" color="#444" pl="5px">
+            <Typography
+              color='#444'
+              fontSize='16px'
+              pl='5px'
+              variant='body2'
+            >
               {status}
             </Typography>
           }
         />
         <LabeledRow
-          label="Hash"
-          tooltip="Preimage Hash"
-          icon="preimage"
+          icon='preimage'
+          label='Hash'
+          tooltip='Preimage Hash'
           value={
             <Preimage
-              mode={ItemMode.Medium}
               hash={preimageHash}
+              mode={ItemMode.Medium}
               service={serviceId}
             />
           }
         />
         <LabeledRow
-          label="Rawbytes"
-          tooltip="Preimage Rawbytes"
-          icon="raw"
-          value={<PreimageRawbytes rawbytes={preimage?.rawbytes || ""} />}
+          icon='raw'
+          label='Rawbytes'
+          tooltip='Preimage Rawbytes'
+          value={<PreimageRawbytes rawbytes={preimage?.rawbytes || ''} />}
         />
       </Paper>
     </Container>

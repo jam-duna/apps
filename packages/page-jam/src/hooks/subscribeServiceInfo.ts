@@ -1,9 +1,14 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import { ServiceInfo } from "../types/index.js";
-import { normalizeEndpoint } from "../utils/ws.js";
-import { useEffect, useRef } from "react";
-import { useIsMounted } from "usehooks-ts";
+'use client';
+
+import type { ServiceInfo } from '../types/index.js';
+
+import { useEffect, useRef } from 'react';
+import { useIsMounted } from 'usehooks-ts';
+
+import { normalizeEndpoint } from '../utils/ws.js';
 
 interface Params {
   endpoint: string;
@@ -11,11 +16,9 @@ interface Params {
   setStatus: (status: ServiceInfo) => void;
 }
 
-export function useSubscribeServiceInfo({
-  endpoint,
+export function useSubscribeServiceInfo ({ endpoint,
   serviceID,
-  setStatus,
-}: Params) {
+  setStatus }: Params) {
   const wsRef = useRef<WebSocket | null>(null);
   const isMounted = useIsMounted();
 
@@ -28,25 +31,29 @@ export function useSubscribeServiceInfo({
     }
 
     if (!wsRef.current) {
-      console.log("[WS-LOG] serviceinfo init");
+      console.log('[WS-LOG] serviceinfo init');
 
       const createWS = () => {
         const ws = new WebSocket(normalEndpoint);
 
         ws.onopen = () => {
-          console.log("[WS-LOG] serviceinfo opened");
+          console.log('[WS-LOG] serviceinfo opened');
           const msg = {
-            method: "subscribeServiceInfo",
-            params: { serviceID },
+            method: 'subscribeServiceInfo',
+            params: { serviceID }
           };
+
           ws.send(JSON.stringify(msg));
         };
 
         ws.onmessage = (event) => {
           const msg = JSON.parse(event.data);
-          console.log("[WS-LOG] serviceinfo", msg);
-          if (msg.method === "subscribeServiceInfo" && msg.result) {
+
+          console.log('[WS-LOG] serviceinfo', msg);
+
+          if (msg.method === 'subscribeServiceInfo' && msg.result) {
             console.log(msg.result);
+
             if (msg.result.serviceID.toString() === serviceID.toString()) {
               setStatus(msg.result.info);
             }
@@ -54,10 +61,13 @@ export function useSubscribeServiceInfo({
         };
 
         ws.onclose = () => {
-          console.log("[WS-LOG] serviceinfo closed");
+          console.log('[WS-LOG] serviceinfo closed');
           setTimeout(() => {
-            if (!isMounted()) return;
-            console.log("[WS-LOG] reopening serviceinfo");
+            if (!isMounted()) {
+              return;
+            }
+
+            console.log('[WS-LOG] reopening serviceinfo');
             wsRef.current = createWS();
           }, 3000);
         };
@@ -69,7 +79,7 @@ export function useSubscribeServiceInfo({
     }
 
     return () => {
-      console.log("[WS-LOG] workpackage close unmount");
+      console.log('[WS-LOG] workpackage close unmount');
       wsRef.current?.close();
     };
   }, [endpoint, wsRef.current?.url]);

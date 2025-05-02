@@ -1,50 +1,54 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import { Link } from "react-router-dom";
-import { Box, Container } from "@mui/material";
-import SearchBar from "../home/SearchBar.js";
+'use client';
 
-export default function Navbar() {
+import { Box, Container } from '@mui/material';
+import { Link } from 'react-router-dom';
+
+import SearchBar from '../home/SearchBar.js';
+
+export default function Navbar () {
   return (
     <Box
-      position="static"
-      component="header"
+      component='header'
+      position='static'
       sx={{
-        backgroundColor: "#F8F9FA",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+        backgroundColor: '#F8F9FA',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
       }}
     >
       <Container
-        maxWidth="lg"
+        maxWidth='lg'
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingInline: "20px",
-          paddingBlock: "10px",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingInline: '20px',
+          paddingBlock: '10px'
         }}
       >
-        <Link to="/">
+        <Link to='/'>
           <Box
-            component="img"
-            src="https://graypaper.com/static/a21b59cd32bc41e89bb89db43380ced9/d4652/jam-pen-polkadot.webp"
-            alt="JAM logo"
-            width="100px"
-            height="54px"
+            alt='JAM logo'
+            component='img'
+            height='54px'
+            src='https://graypaper.com/static/a21b59cd32bc41e89bb89db43380ced9/d4652/jam-pen-polkadot.webp'
             sx={{
-              cursor: "pointer",
-              filter: "invert(100%)",
+              cursor: 'pointer',
+              filter: 'invert(100%)'
             }}
+            width='100px'
           />
         </Link>
         <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="end"
+          alignItems='center'
+          display='flex'
+          justifyContent='end'
           sx={{
-            width: "640px",
-            height: "54px",
-            paddingInline: "25px",
+            width: '640px',
+            height: '54px',
+            paddingInline: '25px'
           }}
         >
           <SearchBar />

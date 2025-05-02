@@ -1,37 +1,32 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-} from "@mui/material";
-import { truncateHash } from "../../../utils/helper.js";
+'use client';
+
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import React, { useState } from 'react';
+
+import { truncateHash } from '../../../utils/helper.js';
 
 // Helper function to safely convert an unknown value to a ReactNode
-function renderCellValue(value: unknown): React.ReactNode {
-  if (typeof value === "string" || typeof value === "number") {
+function renderCellValue (value: unknown): React.ReactNode {
+  if (typeof value === 'string' || typeof value === 'number') {
     return value;
-  } else if (typeof value === "boolean") {
+  } else if (typeof value === 'boolean') {
     return value.toString();
   } else if (React.isValidElement(value)) {
     return value;
   }
+
   // Fallback: convert object to JSON string
   return JSON.stringify(value);
 }
 
 interface TableFormat1Props {
-  data: Array<Record<string, unknown>>;
+  data: Record<string, unknown>[];
 }
 
-export default function TableFormat1({ data }: TableFormat1Props) {
+export default function TableFormat1 ({ data }: TableFormat1Props) {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   if (!data || data.length === 0) {
@@ -43,20 +38,26 @@ export default function TableFormat1({ data }: TableFormat1Props) {
 
   return (
     <Box sx={{ my: 1 }}>
-      <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
-        <Table stickyHeader size="small">
+      <TableContainer
+        component={Paper}
+        sx={{ maxHeight: 400 }}
+      >
+        <Table
+          size='small'
+          stickyHeader
+        >
           <TableHead>
             <TableRow>
               {/* New column for row index */}
               <TableCell
-                sx={{ fontWeight: "bold", backgroundColor: "#f5f5f5" }}
+                sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
               >
                 #
               </TableCell>
               {keys.map((key) => (
                 <TableCell
                   key={key}
-                  sx={{ fontWeight: "bold", backgroundColor: "#f5f5f5" }}
+                  sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
                 >
                   {key.toUpperCase()}
                 </TableCell>
@@ -66,20 +67,20 @@ export default function TableFormat1({ data }: TableFormat1Props) {
           <TableBody>
             {data.map((row, idx) => (
               <TableRow
-                key={idx}
                 hover
-                sx={{ cursor: "pointer" }}
+                key={idx}
                 onClick={() => setExpandedRow(expandedRow === idx ? null : idx)}
+                sx={{ cursor: 'pointer' }}
               >
                 {/* Row index */}
                 <TableCell>{idx}</TableCell>
                 {keys.map((key) => (
                   <TableCell key={key}>
-                    {typeof row[key] === "string"
-                      ? row[key].startsWith("0x")
+                    {typeof row[key] === 'string'
+                      ? row[key].startsWith('0x')
                         ? expandedRow === idx
                           ? row[key]
-                          : truncateHash(row[key], "long")
+                          : truncateHash(row[key], 'long')
                         : row[key]
                       : renderCellValue(row[key])}
                   </TableCell>

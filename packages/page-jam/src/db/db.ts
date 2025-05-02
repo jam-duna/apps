@@ -1,20 +1,9 @@
-import { Dexie } from "dexie";
-import {
-  Overview,
-  Extrinsic,
-  Header,
-  KeyedItem,
-  BetaItem,
-  ChiItem,
-  GammaItem,
-  PiItem,
-  PsiItem,
-  RhoItem,
-  ThetaItem,
-  AccountItem,
-  CoreStatistics,
-  ServiceStatsSet,
-} from "../types/index.js";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
+
+import type { AccountItem, BetaItem, ChiItem, CoreStatistics, Extrinsic, GammaItem, Header, KeyedItem, Overview, PiItem, PsiItem, RhoItem, ServiceStatsSet, ThetaItem } from '../types/index.js';
+
+import { Dexie } from 'dexie';
 
 // Full Block details combining header and extrinsic
 export interface Block {
@@ -61,15 +50,15 @@ export class JamDB extends Dexie {
   public blocksFetchBlockHash!: Dexie.Table<Block, string>;
   public statesFetchBlockHash!: Dexie.Table<State, string>;
 
-  constructor() {
-    super("JamDB");
+  constructor () {
+    super('JamDB');
     // Include "block.header.slot" so we can query by slot.
     this.version(1).stores({
-      blocks: "overview.headerHash,overview.slot,overview.createdAt",
-      states: "overview.headerHash,overview.slot,overview.createdAt",
-      statistics: "hash,timestamp",
-      blocksFetchBlockHash: "overview.blockHash",
-      statesFetchBlockHash: "overview.blockHash",
+      blocks: 'overview.headerHash,overview.slot,overview.createdAt',
+      states: 'overview.headerHash,overview.slot,overview.createdAt',
+      statistics: 'hash,timestamp',
+      blocksFetchBlockHash: 'overview.blockHash',
+      statesFetchBlockHash: 'overview.blockHash'
     });
   }
 }

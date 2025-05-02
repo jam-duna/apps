@@ -1,17 +1,23 @@
-import { Container, Typography } from "@mui/material";
-import React from "react";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-export default function Loading() {
+import { Container, Typography } from '@mui/material';
+import React from 'react';
+
+export default function Loading () {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
+    <Container
+      maxWidth='lg'
+      sx={{ mt: 4 }}
+    >
       <Typography
-        variant="body2"
-        fontSize="16px"
-        width="100%"
-        textAlign="center"
-        fontWeight="bold"
-        color="#444"
+        color='#444'
+        fontSize='16px'
+        fontWeight='bold'
         paddingTop={10}
+        textAlign='center'
+        variant='body2'
+        width='100%'
       >
         Loading ...
       </Typography>

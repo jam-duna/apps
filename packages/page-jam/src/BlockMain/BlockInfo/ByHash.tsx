@@ -14,8 +14,8 @@ import { useApi, useIsMountedRef } from '@polkadot/react-hooks';
 import { convertWeight } from '@polkadot/react-hooks/useWeight';
 import { formatNumber, isBn } from '@polkadot/util';
 
-import Events from '../Events.js';
 import { useTranslation } from '../../translate.js';
+import Events from '../Events.js';
 import Extrinsics from './Extrinsics.js';
 import Justifications from './Justifications.js';
 import Logs from './Logs.js';

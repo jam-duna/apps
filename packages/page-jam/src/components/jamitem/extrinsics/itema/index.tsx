@@ -1,31 +1,43 @@
-import React from 'react'
-import { Box, Tooltip, Typography } from '@mui/material'
-import { ExtrinsicsProps } from '../index.js';
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-export function ExtrA(param : ExtrinsicsProps) {
+import type { ExtrinsicsProps } from '../index.js';
 
+import { Box, Tooltip, Typography } from '@mui/material';
+import React from 'react';
+
+export function ExtrA (param: ExtrinsicsProps) {
   return (
-    <Tooltip title="Extrinsics Assurances" placement='top' arrow>
+    <Tooltip
+      arrow
+      placement='top'
+      title='Extrinsics Assurances'
+    >
       <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
+        alignItems='center'
+        display='flex'
+        justifyContent='center'
         sx={{
-          cursor: "pointer",
-          paddingInline: "5px",
-          transition: "all 0.3s ease-in-out",
-          color: "#ffffff",
-          backgroundColor: "#1b5e20c0",
-          borderRadius: "4px",
-          ":hover": {
-            backgroundColor: "#1b5e20a0",
+          cursor: 'pointer',
+          paddingInline: '5px',
+          transition: 'all 0.3s ease-in-out',
+          color: '#ffffff',
+          backgroundColor: '#1b5e20c0',
+          borderRadius: '4px',
+          ':hover': {
+            backgroundColor: '#1b5e20a0'
           }
         }}
       >
-        <Typography variant="body2" fontWeight="bold" fontSize="12px" paddingTop="2px">
+        <Typography
+          fontSize='12px'
+          fontWeight='bold'
+          paddingTop='2px'
+          variant='body2'
+        >
           A-{param.count}
         </Typography>
       </Box>
     </Tooltip>
-  )
+  );
 }

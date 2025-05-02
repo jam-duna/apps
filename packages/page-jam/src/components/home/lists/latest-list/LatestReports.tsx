@@ -1,49 +1,52 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import { Link } from "react-router-dom";
-import { Paper, Typography } from "@mui/material"; // Report icon
-import { Block } from "../../../../db/db.js";
-import { filterWorkReportBlocks } from "../../../../utils/extrinsics.js";
-import WorkReportListItem from "../list-item/WorkReportListItem.js";
+'use client';
 
-type LatestReportsProps = {
+import type { Block } from '../../../../db/db.js';
+
+import { Paper, Typography } from '@mui/material'; // Report icon
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { filterWorkReportBlocks } from '../../../../utils/extrinsics.js';
+import WorkReportListItem from '../list-item/WorkReportListItem.js';
+
+interface LatestReportsProps {
   latestBlocks: Block[];
-};
+}
 
-export default function LatestReports({ latestBlocks }: LatestReportsProps) {
+export default function LatestReports ({ latestBlocks }: LatestReportsProps) {
   const filteredBlocks = filterWorkReportBlocks(latestBlocks).slice(0, 5);
 
   return (
-    <Paper variant="outlined">
+    <Paper variant='outlined'>
       <Typography
-        variant="h6"
         gutterBottom
-        sx={{ mb: 2, px: 1.5, py: 2, borderBottom: "1px solid #ccc", m: 0 }}
+        sx={{ mb: 2, px: 1.5, py: 2, borderBottom: '1px solid #ccc', m: 0 }}
+        variant='h6'
       >
         Latest Work Reports
       </Typography>
-
       {filteredBlocks.map((blockItem) => {
         return (
           <WorkReportListItem
-            key={blockItem?.overview?.headerHash}
             blockItem={blockItem}
+            key={blockItem?.overview?.headerHash}
           />
         );
       })}
-
       <Link
-        to="/jam/list/workreport"
         style={{
-          textDecoration: "none",
-          color: "inherit",
-          textAlign: "center",
+          textDecoration: 'none',
+          color: 'inherit',
+          textAlign: 'center'
         }}
+        to='/jam/list/workreport'
       >
         <Typography
-          variant="subtitle2"
-          sx={{ p: 2, "&:hover": { backgroundColor: "#f9f9f9" } }}
+          sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+          variant='subtitle2'
         >
           View All Reports
         </Typography>

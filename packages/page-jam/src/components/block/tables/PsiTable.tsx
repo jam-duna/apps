@@ -1,19 +1,14 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-} from "@mui/material";
-import { truncateHash } from "../../../utils/helper.js";
-import { PsiItem } from "../../../types/index.js"; // Ensure PsiItem is defined as shown
+'use client';
+
+import type { PsiItem } from '../../../types/index.js'; // Ensure PsiItem is defined as shown
+
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import React, { useState } from 'react';
+
+import { truncateHash } from '../../../utils/helper.js';
 
 interface PsiTableRow {
   category: string;
@@ -24,19 +19,21 @@ interface PsiTableProps {
   data: PsiItem;
 }
 
-export default function PsiTable({ data }: PsiTableProps) {
+export default function PsiTable ({ data }: PsiTableProps) {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   // Convert PsiItem into an array of rows.
   const rows: PsiTableRow[] = [];
-  const categories: Array<keyof PsiItem> = [
-    "good",
-    "bad",
-    "wonky",
-    "offenders",
+  const categories: (keyof PsiItem)[] = [
+    'good',
+    'bad',
+    'wonky',
+    'offenders'
   ];
+
   categories.forEach((category) => {
     const arr = data[category];
+
     if (arr && arr.length > 0) {
       arr.forEach((hash) => {
         rows.push({ category, hash });
@@ -50,32 +47,42 @@ export default function PsiTable({ data }: PsiTableProps) {
 
   return (
     <Box sx={{ my: 4 }}>
-      <Typography variant="h5" sx={{ mb: 2 }}>
+      <Typography
+        sx={{ mb: 2 }}
+        variant='h5'
+      >
         Psi Data
       </Typography>
-      <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
-        <Table stickyHeader size="small">
+      <TableContainer
+        component={Paper}
+        sx={{ maxHeight: 400 }}
+      >
+        <Table
+          size='small'
+          stickyHeader
+        >
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>#</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Category</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Hash</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>#</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Hash</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row, idx) => {
               const expanded = expandedRow === idx;
+
               return (
                 <TableRow
-                  key={idx}
                   hover
-                  sx={{ cursor: "pointer" }}
+                  key={idx}
                   onClick={() => setExpandedRow(expanded ? null : idx)}
+                  sx={{ cursor: 'pointer' }}
                 >
                   <TableCell>{idx}</TableCell>
                   <TableCell>{row.category}</TableCell>
                   <TableCell>
-                    {expanded ? row.hash : truncateHash(row.hash, "long")}
+                    {expanded ? row.hash : truncateHash(row.hash, 'long')}
                   </TableCell>
                 </TableRow>
               );

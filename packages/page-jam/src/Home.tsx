@@ -1,42 +1,30 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useState } from "react";
-import {
-  Container,
-  Grid,
-  Box,
-  FormControlLabel,
-  Typography,
-} from "@mui/material";
-import LatestBlocks from "./components/home/lists/latest-list/LatestBlocks.js";
-import { Block, State, DB_LIMIT } from "./db/db.js";
-import MainViewGrid from "./components/home/MainViewGrid.js";
-import { CustomToggle } from "./components/display/CustomToggle.js";
-import { GridData, parseBlocksToGridData } from "./utils/parseBlocksToGridData.js";
-import {
-  fetchAggregateCoreStatistics,
-  fetchAggregateServiceStatistics,
-  filterBlocks,
-  filterStates,
-  filterWorkPackages,
-} from "./utils/blockAnalyzer.js";
-import {
-  ListServices,
-  RecentWorkPackages,
-  ReportWithTime,
-} from "./components/jamitem/index.js";
-import { fetchListServices } from "./hooks/useFetchListServices.js";
-import { CoreStatistics, ServiceInfoDetail, ServiceStatistics } from "./types/index.js";
-import { useWsRpcContext } from "./contexts/WSRpcContext/index.js"
-import { CoreStatsGrid } from "./components/core/index.js";
-import { ServiceStatsGrid } from "./components/service/index.js";
-import { HomeIcon } from "./components/Icons/index.js";
-import { getRpcUrlFromWs } from "./utils/ws.js";
-import Loading from "./components/home/Loading.js";
+import type { ReportWithTime } from './components/jamitem/index.js';
+import type { Block, State } from './db/db.js';
+import type { CoreStatistics, ServiceInfoDetail, ServiceStatistics } from './types/index.js';
+import type { GridData } from './utils/parseBlocksToGridData.js';
 
+import { Box, Container, FormControlLabel, Grid, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
-function Home() {
+import { CoreStatsGrid } from './components/core/index.js';
+import { CustomToggle } from './components/display/CustomToggle.js';
+import LatestBlocks from './components/home/lists/latest-list/LatestBlocks.js';
+import Loading from './components/home/Loading.js';
+import MainViewGrid from './components/home/MainViewGrid.js';
+import { HomeIcon } from './components/Icons/index.js';
+import { ListServices, RecentWorkPackages } from './components/jamitem/index.js';
+import { ServiceStatsGrid } from './components/service/index.js';
+import { useWsRpcContext } from './contexts/WSRpcContext/index.js';
+import { DB_LIMIT } from './db/db.js';
+import { fetchListServices } from './hooks/useFetchListServices.js';
+import { fetchAggregateCoreStatistics, fetchAggregateServiceStatistics, filterBlocks, filterStates, filterWorkPackages } from './utils/blockAnalyzer.js';
+import { parseBlocksToGridData } from './utils/parseBlocksToGridData.js';
+import { getRpcUrlFromWs } from './utils/ws.js';
+
+function Home () {
   const [filteredBlocks, setFilteredBlocks] = useState<Block[]>([]);
   const [filteredStates, setFilteredStates] = useState<State[]>([]);
   const [workPackages, setWorkPackages] = useState<ReportWithTime[]>([]);
@@ -46,15 +34,15 @@ function Home() {
     timeslots: [],
     timestamps: [],
     cores: [],
-    coreStatistics: {},
+    coreStatistics: {}
   });
   const [showOnlyWorkPackages, setShowOnlyWorkPackages] = useState(true);
   const [coreStatistics, setCoreStatistics] = useState<Record<
-    number,
-    CoreStatistics
+  number,
+  CoreStatistics
   > | null>(null);
   const [serviceStatistics, setServiceStatistics] = useState<
-    { time: number; stat: ServiceStatistics }[]
+  { time: number; stat: ServiceStatistics }[]
   >([]);
   const [showStatistics, setShowStatistics] = useState(false);
 
@@ -70,24 +58,28 @@ function Home() {
   useEffect(() => {
     const fetchBlocks = async () => {
       const blocks = await filterBlocks(DB_LIMIT);
+
       setFilteredBlocks(blocks);
       setIsBlocksLoaded(true);
     };
 
     const fetchStates = async () => {
       const states = await filterStates(DB_LIMIT);
+
       setFilteredStates(states);
       setIsStatesLoaded(true);
     };
 
     const fetchWorkPackages = async () => {
       const reports = await filterWorkPackages();
+
       setWorkPackages(reports);
       setIsWorkPackagesLoaded(true);
     };
 
     const fetchListService = async () => {
-      const services = await fetchListServices(getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
+      const services = await fetchListServices(getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org'));
+
       setServiceList(services);
       setIsServicesLoaded(true);
     };
@@ -104,15 +96,18 @@ function Home() {
       const service = await fetchAggregateServiceStatistics(
         showOnlyWorkPackages
       );
+
       setCoreStatistics(core);
       setServiceStatistics(service);
       setIsStatsLoaded(true);
     };
+
     fetchAggregateStatistics();
   }, [currentStatistics, showOnlyWorkPackages]);
 
   useEffect(() => {
     const data = parseBlocksToGridData(filteredBlocks, filteredStates);
+
     setGridData(data);
     setIsGridLoaded(true);
   }, [filteredBlocks]);
@@ -128,43 +123,44 @@ function Home() {
     );
   };
 
-  if (!isLoaded()) return <Loading />;
+  if (!isLoaded()) {
+    return <Loading />;
+  }
 
   return (
     <Container
-      className="hasOwnMaxWidth"
-      maxWidth="lg"
+      className='hasOwnMaxWidth'
+      maxWidth='lg'
       sx={{ mt: 4 }}
     >
       {/* header display */}
       <Box
         sx={{
-          display: "inline-flex",
-          alignItems: "center",
+          display: 'inline-flex',
+          alignItems: 'center',
           mb: 3,
           ml: 1,
-          gap: "10px",
+          gap: '10px'
         }}
       >
         <HomeIcon
-          color={"#444"}
+          color={'#444'}
           size={24}
         />
         <Typography
-          color="#444"
-          fontSize="28px"
-          fontWeight={"bold"}
-          variant="subtitle2"
+          color='#444'
+          fontSize='28px'
+          fontWeight={'bold'}
+          variant='subtitle2'
         >
           Home
         </Typography>
       </Box>
-
       {/* grid display */}
       <Box
-        alignItems={"end"}
-        display={"flex"}
-        flexDirection={"column"}
+        alignItems={'end'}
+        display={'flex'}
+        flexDirection={'column'}
         gap={1}
       >
         <FormControlLabel
@@ -174,9 +170,9 @@ function Home() {
               onChange={() => setShowOnlyWorkPackages((prev) => !prev)}
             />
           }
-          label={showOnlyWorkPackages ? "Active" : "All"}
-          labelPlacement="start"
-          sx={{ paddingInline: "10px" }}
+          label={showOnlyWorkPackages ? 'Active' : 'All'}
+          labelPlacement='start'
+          sx={{ paddingInline: '10px' }}
         />
         <MainViewGrid
           cores={gridData.cores}
@@ -188,9 +184,13 @@ function Home() {
           timestamps={gridData.timestamps}
         />
       </Box>
-
       {/* stats graph display */}
-      <Box display={"flex"} flexDirection={"column"} alignItems={"end"} gap={1}>
+      <Box
+        alignItems={'end'}
+        display={'flex'}
+        flexDirection={'column'}
+        gap={1}
+      >
         <FormControlLabel
           control={
             <CustomToggle
@@ -198,47 +198,58 @@ function Home() {
               onChange={() => setShowStatistics((prev) => !prev)}
             />
           }
-          label={showStatistics ? "SERVICE" : "CORE"}
-          labelPlacement="start"
-          sx={{ paddingInline: "10px" }}
+          label={showStatistics ? 'SERVICE' : 'CORE'}
+          labelPlacement='start'
+          sx={{ paddingInline: '10px' }}
         />
-
-        {showStatistics === false ? (
-          coreStatistics && Object.entries(coreStatistics).length !== 0 ? (
-            <CoreStatsGrid stats={coreStatistics} />
-          ) : (
-            <Typography
-              variant="h6"
-              fontSize="16px"
-              textAlign="center"
-              color="#444444"
-              width="100%"
-            >
+        {showStatistics === false
+          ? (
+            coreStatistics && Object.entries(coreStatistics).length !== 0
+              ? (
+                <CoreStatsGrid stats={coreStatistics} />
+              )
+              : (
+                <Typography
+                  color='#444444'
+                  fontSize='16px'
+                  textAlign='center'
+                  variant='h6'
+                  width='100%'
+                >
               Loading core statistics...
-            </Typography>
+                </Typography>
+              )
           )
-        ) : serviceStatistics.length > 0 ? (
-          <ServiceStatsGrid stats={serviceStatistics.slice(0, 8)} />
-        ) : (
-          <Typography
-            variant="h6"
-            fontSize="16px"
-            textAlign="center"
-            color="#444444"
-            width="100%"
-          >
+          : serviceStatistics.length > 0
+            ? (
+              <ServiceStatsGrid stats={serviceStatistics.slice(0, 8)} />
+            )
+            : (
+              <Typography
+                color='#444444'
+                fontSize='16px'
+                textAlign='center'
+                variant='h6'
+                width='100%'
+              >
             Loading service statistics...
-          </Typography>
-        )}
+              </Typography>
+            )}
       </Box>
-
       {/* list display */}
-      <Grid marginTop="20px" container spacing={2}>
+      <Grid
+        container
+        marginTop='20px'
+        spacing={2}
+      >
         <Grid size={6}>
           <LatestBlocks latestBlocks={filteredBlocks.slice(0, 12)} />
         </Grid>
         <Grid size={6}>
-          <Grid container spacing={4}>
+          <Grid
+            container
+            spacing={4}
+          >
             <Grid size={12}>
               <RecentWorkPackages
                 reports={workPackages}

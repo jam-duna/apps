@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from 'react';
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
+
 import type { DefinitionRpcExt } from '@polkadot/types/types';
+
+import React, { useEffect, useState } from 'react';
 
 interface MockInputRpcProps {
   className?: string;
@@ -12,13 +16,11 @@ interface MockInputRpcProps {
   onChange?: (value: DefinitionRpcExt) => void;
 }
 
-export default function MockInputRpc({
-  className = '',
-  jsonrpc,
-  defaultSection,
+export default function MockInputRpc ({ className = '',
   defaultMethod,
-  onChange
-}: MockInputRpcProps): React.ReactElement {
+  defaultSection,
+  jsonrpc,
+  onChange }: MockInputRpcProps): React.ReactElement {
   // 1) only one section: 'jam'
   const sections = Object.keys(jsonrpc);
   const [section, setSection] = useState<string>(defaultSection || sections[0]);
@@ -42,25 +44,30 @@ export default function MockInputRpc({
     <div className={className}>
       {/* Section selector – small */}
       <select
-        className="small"
-        value={section}
+        className='small'
         onChange={(e) => setSection(e.target.value)}
+        value={section}
       >
         {sections.map((sec) => (
-          <option key={sec} value={sec}>
+          <option
+            key={sec}
+            value={sec}
+          >
             {sec}
           </option>
         ))}
       </select>
-
       {/* Method selector – large */}
       <select
-        className="large"
-        value={method}
+        className='large'
         onChange={(e) => setMethod(e.target.value)}
+        value={method}
       >
         {methods.map((m) => (
-          <option key={m} value={m}>
+          <option
+            key={m}
+            value={m}
+          >
             {m}
           </option>
         ))}

@@ -1,23 +1,16 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-} from "@mui/material";
+'use client';
+
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import React from 'react';
 
 interface XiTableProps {
   data: string[][];
 }
 
-export default function XiTable({ data }: XiTableProps) {
+export default function XiTable ({ data }: XiTableProps) {
   // Map over data to keep the original index, then filter out empty rows.
   const nonEmptyRows = data
     .map((row, index) => ({ index, row }))
@@ -29,21 +22,27 @@ export default function XiTable({ data }: XiTableProps) {
 
   return (
     <Box sx={{ my: 4 }}>
-      <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
-        <Table stickyHeader size="small">
+      <TableContainer
+        component={Paper}
+        sx={{ maxHeight: 400 }}
+      >
+        <Table
+          size='small'
+          stickyHeader
+        >
           <TableHead>
             <TableRow>
               <TableCell
                 sx={{
-                  fontWeight: "bold",
-                  backgroundColor: "#f5f5f5",
-                  width: "100px",
+                  fontWeight: 'bold',
+                  backgroundColor: '#f5f5f5',
+                  width: '100px'
                 }}
               >
                 Index
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold", backgroundColor: "#f5f5f5" }}
+                sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
               >
                 Value(s)
               </TableCell>
@@ -51,10 +50,13 @@ export default function XiTable({ data }: XiTableProps) {
           </TableHead>
           <TableBody>
             {nonEmptyRows.map(({ index, row }) => (
-              <TableRow key={index} hover>
+              <TableRow
+                hover
+                key={index}
+              >
                 <TableCell>{index}</TableCell>
-                <TableCell sx={{ fontSize: "12px", letterSpacing: "0.04rem" }}>
-                  {row.join(", ")}
+                <TableCell sx={{ fontSize: '12px', letterSpacing: '0.04rem' }}>
+                  {row.join(', ')}
                 </TableCell>
               </TableRow>
             ))}

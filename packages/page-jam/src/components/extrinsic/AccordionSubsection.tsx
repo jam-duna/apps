@@ -1,17 +1,13 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Box,
-  Typography,
-  Tooltip,
-  IconButton,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { AssuranceIcon, DisputeIcon, GuaranteeIcon, PreimageIcon, TicketIcon } from "../Icons/index.js";
+'use client';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Tooltip, Typography } from '@mui/material';
+import React from 'react';
+
+import { AssuranceIcon, DisputeIcon, GuaranteeIcon, PreimageIcon, TicketIcon } from '../Icons/index.js';
 
 interface AccordionSubsectionProps {
   icon: string;
@@ -21,55 +17,74 @@ interface AccordionSubsectionProps {
   children: React.ReactNode;
 }
 
-export default function AccordionSubsection({
-  icon,
-  title,
+export default function AccordionSubsection ({ children,
   count,
   emptyMessage,
-  children,
-}: AccordionSubsectionProps) {
+  icon,
+  title }: AccordionSubsectionProps) {
   return (
     <Accordion
       disableGutters
       sx={{
         py: 1,
-        border: "none",
-        boxShadow: "none",
-        "&:before": { display: "none" },
+        border: 'none',
+        boxShadow: 'none',
+        '&:before': { display: 'none' }
       }}
     >
       <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
         sx={{
           px: 0,
           py: 0,
-          minHeight: "auto",
-          "& .MuiAccordionSummary-content": { m: 0, p: 0 },
+          minHeight: 'auto',
+          '& .MuiAccordionSummary-content': { m: 0, p: 0 }
         }}
-        expandIcon={<ExpandMoreIcon />}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Tooltip title={`${title} details`}>
-            <IconButton size="small" sx={{ mr: 1 }} component="span">
-              {icon === "ticket" && <TicketIcon size={18} color={'#555'}/>}
-              {icon === "dispute" && <DisputeIcon size={18} color={'#555'}/>}
-              {icon === "guarantee" && <GuaranteeIcon size={18} color={'#555'}/>}
-              {icon === "assurance" && <AssuranceIcon size={18} color={'#555'}/>}
-              {icon === "preimage" && <PreimageIcon size={18} color={'#555'}/>}
+            <IconButton
+              component='span'
+              size='small'
+              sx={{ mr: 1 }}
+            >
+              {icon === 'ticket' && <TicketIcon
+                color={'#555'}
+                size={18}
+              />}
+              {icon === 'dispute' && <DisputeIcon
+                color={'#555'}
+                size={18}
+              />}
+              {icon === 'guarantee' && <GuaranteeIcon
+                color={'#555'}
+                size={18}
+              />}
+              {icon === 'assurance' && <AssuranceIcon
+                color={'#555'}
+                size={18}
+              />}
+              {icon === 'preimage' && <PreimageIcon
+                color={'#555'}
+                size={18}
+              />}
             </IconButton>
           </Tooltip>
-          <Typography variant="subtitle1">
+          <Typography variant='subtitle1'>
             {title} ({count})
           </Typography>
         </Box>
       </AccordionSummary>
       <AccordionDetails sx={{ px: 5, m: 0 }}>
-        {count > 0 ? (
-          children
-        ) : (
-          <Box sx={{ py: 1 }}>
-            <Typography variant="body2">{emptyMessage}</Typography>
-          </Box>
-        )}
+        {count > 0
+          ? (
+            children
+          )
+          : (
+            <Box sx={{ py: 1 }}>
+              <Typography variant='body2'>{emptyMessage}</Typography>
+            </Box>
+          )}
       </AccordionDetails>
     </Accordion>
   );

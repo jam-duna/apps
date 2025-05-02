@@ -1,18 +1,16 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  Box,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { LabeledRow } from "../display/LabeledRow.js";
-import { moreDetailsMapping } from "../../utils/tooltipDetails.js";
-import { DetailsIcon } from "../Icons/index.js";
-import { Hash } from "../jamitem/index.js";
+'use client';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import React from 'react';
+
+import { moreDetailsMapping } from '../../utils/tooltipDetails.js';
+import { LabeledRow } from '../display/LabeledRow.js';
+import { DetailsIcon } from '../Icons/index.js';
+import { Hash } from '../jamitem/index.js';
 
 interface HeaderProps {
   parent: string;
@@ -25,28 +23,37 @@ interface MoreDetailsAccordionProps {
   header: HeaderProps;
 }
 
-export default function MoreDetailsAccordion({
-  header,
-}: MoreDetailsAccordionProps) {
+export default function MoreDetailsAccordion ({ header }: MoreDetailsAccordionProps) {
   return (
     <Accordion sx={{ mt: 2 }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Box display="flex" gap="5px" sx={{ px: 2 }} alignItems="center">
-          <DetailsIcon size={16} color={"#555"}/>
-          <Typography variant="body1" mt="2px">
-            {"More Details"}
+        <Box
+          alignItems='center'
+          display='flex'
+          gap='5px'
+          sx={{ px: 2 }}
+        >
+          <DetailsIcon
+            color={'#555'}
+            size={16}
+          />
+          <Typography
+            mt='2px'
+            variant='body1'
+          >
+            {'More Details'}
           </Typography>
         </Box>
       </AccordionSummary>
       <AccordionDetails sx={{ px: 3 }}>
         {Object.entries(moreDetailsMapping).map(([key, { label, tooltip }]) => (
           <LabeledRow
+            icon={label}
             key={key}
             label={label}
             tooltip={tooltip}
-            icon={label}
             value={
-              <Hash hash={header[key as keyof HeaderProps]}/>
+              <Hash hash={header[key as keyof HeaderProps]} />
             }
           />
         ))}

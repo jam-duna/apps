@@ -1,43 +1,43 @@
 // src/components/WorkReportListItem.tsx
 
-"use client";
+'use client';
 
-import React from "react";
-import { Link } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import { Block } from "../../../../db/db.js";
-import { truncateHash, getRelativeTime, pluralize } from "../../../../utils/helper.js";
+import type { Block } from '../../../../db/db.js';
+
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Box, Typography } from '@mui/material';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { getRelativeTime, pluralize, truncateHash } from '../../../../utils/helper.js';
 
 export interface WorkReportListItemProps {
   blockItem: Block;
 }
 
-export default function WorkReportListItem({
-  blockItem,
-}: WorkReportListItemProps) {
+export default function WorkReportListItem ({ blockItem }: WorkReportListItemProps) {
   const guaranteesCount = blockItem.extrinsic.guarantees.length;
   const createdAt = blockItem?.overview?.createdAt;
-  const relativeTime = createdAt ? getRelativeTime(createdAt) : "N/A";
-  const headerHash = blockItem?.overview?.headerHash || "";
-  const shortHash = truncateHash(headerHash, "long");
+  const relativeTime = createdAt ? getRelativeTime(createdAt) : 'N/A';
+  const headerHash = blockItem?.overview?.headerHash || '';
+  const shortHash = truncateHash(headerHash, 'long');
   const slot = blockItem.header.slot;
 
   return (
     <Link
       key={headerHash}
+      style={{ textDecoration: 'none', color: 'inherit' }}
       to={`/jam/block/${headerHash}/workreport`}
-      style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
           p: 1.5,
           borderRadius: 1,
-          transition: "background-color 0.2s",
-          "&:hover": { backgroundColor: "#f9f9f9" },
-          borderBottom: "1px solid #ddd",
+          transition: 'background-color 0.2s',
+          '&:hover': { backgroundColor: '#f9f9f9' },
+          borderBottom: '1px solid #ddd'
         }}
       >
         {/* Left icon */}
@@ -46,37 +46,41 @@ export default function WorkReportListItem({
             width: 40,
             height: 40,
             borderRadius: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#fff",
-            border: "1px solid #ddd",
-            mr: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#fff',
+            border: '1px solid #ddd',
+            mr: 2
           }}
         >
-          <AssignmentIcon fontSize="small" />
+          <AssignmentIcon fontSize='small' />
         </Box>
-
         {/* Middle: Report count and relative time */}
         <Box sx={{ flex: 1 }}>
-          <Typography variant="subtitle1">
+          <Typography variant='subtitle1'>
             Slot {slot} - {guaranteesCount}
-            {pluralize(" Report", guaranteesCount)}
+            {pluralize(' Report', guaranteesCount)}
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            color='textSecondary'
+            variant='body2'
+          >
             {relativeTime} ago
           </Typography>
         </Box>
-
         {/* Right: truncated header hash */}
-        <Box sx={{ textAlign: "right" }}>
+        <Box sx={{ textAlign: 'right' }}>
           <Typography
-            variant="body2"
-            sx={{ color: "#1976d2", textDecoration: "underline" }}
+            sx={{ color: '#1976d2', textDecoration: 'underline' }}
+            variant='body2'
           >
             {shortHash}
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            color='textSecondary'
+            variant='body2'
+          >
             header hash
           </Typography>
         </Box>

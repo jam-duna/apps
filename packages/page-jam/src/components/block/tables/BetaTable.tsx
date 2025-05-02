@@ -1,25 +1,20 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-} from "@mui/material";
-import type { BetaItem } from "../../../types/index.js"; // Adjust the import path if needed
-import { truncateHash } from "../../../utils/helper.js";
+'use client';
+
+import type { BetaItem } from '../../../types/index.js'; // Adjust the import path if needed
+
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import React, { useState } from 'react';
+
+import { truncateHash } from '../../../utils/helper.js';
 
 interface BetaTableProps {
   data: BetaItem[];
 }
 
-export default function BetaTable({ data }: BetaTableProps) {
+export default function BetaTable ({ data }: BetaTableProps) {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   if (!data || data.length === 0) {
@@ -28,47 +23,54 @@ export default function BetaTable({ data }: BetaTableProps) {
 
   return (
     <Box sx={{ my: 4 }}>
-      <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
-        <Table stickyHeader size="small">
+      <TableContainer
+        component={Paper}
+        sx={{ maxHeight: 400 }}
+      >
+        <Table
+          size='small'
+          stickyHeader
+        >
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>#</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Header Hash</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>MMR Peaks</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>State Root</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Reported Count</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>#</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Header Hash</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>MMR Peaks</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>State Root</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Reported Count</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((item, idx) => (
               <TableRow
-                key={idx}
                 hover
-                sx={{ cursor: "pointer" }}
+                key={idx}
                 onClick={() => setExpandedRow(expandedRow === idx ? null : idx)}
+                sx={{ cursor: 'pointer' }}
               >
                 <TableCell>{idx}</TableCell>
                 <TableCell>
                   {expandedRow === idx
                     ? item.header_hash
-                    : truncateHash(item.header_hash, "long")}
+                    : truncateHash(item.header_hash, 'long')}
                 </TableCell>
                 <TableCell>
                   {(() => {
                     const peaks = item.mmr.peaks
                       .filter((p) => p !== null)
-                      .join("\n");
+                      .join('\n');
+
                     return expandedRow === idx
                       ? peaks
-                      : truncateHash(peaks, "long");
+                      : truncateHash(peaks, 'long');
                   })()}
                 </TableCell>
                 <TableCell>
                   {expandedRow === idx
                     ? item.state_root
-                    : truncateHash(item.state_root, "long")}
+                    : truncateHash(item.state_root, 'long')}
                 </TableCell>
-                <TableCell sx={{ minWidth: "100px", whiteSpace: "nowrap" }}>
+                <TableCell sx={{ minWidth: '100px', whiteSpace: 'nowrap' }}>
                   {item.reported.length}
                 </TableCell>
               </TableRow>

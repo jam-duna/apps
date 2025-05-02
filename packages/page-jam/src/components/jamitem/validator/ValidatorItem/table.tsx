@@ -1,17 +1,16 @@
-import { LabeledRow } from "../../../display/LabeledRow.js";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Typography,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import React, { useEffect, useState } from "react";
-import { Hash } from "../../hash/index.js";
-import { KeyedItem } from "../../../../types/index.js";
-import { truncateHash } from "../../../../utils/helper.js";
-import {Link} from "react-router-dom";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
+
+import type { KeyedItem } from '../../../../types/index.js';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { truncateHash } from '../../../../utils/helper.js';
+import { LabeledRow } from '../../../display/LabeledRow.js';
+import { Hash } from '../../hash/index.js';
 
 interface Props {
   validator: KeyedItem;
@@ -20,13 +19,12 @@ interface Props {
   hash: string;
 }
 
-export function ValidatorTable({ validator, title, badge, hash }: Props) {
-
+export function ValidatorTable ({ badge, hash, title, validator }: Props) {
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     // Only set default expanded state on initial render
-    setExpanded(badge === "");
+    setExpanded(badge === '');
   }, [badge]);
 
   const handleChange = () => {
@@ -36,64 +34,66 @@ export function ValidatorTable({ validator, title, badge, hash }: Props) {
   return (
     <Accordion
       expanded={expanded}
+      onChange={handleChange}
       sx={{
         px: 2,
         py: 1,
         my: 1,
-        boxShadow: "none",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
+        boxShadow: 'none',
+        border: '1px solid #ccc',
+        borderRadius: '4px'
       }}
-      onChange={handleChange}
     >
       <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
         sx={{
           px: 0,
           py: 0,
-          minHeight: "auto",
-          "& .MuiAccordionSummary-content": { m: 0, p: 0 },
+          minHeight: 'auto',
+          '& .MuiAccordionSummary-content': { m: 0, p: 0 }
         }}
-        expandIcon={<ExpandMoreIcon />}
       >
         <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="start"
-          gap="10px"
+          alignItems='center'
+          display='flex'
+          gap='10px'
+          justifyContent='start'
         >
-          <Typography variant="h6" fontWeight={"bold"}>
+          <Typography
+            fontWeight={'bold'}
+            variant='h6'
+          >
             {title}
           </Typography>
           <Typography
-            variant="body2"
-            fontSize="12px"
+            fontSize='12px'
             sx={{
-              px: "4px",
-              py: "0px",
-              backgroundColor: "#888",
-              color: "#fff",
-              borderRadius: "4px",
+              px: '4px',
+              py: '0px',
+              backgroundColor: '#888',
+              color: '#fff',
+              borderRadius: '4px'
             }}
+            variant='body2'
           >
             {badge}
           </Typography>
         </Box>
       </AccordionSummary>
-
       <AccordionDetails
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start'
         }}
       >
         <LabeledRow
-          label="Bandersnatch:"
-          tooltip="Bandersnatch"
+          label='Bandersnatch:'
+          tooltip='Bandersnatch'
           value={
             <Link
               to={
-                hash === "latest"
+                hash === 'latest'
                   ? `/jam/validator/key/${validator.bandersnatch}`
                   : `/jam/validator/key/${validator.bandersnatch}/${hash}`
               }
@@ -103,12 +103,12 @@ export function ValidatorTable({ validator, title, badge, hash }: Props) {
           }
         />
         <LabeledRow
-          label="Ed25519:"
-          tooltip="Ed25519"
+          label='Ed25519:'
+          tooltip='Ed25519'
           value={
             <Link
               to={
-                hash === "latest"
+                hash === 'latest'
                   ? `/jam/validator/key/${validator.ed25519}`
                   : `/jam/validator/key/${validator.ed25519}/${hash}`
               }
@@ -118,12 +118,12 @@ export function ValidatorTable({ validator, title, badge, hash }: Props) {
           }
         />
         <LabeledRow
-          label="Bls:"
-          tooltip="Bls"
+          label='Bls:'
+          tooltip='Bls'
           value={
             <Link
               to={
-                hash === "latest"
+                hash === 'latest'
                   ? `/jam/validator/key/${validator.bls}`
                   : `/jam/validator/key/${validator.bls}/${hash}`
               }
@@ -133,14 +133,16 @@ export function ValidatorTable({ validator, title, badge, hash }: Props) {
           }
         />
         <LabeledRow
-          label="Metadata:"
-          tooltip="Metadata"
+          label='Metadata:'
+          tooltip='Metadata'
           value={
-            truncateHash(validator.metadata, "long") !== "0x000000...000000" ? (
-              <Hash hash={validator.metadata} />
-            ) : (
-              "-"
-            )
+            truncateHash(validator.metadata, 'long') !== '0x000000...000000'
+              ? (
+                <Hash hash={validator.metadata} />
+              )
+              : (
+                '-'
+              )
           }
         />
       </AccordionDetails>

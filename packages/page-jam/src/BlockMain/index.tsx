@@ -7,12 +7,12 @@ import type { KeyedEvent } from '@polkadot/react-hooks/ctx/types';
 import React from 'react';
 
 import { Columar } from '@polkadot/react-components';
+import { useBlockAuthors, useBlockEvents } from '@polkadot/react-hooks';
 
 import BlockHeaders from './BlockHeaders.js';
 import Events from './Events.js';
 import Query from './Query.js';
 import Summary from './Summary.js';
-import { useBlockAuthors, useBlockEvents } from '@polkadot/react-hooks';
 
 interface Props {
   eventCount: number;
@@ -30,7 +30,7 @@ function BlockMain (): React.ReactElement<Props> {
         <Query />
         <Summary eventCount={eventCount} />
       */}
-      
+
       <Columar>
         <BlockHeaders headers={lastHeaders} />
         {/*

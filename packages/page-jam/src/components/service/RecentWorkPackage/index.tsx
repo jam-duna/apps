@@ -1,11 +1,16 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import { Link } from "react-router-dom";
-import { Box, Paper, Typography } from "@mui/material"; // Report icon
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import { State } from "../../../db/db.js";
-import { truncateHash } from "../../../utils/helper.js";
+'use client';
+
+import type { State } from '../../../db/db.js';
+
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Box, Paper, Typography } from '@mui/material'; // Report icon
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { truncateHash } from '../../../utils/helper.js';
 
 interface RecentWorkPackageProps {
   states: State[];
@@ -17,10 +22,12 @@ interface WorkPackageListItemProps {
   serviceId: number;
 }
 
-function WorkPackageListItem({ state, serviceId }: WorkPackageListItemProps) {
+function WorkPackageListItem ({ serviceId, state }: WorkPackageListItemProps) {
   const createdAt = state.overview?.createdAt || 0;
+
   const exportsCount = () => {
     let count = -1;
+
     try {
       state.rho.forEach((rhoItem) => {
         rhoItem?.report.results.forEach((item) => {
@@ -33,8 +40,10 @@ function WorkPackageListItem({ state, serviceId }: WorkPackageListItemProps) {
 
     return count;
   };
+
   const packageHash = () => {
-    let hash = "0x00";
+    let hash = '0x00';
+
     try {
       state.rho.forEach((rhoItem) => {
         rhoItem?.report.results.forEach((item) => {
@@ -47,14 +56,16 @@ function WorkPackageListItem({ state, serviceId }: WorkPackageListItemProps) {
 
     return hash;
   };
+
   const results = () => {
-    let results: string = "";
+    let results = '';
+
     try {
       state.rho.forEach((rhoItem) => {
         rhoItem?.report.results.forEach((item) => {
           if (item.service_id === serviceId) {
             rhoItem.report.results.forEach((result) => {
-              results += result.result.ok ? "ok " : "error ";
+              results += result.result.ok ? 'ok ' : 'error ';
             });
           }
         });
@@ -67,18 +78,18 @@ function WorkPackageListItem({ state, serviceId }: WorkPackageListItemProps) {
   return (
     <Link
       key={packageHash()}
+      style={{ textDecoration: 'none', color: 'inherit' }}
       to={`/jam/workpackage/${packageHash()}/`}
-      style={{ textDecoration: "none", color: "inherit" }}
     >
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
           p: 1.5,
           borderRadius: 1,
-          transition: "background-color 0.2s",
-          "&:hover": { backgroundColor: "#f9f9f9" },
-          borderBottom: "1px solid #ddd",
+          transition: 'background-color 0.2s',
+          '&:hover': { backgroundColor: '#f9f9f9' },
+          borderBottom: '1px solid #ddd'
         }}
       >
         {/* Left icon */}
@@ -87,36 +98,40 @@ function WorkPackageListItem({ state, serviceId }: WorkPackageListItemProps) {
             width: 40,
             height: 40,
             borderRadius: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#fff",
-            border: "1px solid #ddd",
-            mr: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#fff',
+            border: '1px solid #ddd',
+            mr: 2
           }}
         >
-          <AssignmentIcon fontSize="small" />
+          <AssignmentIcon fontSize='small' />
         </Box>
-
         {/* Middle: Report count and relative time */}
         <Box sx={{ flex: 1 }}>
-          <Typography variant="subtitle1">
+          <Typography variant='subtitle1'>
             exports count {exportsCount()}
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            color='textSecondary'
+            variant='body2'
+          >
             {Math.floor((Date.now() - createdAt) / 1000)} seconds ago
           </Typography>
         </Box>
-
         {/* Right: truncated header hash */}
-        <Box sx={{ textAlign: "right" }}>
+        <Box sx={{ textAlign: 'right' }}>
           <Typography
-            variant="body2"
-            sx={{ color: "#1976d2", textDecoration: "underline" }}
+            sx={{ color: '#1976d2', textDecoration: 'underline' }}
+            variant='body2'
           >
-            {truncateHash(packageHash(), "long")}
+            {truncateHash(packageHash(), 'long')}
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            color='textSecondary'
+            variant='body2'
+          >
             results {results()}
           </Typography>
         </Box>
@@ -125,40 +140,39 @@ function WorkPackageListItem({ state, serviceId }: WorkPackageListItemProps) {
   );
 }
 
-export function RecentWorkPackages({
-  states,
-  serviceId,
-}: RecentWorkPackageProps) {
+export function RecentWorkPackages ({ serviceId,
+  states }: RecentWorkPackageProps) {
   const displayStates = states.slice(0, 8);
 
   return (
-    <Paper variant="outlined">
+    <Paper variant='outlined'>
       <Typography
-        variant="h6"
         gutterBottom
-        sx={{ mb: 2, px: 1.5, py: 2, borderBottom: "1px solid #ccc", m: 0 }}
+        sx={{ mb: 2, px: 1.5, py: 2, borderBottom: '1px solid #ccc', m: 0 }}
+        variant='h6'
       >
         Recent Work Packages
       </Typography>
-
-      {displayStates && displayStates.length > 0 ? (
-        displayStates.map((state) => {
-          return (
-            <WorkPackageListItem
-              key={state.overview?.headerHash}
-              state={state}
-              serviceId={serviceId}
-            />
-          );
-        })
-      ) : (
-        <Typography
-          variant="subtitle2"
-          sx={{ p: 2, "&:hover": { backgroundColor: "#f9f9f9" } }}
-        >
+      {displayStates && displayStates.length > 0
+        ? (
+          displayStates.map((state) => {
+            return (
+              <WorkPackageListItem
+                key={state.overview?.headerHash}
+                serviceId={serviceId}
+                state={state}
+              />
+            );
+          })
+        )
+        : (
+          <Typography
+            sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+            variant='subtitle2'
+          >
           No work packages
-        </Typography>
-      )}
+          </Typography>
+        )}
     </Paper>
   );
 }

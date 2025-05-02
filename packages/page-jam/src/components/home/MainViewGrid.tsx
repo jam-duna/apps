@@ -1,20 +1,14 @@
-import React, { useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-  Tooltip,
-} from "@mui/material";
-import { Blocks, ItemMode, Slot, Core, WorkPackage } from "../jamitem/index.js";
-import { ServiceInfoDetail } from "../../types/index.js";
-import { ServiceIcon } from "../Icons/index.js";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
+
+import type { ServiceInfoDetail } from '../../types/index.js';
+
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from '@mui/material';
+import React, { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { ServiceIcon } from '../Icons/index.js';
+import { Blocks, Core, ItemMode, Slot, WorkPackage } from '../jamitem/index.js';
 
 // Extend SquareContent to include headerHash.
 export interface SquareContent {
@@ -37,29 +31,29 @@ export interface MainViewGridProps {
   services: ServiceInfoDetail[];
 }
 
-export default function MainViewGrid({
-  timeslots,
-  timestamps,
-  cores,
+export default function MainViewGrid ({ cores,
   data,
-  showActive,
   serviceId,
   services,
-}: MainViewGridProps) {
+  showActive,
+  timeslots,
+  timestamps }: MainViewGridProps) {
   const navigate = useNavigate();
 
   // Compute filtered cores and timeslots when toggle is on.
-  const { filteredCores, filteredTimestamps, filteredTimeslots } =
+  const { filteredCores, filteredTimeslots, filteredTimestamps } =
     useMemo(() => {
       if (!showActive) {
         return {
           filteredCores: cores,
           filteredTimestamps: timestamps.slice(-8),
-          filteredTimeslots: timeslots.slice(-8),
+          filteredTimeslots: timeslots.slice(-8)
         };
       }
+
       // Build a map of busy cells: busyCells[core] is a Set of slots that are busy.
       const busyCells: Record<number, Set<number>> = {};
+
       for (const core of cores) {
         for (const slot of timestamps) {
           if (
@@ -70,26 +64,33 @@ export default function MainViewGrid({
               ) !== -1) ||
               serviceId === -1)
           ) {
-            if (!busyCells[core]) busyCells[core] = new Set();
+            if (!busyCells[core]) {
+              busyCells[core] = new Set();
+            }
+
             busyCells[core].add(slot);
           }
         }
       }
+
       // Filter cores that have at least one busy cell.
       const filteredCores = cores.filter((core) => busyCells[core]?.size);
       // Filter timeslots that appear in at least one busy cell in the filtered cores.
       let filteredTimestamps = timestamps.filter((slot) =>
         filteredCores.some((core) => busyCells[core].has(slot))
       );
+
       filteredTimestamps = filteredTimestamps.slice(-8);
 
       let filteredTimeslots: number[] = [];
+
       timestamps.forEach((value, index) => {
         if (filteredTimestamps.find((fvalue) => fvalue === value)) {
           filteredTimeslots.push(timeslots[index]);
         }
       });
       filteredTimeslots = filteredTimeslots.slice(-8);
+
       return { filteredCores, filteredTimestamps, filteredTimeslots };
     }, [showActive, cores, timestamps, timeslots, data]);
 
@@ -102,8 +103,14 @@ export default function MainViewGrid({
   const getServiceName = (id: number) => {
     const service = getService(id);
 
-    if (service === undefined) return id.toString();
-    if (service.metadata.length === 0) return id.toString();
+    if (service === undefined) {
+      return id.toString();
+    }
+
+    if (service.metadata.length === 0) {
+      return id.toString();
+    }
+
     return service.metadata;
   };
 
@@ -111,38 +118,45 @@ export default function MainViewGrid({
     if (str.length < maxLen) {
       return str;
     }
-    return str.slice(0, maxLen) + "...";
+
+    return str.slice(0, maxLen) + '...';
   };
 
   return (
     <>
-      <TableContainer component={Paper} sx={{ width: "100%", mb: 4 }}>
-        <Table sx={{ width: "100%", tableLayout: "fixed" }} size="small">
+      <TableContainer
+        component={Paper}
+        sx={{ width: '100%', mb: 4 }}
+      >
+        <Table
+          size='small'
+          sx={{ width: '100%', tableLayout: 'fixed' }}
+        >
           <TableHead>
             <TableRow>
               {/* Top-left cell: Blocks */}
               <TableCell
-                align="center"
-                sx={{ padding: 0, height: "60px", width: "120px" }}
+                align='center'
+                sx={{ padding: 0, height: '60px', width: '120px' }}
               >
                 <Blocks />
               </TableCell>
               {/* Timeslot headers */}
               {filteredTimestamps.map((timestamp, index) => (
                 <TableCell
+                  align='center'
                   key={timestamp}
-                  align="center"
-                  sx={{ padding: 0, height: "60px" }}
+                  sx={{ padding: 0, height: '60px' }}
                 >
                   <Slot
                     mode={ItemMode.Small}
+                    showmode={index === 0 ? 'long' : 'short'}
                     slot={
                       filteredTimeslots === undefined
                         ? 0
                         : filteredTimeslots[index]
                     }
                     timestamp={timestamp}
-                    showmode={index === 0 ? "long" : "short"}
                   />
                 </TableCell>
               ))}
@@ -153,85 +167,93 @@ export default function MainViewGrid({
               <TableRow key={coreIndex}>
                 {/* Left cell: Core */}
                 <TableCell
-                  align="center"
-                  sx={{ padding: 0, height: "80px", border: "none" }}
+                  align='center'
+                  sx={{ padding: 0, height: '80px', border: 'none' }}
                 >
-                  <Core mode={ItemMode.Small} index={coreIndex} />
+                  <Core
+                    index={coreIndex}
+                    mode={ItemMode.Small}
+                  />
                 </TableCell>
                 {/* Data cells for each timeslot */}
                 {filteredTimestamps.map((slot) => {
                   const cell = data[coreIndex]?.[slot];
+
                   return (
                     <TableCell
+                      align='center'
                       key={slot}
-                      align="center"
-                      sx={{ padding: 0, height: "80px", border: "none" }}
+                      sx={{ padding: 0, height: '80px', border: 'none' }}
                     >
                       {cell.serviceName.length > 0 &&
-                      cell.workPackageHash.length > 0 ? (
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          justifyContent="center"
-                          alignItems="start"
-                          sx={{
-                            backgroundColor: "#e8f5e9",
-                            cursor: "pointer",
-                            width: "100%",
-                            height: "100%",
-                          }}
-                        >
+                      cell.workPackageHash.length > 0
+                        ? (
                           <Box
-                            display="flex"
-                            justifyContent="start"
-                            alignItems="center"
-                            gap="3px"
+                            alignItems='start'
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='center'
                             sx={{
-                              cursor: "pointer",
-                              paddingInline: "5px",
-                              transition: "all 0.3s ease-in-out",
-                              color: "#444444",
+                              backgroundColor: '#e8f5e9',
+                              cursor: 'pointer',
+                              width: '100%',
+                              height: '100%'
                             }}
                           >
-                            <ServiceIcon size={16} color={"#311b92"} />
-                            {cell.serviceName.map((item, index) => (
-                              <Tooltip
-                                key={index}
-                                title={`ServiceId: ${item}`}
-                                placement="top"
-                                arrow
-                              >
-                                <Typography
-                                  variant="subtitle2"
-                                  fontSize="12px"
-                                  sx={{
-                                    ":hover": {
-                                      color: "#311b92",
-                                    },
-                                  }}
-                                  onClick={() => {
-                                    navigate(`/jam/service/${item}`);
-                                  }}
+                            <Box
+                              alignItems='center'
+                              display='flex'
+                              gap='3px'
+                              justifyContent='start'
+                              sx={{
+                                cursor: 'pointer',
+                                paddingInline: '5px',
+                                transition: 'all 0.3s ease-in-out',
+                                color: '#444444'
+                              }}
+                            >
+                              <ServiceIcon
+                                color={'#311b92'}
+                                size={16}
+                              />
+                              {cell.serviceName.map((item, index) => (
+                                <Tooltip
+                                  arrow
+                                  key={index}
+                                  placement='top'
+                                  title={`ServiceId: ${item}`}
                                 >
-                                  {truncateString(
-                                    getServiceName(Number.parseInt(item)),
-                                    5
-                                  )}
-                                </Typography>
-                              </Tooltip>
-                            ))}
+                                  <Typography
+                                    fontSize='12px'
+                                    onClick={() => {
+                                      navigate(`/jam/service/${item}`);
+                                    }}
+                                    sx={{
+                                      ':hover': {
+                                        color: '#311b92'
+                                      }
+                                    }}
+                                    variant='subtitle2'
+                                  >
+                                    {truncateString(
+                                      getServiceName(Number.parseInt(item)),
+                                      5
+                                    )}
+                                  </Typography>
+                                </Tooltip>
+                              ))}
+                            </Box>
+                            <WorkPackage
+                              hash={cell.workPackageHash}
+                              mode={ItemMode.Small}
+                              report={null}
+                              timestamp={0}
+                            />
                           </Box>
-
-                          <WorkPackage
-                            mode={ItemMode.Small}
-                            hash={cell.workPackageHash}
-                            report={null}
-                            timestamp={0}
-                          />
-                        </Box>
-                      ) : (
-                        <>_</>
-                      )}
+                        )
+                        : (
+                          <>_</>
+                        )}
                     </TableCell>
                   );
                 })}

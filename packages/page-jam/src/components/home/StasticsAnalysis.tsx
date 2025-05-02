@@ -1,15 +1,10 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
+'use client';
+
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import React, { useState } from 'react';
 
 interface StatsData {
   blocks: number;
@@ -33,7 +28,7 @@ const sampleData: DataObject = {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 1,
-      assurances: 2,
+      assurances: 2
     },
     {
       blocks: 1,
@@ -41,7 +36,7 @@ const sampleData: DataObject = {
       pre_images: 1,
       pre_images_size: 1175,
       guarantees: 2,
-      assurances: 2,
+      assurances: 2
     },
     {
       blocks: 2,
@@ -49,7 +44,7 @@ const sampleData: DataObject = {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 2,
-      assurances: 2,
+      assurances: 2
     },
     {
       blocks: 2,
@@ -57,7 +52,7 @@ const sampleData: DataObject = {
       pre_images: 1,
       pre_images_size: 1041,
       guarantees: 1,
-      assurances: 2,
+      assurances: 2
     },
     {
       blocks: 1,
@@ -65,7 +60,7 @@ const sampleData: DataObject = {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 1,
-      assurances: 2,
+      assurances: 2
     },
     {
       blocks: 2,
@@ -73,8 +68,8 @@ const sampleData: DataObject = {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 2,
-      assurances: 2,
-    },
+      assurances: 2
+    }
   ],
   last: [
     {
@@ -83,7 +78,7 @@ const sampleData: DataObject = {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 1,
-      assurances: 3,
+      assurances: 3
     },
     {
       blocks: 2,
@@ -91,7 +86,7 @@ const sampleData: DataObject = {
       pre_images: 2,
       pre_images_size: 2245,
       guarantees: 2,
-      assurances: 3,
+      assurances: 3
     },
     {
       blocks: 0,
@@ -99,7 +94,7 @@ const sampleData: DataObject = {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 2,
-      assurances: 3,
+      assurances: 3
     },
     {
       blocks: 0,
@@ -107,7 +102,7 @@ const sampleData: DataObject = {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 2,
-      assurances: 3,
+      assurances: 3
     },
     {
       blocks: 6,
@@ -115,7 +110,7 @@ const sampleData: DataObject = {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 1,
-      assurances: 3,
+      assurances: 3
     },
     {
       blocks: 1,
@@ -123,12 +118,12 @@ const sampleData: DataObject = {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 1,
-      assurances: 3,
-    },
-  ],
+      assurances: 3
+    }
+  ]
 };
 
-function sumStats(data: StatsData[]): StatsData {
+function sumStats (data: StatsData[]): StatsData {
   return data.reduce(
     (acc, curr) => ({
       blocks: acc.blocks + curr.blocks,
@@ -136,7 +131,7 @@ function sumStats(data: StatsData[]): StatsData {
       pre_images: acc.pre_images + curr.pre_images,
       pre_images_size: acc.pre_images_size + curr.pre_images_size,
       guarantees: acc.guarantees + curr.guarantees,
-      assurances: acc.assurances + curr.assurances,
+      assurances: acc.assurances + curr.assurances
     }),
     {
       blocks: 0,
@@ -144,12 +139,12 @@ function sumStats(data: StatsData[]): StatsData {
       pre_images: 0,
       pre_images_size: 0,
       guarantees: 0,
-      assurances: 0,
+      assurances: 0
     }
   );
 }
 
-export default function StatisticsAnalysis() {
+export default function StatisticsAnalysis () {
   const [openDialog, setOpenDialog] = useState(false);
 
   const currentTotals = sumStats(sampleData.current);
@@ -162,15 +157,18 @@ export default function StatisticsAnalysis() {
     pre_images: currentTotals.pre_images - lastTotals.pre_images,
     pre_images_size: currentTotals.pre_images_size - lastTotals.pre_images_size,
     guarantees: currentTotals.guarantees - lastTotals.guarantees,
-    assurances: currentTotals.assurances - lastTotals.assurances,
+    assurances: currentTotals.assurances - lastTotals.assurances
   };
 
   // Helper to format difference (prepend '+' if positive)
   const formatDiff = (value: number) => (value > 0 ? `+${value}` : `${value}`);
 
   return (
-    <Box sx={{ mt: 4, p: 2, border: "1px solid #ddd", borderRadius: 2 }}>
-      <Typography variant="h6" gutterBottom>
+    <Box sx={{ mt: 4, p: 2, border: '1px solid #ddd', borderRadius: 2 }}>
+      <Typography
+        gutterBottom
+        variant='h6'
+      >
         Validator Statistics - Current Totals (vs Last)
       </Typography>
       <Typography>Blocks: {currentTotals.blocks}</Typography>
@@ -180,14 +178,16 @@ export default function StatisticsAnalysis() {
       <Typography>Guarantees: {currentTotals.guarantees}</Typography>
       <Typography>Assurances: {currentTotals.assurances}</Typography>
       <Button
-        variant="outlined"
-        sx={{ mt: 2 }}
         onClick={() => setOpenDialog(true)}
+        sx={{ mt: 2 }}
+        variant='outlined'
       >
         See Detailed Difference
       </Button>
-
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+      <Dialog
+        onClose={() => setOpenDialog(false)}
+        open={openDialog}
+      >
         <DialogTitle>Difference Analysis (Current vs Last)</DialogTitle>
         <DialogContent dividers>
           <Typography>
@@ -195,23 +195,23 @@ export default function StatisticsAnalysis() {
             {formatDiff(diff.blocks)})
           </Typography>
           <Typography>
-            Tickets: Current {currentTotals.tickets} vs Last{" "}
+            Tickets: Current {currentTotals.tickets} vs Last{' '}
             {lastTotals.tickets} ({formatDiff(diff.tickets)})
           </Typography>
           <Typography>
-            Pre Images: Current {currentTotals.pre_images} vs Last{" "}
+            Pre Images: Current {currentTotals.pre_images} vs Last{' '}
             {lastTotals.pre_images} ({formatDiff(diff.pre_images)})
           </Typography>
           <Typography>
-            Pre Images Size: Current {currentTotals.pre_images_size} vs Last{" "}
+            Pre Images Size: Current {currentTotals.pre_images_size} vs Last{' '}
             {lastTotals.pre_images_size} ({formatDiff(diff.pre_images_size)})
           </Typography>
           <Typography>
-            Guarantees: Current {currentTotals.guarantees} vs Last{" "}
+            Guarantees: Current {currentTotals.guarantees} vs Last{' '}
             {lastTotals.guarantees} ({formatDiff(diff.guarantees)})
           </Typography>
           <Typography>
-            Assurances: Current {currentTotals.assurances} vs Last{" "}
+            Assurances: Current {currentTotals.assurances} vs Last{' '}
             {lastTotals.assurances} ({formatDiff(diff.assurances)})
           </Typography>
         </DialogContent>

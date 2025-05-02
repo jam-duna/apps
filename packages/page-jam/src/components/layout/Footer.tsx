@@ -1,159 +1,208 @@
-import React from "react";
-import { Box, Typography, Link, Grid, Divider, Container } from "@mui/material";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
+
+import { Box, Container, Divider, Grid, Link, Typography } from '@mui/material';
+import React from 'react';
 
 const Footer: React.FC = () => {
   return (
     <Box
-      component="footer"
+      component='footer'
       sx={{
-        color: "#555",
-        backgroundColor: "#F8F9FA",
-        marginTop: 8,
+        color: '#555',
+        backgroundColor: '#F8F9FA',
+        marginTop: 8
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth='lg'>
         {/* Top Section */}
         <Box sx={{ px: 4, pb: 4, pt: 2 }}>
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={3}
+          >
             {/* Community Section */}
-            <Grid columns={{xs: 12, sm: 4}}>
+            <Grid columns={{ xs: 12, sm: 4 }}>
               <Typography
-                variant="h6"
-                color="textSecondary"
-                fontSize="16px"
+                color='textSecondary'
+                fontSize='16px'
                 gutterBottom
+                variant='h6'
               >
                 COMMUNITY
               </Typography>
               <Box
-                display="flex"
-                flexDirection="column"
-                gap="8px"
-                fontSize="14px"
+                display='flex'
+                flexDirection='column'
+                fontSize='14px'
+                gap='8px'
               >
                 <Link
-                  href="https://x.com/colorfulnotion"
-                  underline="hover"
-                  color="primary"
+                  color='primary'
+                  href='https://x.com/colorfulnotion'
+                  underline='hover'
                 >
                   X
                 </Link>
                 <Link
-                  href="https://github.com/jam-duna/jamtestnet"
-                  underline="hover"
-                  color="primary"
+                  color='primary'
+                  href='https://github.com/jam-duna/jamtestnet'
+                  underline='hover'
                 >
                   Github
                 </Link>
                 <Link
-                  href="https://discord.gg/ADWefR9m"
-                  underline="hover"
-                  color="primary"
+                  color='primary'
+                  href='https://discord.gg/ADWefR9m'
+                  underline='hover'
                 >
                   JAM DAO Discord
                 </Link>
                 <Link
-                  href="https://t.me/colorfulnotion"
-                  underline="hover"
-                  color="primary"
+                  color='primary'
+                  href='https://t.me/colorfulnotion'
+                  underline='hover'
                 >
                   Telegram
                 </Link>
                 <Link
-                  href="https://docs.jamcha.in/"
-                  underline="hover"
-                  color="primary"
+                  color='primary'
+                  href='https://docs.jamcha.in/'
+                  underline='hover'
                 >
                   Docs
                 </Link>
               </Box>
             </Grid>
             {/* Ecosystem Section */}
-            <Grid columns={{xs: 12, sm: 4}}>
+            <Grid columns={{ xs: 12, sm: 4 }}>
               <Typography
-                variant="h6"
-                color="textSecondary"
-                fontSize="16px"
+                color='textSecondary'
+                fontSize='16px'
                 gutterBottom
+                variant='h6'
               >
                 ECOSYSTEM
               </Typography>
               <Box
-                display="flex"
-                flexDirection="column"
-                gap="8px"
-                fontSize="14px"
+                display='flex'
+                flexDirection='column'
+                fontSize='14px'
+                gap='8px'
               >
-                <Link href="#" underline="hover" color="primary">
+                <Link
+                  color='primary'
+                  href='#'
+                  underline='hover'
+                >
                   Signer
                 </Link>
-                <Link href="#" underline="hover" color="primary">
+                <Link
+                  color='primary'
+                  href='#'
+                  underline='hover'
+                >
                   Status
                 </Link>
               </Box>
             </Grid>
             {/* Resources Section */}
-            <Grid columns={{xs: 12, sm: 4}}>
+            <Grid columns={{ xs: 12, sm: 4 }}>
               <Typography
-                variant="h6"
-                color="textSecondary"
-                fontSize="16px"
+                color='textSecondary'
+                fontSize='16px'
                 gutterBottom
+                variant='h6'
               >
                 RESOURCES
               </Typography>
               <Box
-                display="flex"
-                flexDirection="column"
-                gap="8px"
-                fontSize="14px"
+                display='flex'
+                flexDirection='column'
+                fontSize='14px'
+                gap='8px'
               >
-                <Link href="#" underline="hover" color="primary">
+                <Link
+                  color='primary'
+                  href='#'
+                  underline='hover'
+                >
                   Docs
                 </Link>
-                <Link href="#" underline="hover" color="primary">
+                <Link
+                  color='primary'
+                  href='#'
+                  underline='hover'
+                >
                   Blog
                 </Link>
-                <Link href="#" underline="hover" color="primary">
+                <Link
+                  color='primary'
+                  href='#'
+                  underline='hover'
+                >
                   Media Kit
                 </Link>
               </Box>
             </Grid>
           </Grid>
         </Box>
-
         <Divider />
-
         {/* Bottom Section */}
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             px: 4,
-            py: 2,
+            py: 2
           }}
         >
           {/* Footer Info */}
           <Box>
-            <Typography variant="body2" color="textSecondary" fontSize="14px">
+            <Typography
+              color='textSecondary'
+              fontSize='14px'
+              variant='body2'
+            >
               Jam Explorer UI
             </Typography>
-            <Typography variant="body2" color="textSecondary" fontSize="14px">
+            <Typography
+              color='textSecondary'
+              fontSize='14px'
+              variant='body2'
+            >
               Trustless Supercomputing Explorer Designed by Developers &copy;
               2025
             </Typography>
           </Box>
-
           {/* Footer Links */}
-          <Box mt="15px" fontSize="14px">
-            <Link href="#" underline="hover" color="inherit" sx={{ mx: 1 }}>
+          <Box
+            fontSize='14px'
+            mt='15px'
+          >
+            <Link
+              color='inherit'
+              href='#'
+              sx={{ mx: 1 }}
+              underline='hover'
+            >
               Terms of Use
             </Link>
-            <Link href="#" underline="hover" color="inherit" sx={{ mx: 1 }}>
+            <Link
+              color='inherit'
+              href='#'
+              sx={{ mx: 1 }}
+              underline='hover'
+            >
               Privacy Policy
             </Link>
-            <Link href="#" underline="hover" color="inherit" sx={{ mx: 1 }}>
+            <Link
+              color='inherit'
+              href='#'
+              sx={{ mx: 1 }}
+              underline='hover'
+            >
               Cookie Policy
             </Link>
           </Box>

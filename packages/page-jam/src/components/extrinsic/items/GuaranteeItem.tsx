@@ -1,16 +1,13 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import {
-  Box,
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Link as MuiLink,
-} from "@mui/material";
-import { Link } from "react-router-dom";
-import type{ Report, GuaranteeSignature } from "../../../types/index.js";
+'use client';
+
+import type{ GuaranteeSignature, Report } from '../../../types/index.js';
+
+import { Accordion, AccordionDetails, AccordionSummary, Box, Link as MuiLink, Typography } from '@mui/material';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface Guarantee {
   report: Report;
@@ -25,45 +22,55 @@ interface GuaranteeItemProps {
   headerHash: string;
 }
 
-export default function GuaranteeItem({
-  guarantee,
-  idx,
+export default function GuaranteeItem ({ guarantee,
   headerHash,
-}: GuaranteeItemProps) {
+  idx }: GuaranteeItemProps) {
   return (
     <Box
       sx={{
-        borderTop: "1px solid #ccc",
-        whiteSpace: "normal",
-        wordBreak: "break-word",
-        overflowWrap: "anywhere",
+        borderTop: '1px solid #ccc',
+        whiteSpace: 'normal',
+        wordBreak: 'break-word',
+        overflowWrap: 'anywhere'
       }}
     >
       <Accordion
         disableGutters
         sx={{
-          boxShadow: "none",
-          "&:before": { display: "none" },
+          boxShadow: 'none',
+          '&:before': { display: 'none' }
         }}
       >
         <AccordionSummary sx={{ p: 0 }}>
-          <Typography variant="body2">Guarantee {idx}</Typography>
+          <Typography variant='body2'>Guarantee {idx}</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ p: 0, pb: 2 }}>
-          <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
-            Work Report:{" "}
+          <Typography
+            color='textSecondary'
+            sx={{ mb: 1 }}
+            variant='body2'
+          >
+            Work Report:{' '}
             <MuiLink
               component={Link}
+              sx={{ textDecoration: 'underline' }}
               to={`/jam/block/${headerHash}/workreport/${guarantee.report.package_spec.hash}`}
-              sx={{ textDecoration: "underline" }}
             >
               {guarantee.report.package_spec.hash}
             </MuiLink>
           </Typography>
-          <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+          <Typography
+            color='textSecondary'
+            sx={{ mb: 1 }}
+            variant='body2'
+          >
             Slot: {guarantee.slot}
           </Typography>
-          <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+          <Typography
+            color='textSecondary'
+            sx={{ mb: 1 }}
+            variant='body2'
+          >
             Signatures:
           </Typography>
           {guarantee.signatures.map((sig, i) => (
@@ -72,11 +79,11 @@ export default function GuaranteeItem({
               to={`/jam/validator/${sig.validator_index}/${headerHash}`}
             >
               <Typography
-                key={`signature-${i}`}
-                variant="body2"
-                color="textSecondary"
-                sx={{ ml: 2 }}
+                color='textSecondary'
                 gutterBottom
+                key={`signature-${i}`}
+                sx={{ ml: 2 }}
+                variant='body2'
               >
                 Validator {sig.validator_index}: {sig.signature}
               </Typography>

@@ -36,7 +36,7 @@ function Entry (): React.ReactElement | null {
 
   return (
     <>
-      
+
       {/*
       <Query />
       */}

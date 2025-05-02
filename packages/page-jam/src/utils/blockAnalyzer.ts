@@ -1,17 +1,14 @@
-import { ReportWithTime } from "../components/jamitem/workpackage/list.js";
-import { Block, db, State, Statistics } from "../db/db.js";
-import {
-  CoreStatistics,
-  KeyedItem,
-  PiEntry,
-  Preimage,
-  Result,
-  ServiceStatistics,
-  ValidatorShowCase,
-} from "../types/index.js";
-import { fetchState } from "../hooks/useFetchState.js"
-import { getRpcUrlFromWs } from "./ws.js";
-import { formatDate } from "./helper.js";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
+
+import type { ReportWithTime } from '../components/jamitem/workpackage/list.js';
+import type { Block, State, Statistics } from '../db/db.js';
+import type { CoreStatistics, KeyedItem, PiEntry, Preimage, Result, ServiceStatistics, ValidatorShowCase } from '../types/index.js';
+
+import { db } from '../db/db.js';
+import { fetchState } from '../hooks/useFetchState.js';
+import { formatDate } from './helper.js';
+import { getRpcUrlFromWs } from './ws.js';
 
 export const sortBlocks = async (): Promise<Block[]> => {
   const data = db.blocks
@@ -20,17 +17,30 @@ export const sortBlocks = async (): Promise<Block[]> => {
       const sortedBlocks = blocks.sort((a, b) => {
         const aCreatedAt = a?.overview?.createdAt;
         const bCreatedAt = b?.overview?.createdAt;
-        if (aCreatedAt == null && bCreatedAt == null) return 0;
-        if (aCreatedAt == null) return 1;
-        if (bCreatedAt == null) return -1;
+
+        if (aCreatedAt == null && bCreatedAt == null) {
+          return 0;
+        }
+
+        if (aCreatedAt == null) {
+          return 1;
+        }
+
+        if (bCreatedAt == null) {
+          return -1;
+        }
+
         return bCreatedAt - aCreatedAt;
       });
+
       return sortedBlocks;
     })
     .catch((error) => {
-      console.error("Error loading blocks from DB:", error);
+      console.error('Error loading blocks from DB:', error);
+
       return [];
     });
+
   return data;
 };
 
@@ -41,15 +51,27 @@ export const sortStates = async (): Promise<State[]> => {
       const sortedStates = states.sort((a, b) => {
         const aCreatedAt = a?.overview?.createdAt;
         const bCreatedAt = b?.overview?.createdAt;
-        if (aCreatedAt == null && bCreatedAt == null) return 0;
-        if (aCreatedAt == null) return 1;
-        if (bCreatedAt == null) return -1;
+
+        if (aCreatedAt == null && bCreatedAt == null) {
+          return 0;
+        }
+
+        if (aCreatedAt == null) {
+          return 1;
+        }
+
+        if (bCreatedAt == null) {
+          return -1;
+        }
+
         return bCreatedAt - aCreatedAt;
       });
+
       return sortedStates;
     })
     .catch((error) => {
-      console.error("Error loading states from DB:", error);
+      console.error('Error loading states from DB:', error);
+
       return [];
     });
 
@@ -58,6 +80,7 @@ export const sortStates = async (): Promise<State[]> => {
 
 export const filterBlocks = async (count: number): Promise<Block[]> => {
   const sortedBlocks = await sortBlocks();
+
   return sortedBlocks.slice(0, count);
 };
 
@@ -74,11 +97,12 @@ export const filterBlocksFromAuthor = async (
 
 export const filterStates = async (count: number): Promise<State[]> => {
   const sortedStates = await sortStates();
+
   return sortedStates.slice(0, count);
 };
 
 export const filterWorkPackages = async (
-  coreIndex: number = -1
+  coreIndex = -1
 ): Promise<ReportWithTime[]> => {
   const sortedStates = await sortStates();
   const filteredStates = sortedStates.filter((state) => {
@@ -88,16 +112,18 @@ export const filterWorkPackages = async (
         (coreIndex === -1 || rhoItem.report.core_index === coreIndex)
       );
     });
+
     return filteredRhos !== null && filteredRhos.length > 0;
   });
 
-  let filteredReports: ReportWithTime[] = [];
+  const filteredReports: ReportWithTime[] = [];
+
   filteredStates.forEach((state) => {
     state.rho.forEach((report) => {
       if (report) {
         filteredReports.push({
           report: report?.report,
-          timestamp: state.overview?.createdAt || 0,
+          timestamp: state.overview?.createdAt || 0
         });
       }
     });
@@ -115,12 +141,15 @@ export const filterWorkPackagesFromValidator = async (
       const index = guarantee.signatures.findIndex(
         (item) => item.validator_index === validator
       );
+
       return index !== -1;
     });
+
     return filteredRhos !== null && filteredRhos.length > 0;
   });
 
-  let filteredReports: ReportWithTime[] = [];
+  const filteredReports: ReportWithTime[] = [];
+
   filteredBlocks.forEach((block) => {
     block.extrinsic.guarantees.forEach((guarantee) => {
       if (
@@ -130,7 +159,7 @@ export const filterWorkPackagesFromValidator = async (
       ) {
         filteredReports.push({
           report: guarantee.report,
-          timestamp: block.overview?.createdAt || 0,
+          timestamp: block.overview?.createdAt || 0
         });
       }
     });
@@ -144,7 +173,7 @@ export const filterActiveValidators = async (
 ): Promise<ValidatorShowCase[]> => {
   const sortedBlocks = await sortBlocks();
 
-  let validators: ValidatorShowCase[] = [];
+  const validators: ValidatorShowCase[] = [];
 
   sortedBlocks.forEach((block) => {
     block.extrinsic.guarantees.forEach((guarantee) => {
@@ -153,20 +182,20 @@ export const filterActiveValidators = async (
           const isExist: boolean =
             validators.findIndex(
               (item) => item.index === validator.validator_index
-            ) === -1
-              ? false
-              : true;
+            ) !== -1;
+
           if (isExist === false) {
             validators.push({
               index: validator.validator_index,
-              hash: block.overview?.headerHash || "0x00",
-              lastSeenTime: block.overview?.createdAt || 0,
+              hash: block.overview?.headerHash || '0x00',
+              lastSeenTime: block.overview?.createdAt || 0
             });
           }
         });
       }
     });
   });
+
   return validators;
 };
 
@@ -180,22 +209,26 @@ export const filterWorkPackagesFromService = async (
         rhoItem?.report.results.filter((resultItem) => {
           return resultItem.service_id === serviceId;
         });
+
       return filteredResults !== undefined && filteredResults.length > 0;
     });
+
     return filteredRhos !== null && filteredRhos.length > 0;
   });
 
-  let filteredReports: ReportWithTime[] = [];
+  const filteredReports: ReportWithTime[] = [];
+
   filteredStates.forEach((state) => {
     state.rho.forEach((report) => {
       if (report) {
         filteredReports.push({
           report: report?.report,
-          timestamp: state.overview?.createdAt || 0,
+          timestamp: state.overview?.createdAt || 0
         });
       }
     });
   });
+
   return filteredReports;
 };
 
@@ -208,21 +241,24 @@ export interface PreimageProps {
 export const filterPreimagesFromService = async (
   serviceId: number
 ): Promise<PreimageProps[]> => {
-  let fetchedData: PreimageProps[] = [];
+  const fetchedData: PreimageProps[] = [];
 
   const sortedBlocks = await sortBlocks();
+
   sortedBlocks.forEach((block) => {
     block.extrinsic.preimages.forEach((preimg) => {
       if (preimg.requester === serviceId) {
-        let hashes = "";
+        let hashes = '';
+
         block.extrinsic.guarantees.forEach((guarantee) => {
-          hashes = hashes + (guarantee.report.package_spec.hash + " ");
+          hashes = hashes + (guarantee.report.package_spec.hash + ' ');
         });
         const preimage: PreimageProps = {
           preimage: preimg,
           package_hash: hashes,
-          timestamp: block.overview?.createdAt || 0,
+          timestamp: block.overview?.createdAt || 0
         };
+
         fetchedData.push(preimage);
       }
     });
@@ -236,7 +272,8 @@ export const getServiceLastSeenTime = async (
 ): Promise<string> => {
   const sortedBlocks = await sortBlocks();
 
-  let lastTime: number = 0;
+  let lastTime = 0;
+
   sortedBlocks.forEach((block) => {
     block.extrinsic.guarantees.forEach((guarantee) => {
       guarantee.report.results.forEach((result) => {
@@ -247,7 +284,7 @@ export const getServiceLastSeenTime = async (
     });
   });
 
-  return lastTime === 0 ? "-" : formatDate(lastTime);
+  return lastTime === 0 ? '-' : formatDate(lastTime);
 };
 
 export const sortStatistics = async (): Promise<Statistics[]> => {
@@ -257,15 +294,27 @@ export const sortStatistics = async (): Promise<Statistics[]> => {
       const sortedItems = items.sort((a, b) => {
         const aCreatedAt = a.timestamp;
         const bCreatedAt = b.timestamp;
-        if (aCreatedAt == null && bCreatedAt == null) return 0;
-        if (aCreatedAt == null) return 1;
-        if (bCreatedAt == null) return -1;
+
+        if (aCreatedAt == null && bCreatedAt == null) {
+          return 0;
+        }
+
+        if (aCreatedAt == null) {
+          return 1;
+        }
+
+        if (bCreatedAt == null) {
+          return -1;
+        }
+
         return bCreatedAt - aCreatedAt;
       });
+
       return sortedItems;
     })
     .catch((error) => {
-      console.error("Error sorting statistics from DB:", error);
+      console.error('Error sorting statistics from DB:', error);
+
       return [];
     });
 
@@ -276,22 +325,34 @@ export const isActiveBlock = async (hash: string) => {
   const blocks = await sortBlocks();
   const block = blocks.find((item) => item.header_hash === hash);
   let isBusy = false;
+
   block?.extrinsic.guarantees.forEach((guarantee) => {
-    if (guarantee.report.package_spec.hash.startsWith("0x")) isBusy = true;
+    if (guarantee.report.package_spec.hash.startsWith('0x')) {
+      isBusy = true;
+    }
   });
+
   return isBusy;
 };
 
 export const getActiveBlocks = async () => {
   const blocks = await sortBlocks();
-  let hashes: string[] = [];
+  const hashes: string[] = [];
+
   blocks.forEach((block) => {
     let isBusy = false;
+
     block?.extrinsic.guarantees.forEach((guarantee) => {
-      if (guarantee.report.package_spec.hash.startsWith("0x")) isBusy = true;
+      if (guarantee.report.package_spec.hash.startsWith('0x')) {
+        isBusy = true;
+      }
     });
-    if (isBusy) hashes.push(block.header_hash);
+
+    if (isBusy) {
+      hashes.push(block.header_hash);
+    }
   });
+
   return hashes;
 };
 
@@ -302,7 +363,7 @@ export const filterCoreStatistics = async (
   const statistics = await sortStatistics();
   const hashes = await getActiveBlocks();
 
-  let result: Record<number, CoreStatistics> = {};
+  const result: Record<number, CoreStatistics> = {};
 
   statistics.forEach((item) => {
     (() => {
@@ -310,6 +371,7 @@ export const filterCoreStatistics = async (
         active === false
           ? true
           : hashes.findIndex((hash) => hash === item.hash) !== -1;
+
       if (isActive) {
         result[item.timestamp] = item.cores[coreIndex];
       }
@@ -326,17 +388,19 @@ export const fetchServiceStatisticsFromId = async (
   const statistics = await sortStatistics();
   const hashes = await getActiveBlocks();
 
-  let data: { time: number; stat: ServiceStatistics }[] = [];
+  const data: { time: number; stat: ServiceStatistics }[] = [];
 
   statistics.forEach((item) => {
     const isActive =
       active === false
         ? true
         : hashes.findIndex((hash) => hash === item.hash) !== -1;
+
     if (isActive) {
       const serviceStat = item.services.find(
         (stat) => stat.id.toString() === serviceId.toString()
       );
+
       if (serviceStat !== undefined) {
         data.push({ time: item.timestamp, stat: serviceStat.record });
       }
@@ -350,7 +414,7 @@ export const fetchAggregateCoreStatistics = async (active: boolean) => {
   const statistics = await sortStatistics();
   const hashes = await getActiveBlocks();
 
-  let result: Record<number, CoreStatistics> = {};
+  const result: Record<number, CoreStatistics> = {};
 
   statistics.forEach((item) => {
     (() => {
@@ -358,6 +422,7 @@ export const fetchAggregateCoreStatistics = async (active: boolean) => {
         active === false
           ? true
           : hashes.findIndex((hash) => hash === item.hash) !== -1;
+
       if (isActive) {
         result[item.timestamp] = {
           gas_used: item.cores[0].gas_used + item.cores[1].gas_used,
@@ -369,7 +434,7 @@ export const fetchAggregateCoreStatistics = async (active: boolean) => {
           exports: item.cores[0].exports + item.cores[1].exports,
           bundle_size: item.cores[0].bundle_size + item.cores[1].bundle_size,
           da_load: item.cores[0].da_load + item.cores[1].da_load,
-          popularity: item.cores[0].popularity + item.cores[1].popularity,
+          popularity: item.cores[0].popularity + item.cores[1].popularity
         };
       }
     })();
@@ -382,7 +447,7 @@ export const fetchAggregateServiceStatistics = async (active: boolean) => {
   const statistics = await sortStatistics();
   const hashes = await getActiveBlocks();
 
-  let data: { time: number; stat: ServiceStatistics }[] = [];
+  const data: { time: number; stat: ServiceStatistics }[] = [];
 
   statistics.forEach((item) => {
     (async () => {
@@ -390,8 +455,10 @@ export const fetchAggregateServiceStatistics = async (active: boolean) => {
         active === false
           ? true
           : hashes.findIndex((hash) => hash === item.hash) !== -1;
+
       if (isActive) {
-        let aggStatistics: ServiceStatistics | undefined = undefined;
+        let aggStatistics: ServiceStatistics | undefined;
+
         item.services.forEach((service) => {
           if (aggStatistics === undefined) {
             aggStatistics = service.record;
@@ -424,10 +491,11 @@ export const fetchAggregateServiceStatistics = async (active: boolean) => {
                 service.record.on_transfers_count,
               on_transfers_gas_used:
                 aggStatistics.on_transfers_gas_used +
-                service.record.on_transfers_gas_used,
+                service.record.on_transfers_gas_used
             };
           }
         });
+
         if (aggStatistics !== undefined) {
           data.push({ time: item.timestamp, stat: aggStatistics });
         }
@@ -459,7 +527,7 @@ export const getValidator = async (
   index: number,
   hash: string
 ): Promise<ValidatorResult | null> => {
-  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
+  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org'));
 
   let result = null;
 
@@ -468,7 +536,7 @@ export const getValidator = async (
       previous: state.iota[index],
       current: state.kappa[index],
       next: state.lambda[index],
-      staging: state.gamma.gamma_k[index],
+      staging: state.gamma.gamma_k[index]
     };
   }
 
@@ -484,14 +552,14 @@ export const fetchValidatorStatistics = async (
   index: number,
   hash: string
 ): Promise<ValidatorStatistics | null> => {
-  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
+  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org'));
 
   let result: ValidatorStatistics | null = null;
 
   if (state !== null) {
     result = {
       current: state.pi.vals_current[index],
-      last: state.pi.vals_last[index],
+      last: state.pi.vals_last[index]
     };
   }
 
@@ -510,7 +578,7 @@ export const fetchValidatorFromKey = async (
   key: string,
   hash: string
 ): Promise<ValidatorKey | null> => {
-  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org"));
+  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org'));
 
   let result: ValidatorKey | null = null;
 
@@ -531,13 +599,14 @@ export const fetchValidatorFromKey = async (
       (item: { bandersnatch: string; bls: string; ed25519: string; }) =>
         item.bandersnatch === key || item.bls === key || item.ed25519 === key
     );
+
     if (prevIndex !== -1) {
       result = {
         previous: prevIndex,
         current: curIndex,
         next: nextIndex,
         staging: stagIndex,
-        item: state.iota[prevIndex],
+        item: state.iota[prevIndex]
       };
     } else if (curIndex !== -1) {
       result = {
@@ -545,7 +614,7 @@ export const fetchValidatorFromKey = async (
         current: curIndex,
         next: nextIndex,
         staging: stagIndex,
-        item: state.kappa[curIndex],
+        item: state.kappa[curIndex]
       };
     } else if (nextIndex !== -1) {
       result = {
@@ -553,7 +622,7 @@ export const fetchValidatorFromKey = async (
         current: curIndex,
         next: nextIndex,
         staging: stagIndex,
-        item: state.lambda[nextIndex],
+        item: state.lambda[nextIndex]
       };
     } else if (stagIndex !== -1) {
       result = {
@@ -561,7 +630,7 @@ export const fetchValidatorFromKey = async (
         current: curIndex,
         next: nextIndex,
         staging: stagIndex,
-        item: state.gamma.gamma_k[stagIndex],
+        item: state.gamma.gamma_k[stagIndex]
       };
     }
   }

@@ -1,31 +1,22 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Box,
-  Typography,
-  Tooltip,
-  Link as MuiLink,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { useNavigate } from "react-router-dom";
-import {
-  Report,
-  Context,
-  PackageSpec,
-  Result,
-  SegmentRootLookup,
-} from "../../../types/index.js";
-import { LabeledRow } from "../../../components/display/LabeledRow.js";
-import { workReportMapping } from "../../../utils/tooltipDetails.js";
-import ToggleHash from "../ToggleHashText.js";
+'use client';
+
+import type { Context, PackageSpec, Report, Result, SegmentRootLookup } from '../../../types/index.js';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { LabeledRow } from '../../../components/display/LabeledRow.js';
+import { workReportMapping } from '../../../utils/tooltipDetails.js';
+import ToggleHash from '../ToggleHashText.js';
 
 // Display Context information.
-export function ContextDisplay({ context }: { context: Context }) {
+export function ContextDisplay ({ context }: { context: Context }) {
   return (
     <Box>
       <LabeledRow
@@ -57,7 +48,7 @@ export function ContextDisplay({ context }: { context: Context }) {
         <LabeledRow
           label={workReportMapping.context[5].label}
           tooltip={workReportMapping.context[5].tooltip}
-          value={context.prerequisites.join(", ")}
+          value={context.prerequisites.join(', ')}
         />
       )}
     </Box>
@@ -70,10 +61,8 @@ interface PackageSpecDisplayProps {
   headerHash: string;
 }
 
-function PackageSpecDisplay({
-  packageSpec,
-  headerHash,
-}: PackageSpecDisplayProps) {
+function PackageSpecDisplay ({ headerHash,
+  packageSpec }: PackageSpecDisplayProps) {
   const navigate = useNavigate();
 
   const handleWorkReportRedirect = () => {
@@ -83,12 +72,12 @@ function PackageSpecDisplay({
   return (
     <Box>
       <LabeledRow
-        label="Hash"
-        tooltip="Package hash"
+        label='Hash'
+        tooltip='Package hash'
         value={
           <MuiLink
             onClick={handleWorkReportRedirect}
-            sx={{ cursor: "pointer", textDecoration: "underline" }}
+            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
           >
             <ToggleHash hash={packageSpec.hash} />
           </MuiLink>
@@ -119,7 +108,7 @@ function PackageSpecDisplay({
 }
 
 // Display a single Result.
-function ResultDisplay({ result, index }: { result: Result; index: number }) {
+function ResultDisplay ({ index, result }: { result: Result; index: number }) {
   const navigate = useNavigate();
 
   const handleServiceRedirect = () => {
@@ -127,61 +116,66 @@ function ResultDisplay({ result, index }: { result: Result; index: number }) {
   };
 
   return (
-    <Box sx={{ borderBottom: "3px solid #eee", borderRadius: 1, p: 1, mb: 1 }}>
-      <Typography variant="body1" sx={{ mb: 2 }}>
+    <Box sx={{ borderBottom: '3px solid #eee', borderRadius: 1, p: 1, mb: 1 }}>
+      <Typography
+        sx={{ mb: 2 }}
+        variant='body1'
+      >
         Result {index}
       </Typography>
       <LabeledRow
-        label="Service ID"
-        tooltip="Service ID"
+        label='Service ID'
+        tooltip='Service ID'
         value={
           <MuiLink
             onClick={handleServiceRedirect}
-            sx={{ cursor: "pointer", textDecoration: "underline" }}
+            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
           >
             {result.service_id.toString()}
           </MuiLink>
         }
       />
       <LabeledRow
-        label="Code Hash"
-        tooltip="Code Hash"
+        label='Code Hash'
+        tooltip='Code Hash'
         value={<ToggleHash hash={result.code_hash} />}
       />
       <LabeledRow
-        label="Payload Hash"
-        tooltip="Payload Hash"
+        label='Payload Hash'
+        tooltip='Payload Hash'
         value={<ToggleHash hash={result.payload_hash} />}
       />
       <LabeledRow
-        label="Accumulate Gas"
-        tooltip="Accumulate Gas"
+        label='Accumulate Gas'
+        tooltip='Accumulate Gas'
         value={result.accumulate_gas.toString()}
       />
       <LabeledRow
-        label="Result"
-        tooltip="Result"
-        value={result.result.ok || "N/A"}
+        label='Result'
+        tooltip='Result'
+        value={result.result.ok || 'N/A'}
       />
     </Box>
   );
 }
 
 // Display a list of Results.
-function ResultsDisplay({ results }: { results: Result[] }) {
+function ResultsDisplay ({ results }: { results: Result[] }) {
   return (
     <Box>
       {results.map((result, idx) => (
-        <ResultDisplay key={idx} result={result} index={idx} />
+        <ResultDisplay
+          index={idx}
+          key={idx}
+          result={result}
+        />
       ))}
     </Box>
   );
 }
 
 // Display a list of SegmentRootLookup.
-function SegmentRootLookupDisplay({
-  lookups,
-}: {
+function SegmentRootLookupDisplay ({ lookups }: {
   lookups: SegmentRootLookup[];
 }) {
   return (
@@ -189,16 +183,16 @@ function SegmentRootLookupDisplay({
       {lookups.map((lookup, idx) => (
         <Box
           key={idx}
-          sx={{ border: "1px solid #eee", borderRadius: 1, p: 1, mb: 1 }}
+          sx={{ border: '1px solid #eee', borderRadius: 1, p: 1, mb: 1 }}
         >
           <LabeledRow
-            label="Segment Tree Root"
-            tooltip="Segment Tree Root"
+            label='Segment Tree Root'
+            tooltip='Segment Tree Root'
             value={<ToggleHash hash={lookup.segment_tree_root} />}
           />
           <LabeledRow
-            label="Work Package Hash"
-            tooltip="Work Package Hash"
+            label='Work Package Hash'
+            tooltip='Work Package Hash'
             value={<ToggleHash hash={lookup.work_package_hash} />}
           />
         </Box>
@@ -214,31 +208,32 @@ interface ReportTableProps {
   headerHash: string; // Pass headerHash so we can use it for redirection.
 }
 
-export default function ReportTable({
-  data,
-  idx,
-  timeout,
+export default function ReportTable ({ data,
   headerHash,
-}: ReportTableProps) {
+  idx,
+  timeout }: ReportTableProps) {
   // Reusable custom AccordionSummary style
   const customAccordionSummary = (title: string, tooltipText: string) => (
     <AccordionSummary
+      expandIcon={<ExpandMoreIcon />}
       sx={{
         px: 0,
         py: 0.75,
-        minHeight: "auto",
-        "& .MuiAccordionSummary-content": { m: 0, p: 0 },
-        cursor: "default",
+        minHeight: 'auto',
+        '& .MuiAccordionSummary-content': { m: 0, p: 0 },
+        cursor: 'default'
       }}
-      expandIcon={<ExpandMoreIcon />}
     >
-      <Box sx={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-        <Tooltip title={tooltipText} sx={{ ml: 0.5, mr: 1.5 }}>
-          <InfoOutlinedIcon fontSize="small" />
+      <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+        <Tooltip
+          sx={{ ml: 0.5, mr: 1.5 }}
+          title={tooltipText}
+        >
+          <InfoOutlinedIcon fontSize='small' />
         </Tooltip>
         <Typography
-          variant="body1"
-          sx={{ whiteSpace: "nowrap", minWidth: "170px" }}
+          sx={{ whiteSpace: 'nowrap', minWidth: '170px' }}
+          variant='body1'
         >
           {title}
         </Typography>
@@ -249,13 +244,15 @@ export default function ReportTable({
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        {timeout ? (
-          <Typography variant="body1">
+        {timeout
+          ? (
+            <Typography variant='body1'>
             Report {idx} - Timeout {timeout}
-          </Typography>
-        ) : (
-          <Typography variant="body1">Report {idx}</Typography>
-        )}
+            </Typography>
+          )
+          : (
+            <Typography variant='body1'>Report {idx}</Typography>
+          )}
       </AccordionSummary>
       <AccordionDetails>
         {/* Simple fields using workReportMapping for authorization and basicInfo */}
@@ -274,74 +271,70 @@ export default function ReportTable({
           tooltip={workReportMapping.basicInfo[3].tooltip}
           value={data.core_index.toString()}
         />
-
         {/* Sub-accordion for Context */}
         <Accordion
           sx={{
-            border: "none",
-            boxShadow: "none",
-            "&:before": { display: "none" },
+            border: 'none',
+            boxShadow: 'none',
+            '&:before': { display: 'none' },
             mt: 2,
             mb: 1,
-            px: 0,
+            px: 0
           }}
         >
-          {customAccordionSummary("Context", "Context details")}
+          {customAccordionSummary('Context', 'Context details')}
           <AccordionDetails sx={{ px: 0 }}>
             <ContextDisplay context={data.context} />
           </AccordionDetails>
         </Accordion>
-
         {/* Sub-accordion for Package Spec */}
         <Accordion
           sx={{
-            border: "none",
-            boxShadow: "none",
-            "&:before": { display: "none" },
+            border: 'none',
+            boxShadow: 'none',
+            '&:before': { display: 'none' },
             mb: 1,
-            px: 0,
+            px: 0
           }}
         >
           {customAccordionSummary(
-            "Package Spec",
-            "Package specification details"
+            'Package Spec',
+            'Package specification details'
           )}
           <AccordionDetails sx={{ px: 0 }}>
             <PackageSpecDisplay
-              packageSpec={data.package_spec}
               headerHash={headerHash}
+              packageSpec={data.package_spec}
             />
           </AccordionDetails>
         </Accordion>
-
         {/* Sub-accordion for Results */}
         <Accordion
           sx={{
-            border: "none",
-            boxShadow: "none",
-            "&:before": { display: "none" },
+            border: 'none',
+            boxShadow: 'none',
+            '&:before': { display: 'none' },
             mb: 1,
-            px: 0,
+            px: 0
           }}
         >
-          {customAccordionSummary("Results", "Results details")}
+          {customAccordionSummary('Results', 'Results details')}
           <AccordionDetails sx={{ px: 0 }}>
             <ResultsDisplay results={data.results} />
           </AccordionDetails>
         </Accordion>
-
         {/* Sub-accordion for Segment Root Lookup */}
         <Accordion
           sx={{
-            border: "none",
-            boxShadow: "none",
-            "&:before": { display: "none" },
-            px: 0,
+            border: 'none',
+            boxShadow: 'none',
+            '&:before': { display: 'none' },
+            px: 0
           }}
         >
           {customAccordionSummary(
-            "Segment Root Lookup",
-            "Segment root lookup details"
+            'Segment Root Lookup',
+            'Segment root lookup details'
           )}
           <AccordionDetails sx={{ px: 0 }}>
             <SegmentRootLookupDisplay lookups={data.segment_root_lookup} />

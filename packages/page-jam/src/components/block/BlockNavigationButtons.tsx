@@ -1,9 +1,12 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import { Box, IconButton } from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+'use client';
+
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box, IconButton } from '@mui/material';
+import React from 'react';
 
 export interface BlockNavigationButtonsProps {
   prevHash: string | null;
@@ -12,35 +15,33 @@ export interface BlockNavigationButtonsProps {
   onNext: () => void;
 }
 
-export default function BlockNavigationButtons({
-  prevHash,
-  nextHash,
-  onPrev,
+export default function BlockNavigationButtons ({ nextHash,
   onNext,
-}: BlockNavigationButtonsProps) {
+  onPrev,
+  prevHash }: BlockNavigationButtonsProps) {
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <IconButton
-        size="small"
         disabled={!prevHash}
         onClick={(e) => {
           e.stopPropagation();
           onPrev();
         }}
+        size='small'
         sx={{ ml: 2 }}
       >
-        <ArrowBackIosNewIcon fontSize="small" />
+        <ArrowBackIosNewIcon fontSize='small' />
       </IconButton>
       <IconButton
-        size="small"
         disabled={!nextHash}
         onClick={(e) => {
           e.stopPropagation();
           onNext();
         }}
+        size='small'
         sx={{ ml: 0.5 }}
       >
-        <ArrowForwardIosIcon fontSize="small" />
+        <ArrowForwardIosIcon fontSize='small' />
       </IconButton>
     </Box>
   );

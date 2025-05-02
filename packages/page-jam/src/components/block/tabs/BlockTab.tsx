@@ -1,17 +1,21 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
-import { Paper, Typography, Box } from "@mui/material";
-import { LabeledRow } from "../../display/LabeledRow.js";
-import ExtrinsicAccordion from "../../extrinsic/ExtrinsicAccordion.js";
-import MoreDetailsAccordion from "../MoreDetailsAccordion.js";
-import BlockNavigationButtons from "../BlockNavigationButtons.js";
-import { basicInfoMapping } from "../../../utils/tooltipDetails.js";
-import { useNavigate } from "react-router-dom";
-import { pluralize } from "../../../utils/helper.js";
-import { Block } from "../../../db/db.js";
-import { Hash } from "../../jamitem/index.js";
-import { Link } from "react-router-dom";
+'use client';
+
+import type { Block } from '../../../db/db.js';
+
+import { Box, Paper, Typography } from '@mui/material';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { pluralize } from '../../../utils/helper.js';
+import { basicInfoMapping } from '../../../utils/tooltipDetails.js';
+import { LabeledRow } from '../../display/LabeledRow.js';
+import ExtrinsicAccordion from '../../extrinsic/ExtrinsicAccordion.js';
+import { Hash } from '../../jamitem/index.js';
+import BlockNavigationButtons from '../BlockNavigationButtons.js';
+import MoreDetailsAccordion from '../MoreDetailsAccordion.js';
 
 interface BlockTabProps {
   blockRecord: Block; // Use your actual BlockRecord type here.
@@ -21,13 +25,11 @@ interface BlockTabProps {
   nextHash: string | null;
 }
 
-export function BlockTab({
-  blockRecord,
+export function BlockTab ({ blockRecord,
   hash,
-  type,
-  prevHash,
   nextHash,
-}: BlockTabProps) {
+  prevHash,
+  type }: BlockTabProps) {
   const navigate = useNavigate();
   const header = blockRecord.header;
   const extrinsic = blockRecord.extrinsic;
@@ -38,39 +40,44 @@ export function BlockTab({
 
   return (
     <>
-      <Paper variant="outlined" sx={{ p: 3 }}>
-        <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+      <Paper
+        sx={{ p: 3 }}
+        variant='outlined'
+      >
+        <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
           <LabeledRow
             label={basicInfoMapping.blockHeight.label}
             tooltip={basicInfoMapping.blockHeight.tooltip}
             value={
-              <Typography variant="body1">{blockRecord.header.slot}</Typography>
+              <Typography variant='body1'>{blockRecord.header.slot}</Typography>
             }
           />
-          {type === "headerHash" && (
+          {type === 'headerHash' && (
             <BlockNavigationButtons
-              prevHash={prevHash}
               nextHash={nextHash}
-              onPrev={() => {
-                if (prevHash) navigate(`/jam/block/${prevHash}?type=hash`);
-              }}
               onNext={() => {
-                if (nextHash) navigate(`/jam/block/${nextHash}?type=hash`);
+                if (nextHash) {
+                  navigate(`/jam/block/${nextHash}?type=hash`);
+                }
               }}
+              onPrev={() => {
+                if (prevHash) {
+                  navigate(`/jam/block/${prevHash}?type=hash`);
+                }
+              }}
+              prevHash={prevHash}
             />
           )}
         </Box>
-
         <LabeledRow
-          label="Finalized"
-          tooltip="Block Finalized"
+          label='Finalized'
+          tooltip='Block Finalized'
           value={
-            <Typography variant="body1">
+            <Typography variant='body1'>
               {(finalized || false).toString()}
             </Typography>
           }
         />
-
         {blockHash && (
           <LabeledRow
             label={basicInfoMapping.blockHash.label}
@@ -78,7 +85,6 @@ export function BlockTab({
             value={<Hash hash={blockHash} />}
           />
         )}
-
         {headerHash && (
           <LabeledRow
             label={basicInfoMapping.headerHash.label}
@@ -86,58 +92,59 @@ export function BlockTab({
             value={<Hash hash={headerHash} />}
           />
         )}
-
         {createdAt && (
           <LabeledRow
+            icon='slot'
             label={basicInfoMapping.createdDate.label}
             tooltip={basicInfoMapping.createdDate.tooltip}
-            icon="slot"
             value={
-              <Typography variant="body1">
+              <Typography variant='body1'>
                 {new Date(createdAt * 1000).toLocaleString()}
               </Typography>
             }
           />
         )}
-
         <LabeledRow
+          icon='author'
           label={basicInfoMapping.authorIndex.label}
           tooltip={basicInfoMapping.authorIndex.tooltip}
-          icon="author"
           value={
             <Link to={`/jam/validator/${header.author_index}/${hash}`}>
-              <Typography variant="body1">{header.author_index}</Typography>
+              <Typography variant='body1'>{header.author_index}</Typography>
             </Link>
           }
         />
-
         <LabeledRow
+          icon='work_report'
           label={basicInfoMapping.workReport.label}
           tooltip={basicInfoMapping.workReport.tooltip}
-          icon="work_report"
           value={
             <Typography
-              variant="body1"
               sx={{
-                textDecoration: "underline",
-                color: "#1976d2",
-                textDecorationColor: "#1976d2",
+                textDecoration: 'underline',
+                color: '#1976d2',
+                textDecorationColor: '#1976d2'
               }}
+              variant='body1'
             >
-              {extrinsic.guarantees?.length ? (
-                <Link to={`/jam/block/${headerHash}/workreport`}>
-                  {extrinsic.guarantees.length}
-                  {pluralize(" report", extrinsic.guarantees.length)} in this
+              {extrinsic.guarantees?.length
+                ? (
+                  <Link to={`/jam/block/${headerHash}/workreport`}>
+                    {extrinsic.guarantees.length}
+                    {pluralize(' report', extrinsic.guarantees.length)} in this
                   block
-                </Link>
-              ) : (
-                "0 report in this block"
-              )}
+                  </Link>
+                )
+                : (
+                  '0 report in this block'
+                )}
             </Typography>
           }
         />
-
-        <ExtrinsicAccordion extrinsic={extrinsic || null} headerHash={hash} />
+        <ExtrinsicAccordion
+          extrinsic={extrinsic || null}
+          headerHash={hash}
+        />
       </Paper>
       <MoreDetailsAccordion header={header} />
     </>

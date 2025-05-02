@@ -194,11 +194,12 @@ function Endpoints ({ className = '', offset, onClose }: Props): React.ReactElem
   }, [apiUrl, storedCustomEndpoints]);
 
   const isJamUrl = useMemo(() => {
-    const jamNetworks = groups.find(group => group.header?.toString() === "JAM Implementers Testnets");
+    const jamNetworks = groups.find((group) => group.header?.toString() === 'JAM Implementers Testnets');
 
     if (jamNetworks !== undefined) {
-      return jamNetworks.networks.find(network => network.providers.find(provider => provider.url.toString() == apiUrl.toString())) !== undefined;
+      return jamNetworks.networks.find((network) => network.providers.find((provider) => provider.url.toString() == apiUrl.toString())) !== undefined;
     }
+
     return false;
   }, [apiUrl, groups]);
 
@@ -229,7 +230,6 @@ function Endpoints ({ className = '', offset, onClose }: Props): React.ReactElem
 
   const _setApiUrl = useCallback(
     (network: string, apiUrl: string): void => {
-
       setAffinities((affinities): Record<string, string> => {
         const newValue = { ...affinities, [network]: apiUrl };
 
@@ -255,13 +255,12 @@ function Endpoints ({ className = '', offset, onClose }: Props): React.ReactElem
 
   const _onApply = useCallback(
     (): void => {
-
       if (isJamUrl) { // if jam implementers testnets
-        console.log("DeepLook apiUrl is jam implementers testnets url", apiUrl);
-        localStorage.setItem("jamUrl", apiUrl);
-        localStorage.setItem("jamReset", "true");
+        console.log('DeepLook apiUrl is jam implementers testnets url', apiUrl);
+        localStorage.setItem('jamUrl', apiUrl);
+        localStorage.setItem('jamReset', 'true');
         window.location.reload();
-      } else {  // if other polkadot-js testnets
+      } else { // if other polkadot-js testnets
         store.set('localFork', '');
         settings.set({ ...(settings.get()), apiUrl });
         window.location.assign(`${window.location.origin}${window.location.pathname}?rpc=${encodeURIComponent(apiUrl)}${window.location.hash}`);

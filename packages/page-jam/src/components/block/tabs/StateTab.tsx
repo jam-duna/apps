@@ -1,21 +1,24 @@
-"use client";
+// [object Object]
+// SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from "react";
-import { Paper, Typography, Divider, Button, Box } from "@mui/material";
-import { LabeledRow } from "../../display/LabeledRow.js";
-import { jamStateMapping as importedMapping } from "../../../utils/tooltipDetails.js";
-import { JsonEditor, githubLightTheme } from "json-edit-react";
-import { createJsonRedirectButtonDefinition } from "../createJsonRedirectButtonDefinition.js";
-import { State } from "../../../db/db.js";
-import { useParams } from "react-router-dom";
-import { renderTable } from "../tables/RenderStateTable.js";
+'use client';
 
-interface JamStateMapping {
-  [key: string]: {
-    label: string;
-    tooltip: string;
-  };
-}
+import type { State } from '../../../db/db.js';
+
+import { Box, Button, Divider, Paper, Typography } from '@mui/material';
+import { githubLightTheme, JsonEditor } from 'json-edit-react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { jamStateMapping as importedMapping } from '../../../utils/tooltipDetails.js';
+import { LabeledRow } from '../../display/LabeledRow.js';
+import { createJsonRedirectButtonDefinition } from '../createJsonRedirectButtonDefinition.js';
+import { renderTable } from '../tables/RenderStateTable.js';
+
+type JamStateMapping = Record<string, {
+  label: string;
+  tooltip: string;
+}>;
 
 const jamStateMapping: JamStateMapping = importedMapping;
 
@@ -25,7 +28,7 @@ interface StateTabProps {
   stateRecord: State;
 }
 
-export function StateTab({ stateRecord }: StateTabProps) {
+export function StateTab ({ stateRecord }: StateTabProps) {
   const { headerHash } = useParams() as { headerHash: string };
 
   // Example test data.
@@ -35,93 +38,103 @@ export function StateTab({ stateRecord }: StateTabProps) {
       data: {
         service: {
           code_hash:
-            "0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d",
+            '0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d',
           balance: 10000000000,
           min_item_gas: 100,
           min_memo_gas: 100,
           bytes: 1157,
-          items: 4,
+          items: 4
         },
         preimages: [
           {
-            hash: "0x8c30f2c101674af1da31769e96ce72e81a4a44c89526d7d3ff0a1a511d5f3c9f",
-            blob: "0x00000000000000000020000a00000000000628023307320015",
+            hash: '0x8c30f2c101674af1da31769e96ce72e81a4a44c89526d7d3ff0a1a511d5f3c9f',
+            blob: '0x00000000000000000020000a00000000000628023307320015'
           },
           {
-            hash: "0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d",
-            blob: "0x0000000000000200002000bb030000040283464001e2017d02b00228ab...",
-          },
+            hash: '0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d',
+            blob: '0x0000000000000200002000bb030000040283464001e2017d02b00228ab...'
+          }
         ],
         lookup_meta: [
           {
             key: {
-              hash: "0x8c30f2c101674af1da31769e96ce72e81a4a44c89526d7d3ff0a1a511d5f3c9f",
-              length: 25,
+              hash: '0x8c30f2c101674af1da31769e96ce72e81a4a44c89526d7d3ff0a1a511d5f3c9f',
+              length: 25
             },
-            value: [0],
+            value: [0]
           },
           {
             key: {
-              hash: "0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d",
-              length: 970,
+              hash: '0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d',
+              length: 970
             },
-            value: [0],
-          },
+            value: [0]
+          }
         ],
-        storage: null,
-      },
-    },
+        storage: null
+      }
+    }
   ];
 
   // console.log(stateRecord);
   const jamState = { ...stateRecord, accounts: testData };
-  const [viewMode, setViewMode] = useState<"json" | "table">("json");
+  const [viewMode, setViewMode] = useState<'json' | 'table'>('json');
 
-  console.log("jamState", jamState);
+  console.log('jamState', jamState);
 
   const toggleView = () =>
-    setViewMode((prev) => (prev === "json" ? "table" : "json"));
+    setViewMode((prev) => (prev === 'json' ? 'table' : 'json'));
 
   return (
-    <Paper variant="outlined" sx={{ p: 3 }}>
-      <Button variant="contained" onClick={toggleView} sx={{ mb: 2 }}>
-        {viewMode === "json" ? "table" : "json"} View
+    <Paper
+      sx={{ p: 3 }}
+      variant='outlined'
+    >
+      <Button
+        onClick={toggleView}
+        sx={{ mb: 2 }}
+        variant='contained'
+      >
+        {viewMode === 'json' ? 'table' : 'json'} View
       </Button>
       {Object.entries(jamStateMapping).map(([key, { label, tooltip }]) => {
         const stateKey = key as AllowedStateKey;
         const rawValue = jamState[stateKey];
-        console.log("jamState key", rawValue, stateKey);
+
+        console.log('jamState key', rawValue, stateKey);
         let displayValue: React.ReactNode;
 
-        if (typeof rawValue === "object") {
+        if (typeof rawValue === 'object') {
           displayValue =
-            viewMode === "json" ? (
-              <JsonEditor
-                data={rawValue}
-                viewOnly={true}
-                collapse={true}
-                theme={githubLightTheme}
-                customButtons={[createJsonRedirectButtonDefinition(headerHash)]}
-              />
-            ) : (
-              renderTable(jamState, key as keyof State, headerHash) ?? (
-                <Typography variant="body2">
-                  {`Table view not available for key '${key}'`}
-                </Typography>
+            viewMode === 'json'
+              ? (
+                <JsonEditor
+                  collapse={true}
+                  customButtons={[createJsonRedirectButtonDefinition(headerHash)]}
+                  data={rawValue}
+                  theme={githubLightTheme}
+                  viewOnly={true}
+                />
               )
-            );
+              : (
+                renderTable(jamState, key as keyof State, headerHash) ?? (
+                  <Typography variant='body2'>
+                    {`Table view not available for key '${key}'`}
+                  </Typography>
+                )
+              );
         } else {
-          displayValue = rawValue ?? "N/A";
+          displayValue = rawValue ?? 'N/A';
         }
 
         return (
           <React.Fragment key={key}>
             <LabeledRow
-              label={label}
               icon={label}
-              tooltip={tooltip}
-              value={<Box component="div">{displayValue}</Box>}
+              label={label}
               labelWidth={300}
+              tooltip={tooltip}
+              value={<Box component='div'>{displayValue}</Box>}
             />
             <Divider sx={{ my: 3 }} />
           </React.Fragment>
