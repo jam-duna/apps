@@ -7,17 +7,6 @@ import { chainsColorfulnotionPNG, chainsJamdunaPNG } from '@polkadot/apps-config
 
 export const jamChains: Omit<EndpointOption, 'teleport'>[] = [
   {
-    info: 'jam duna',
-    providers: {
-      jam: 'wss://jam-0.jamduna.org/ws'
-    },
-    text: 'JAM DUNA',
-    ui: {
-      color: '#F23232',
-      logo: chainsJamdunaPNG
-    }
-  },
-  {
     info: 'colorful notion',
     providers: {
       dot: 'wss://dot-0.jamduna.org/ws'
@@ -26,6 +15,17 @@ export const jamChains: Omit<EndpointOption, 'teleport'>[] = [
     ui: {
       color: '#F23232',
       logo: chainsColorfulnotionPNG
+    }
+  },
+  {
+    info: 'jam duna',
+    providers: {
+      jam: 'wss://jam-0.jamduna.org/ws'
+    },
+    text: 'JAM DUNA',
+    ui: {
+      color: '#F23232',
+      logo: chainsJamdunaPNG
     }
   }
 ];
