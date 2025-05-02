@@ -25,6 +25,16 @@ function NetworkDisplay ({ apiUrl, className = '', setApiUrl, value: { isChild, 
     [apiUrl, providers]
   );
 
+  const isJamUrl = () => {
+    const currentJamUrl = localStorage.getItem("jamUrl");
+
+    const matchProvider = providers.find(provider => provider.url === currentJamUrl);
+
+    console.log("DeepLook jamUrl", currentJamUrl, name, providers, matchProvider);
+
+    return matchProvider !== undefined;
+  };
+
   const _selectUrl = useCallback(
     () => {
       const filteredProviders = providers.filter(({ url }) => !url.startsWith('light://'));
@@ -40,7 +50,7 @@ function NetworkDisplay ({ apiUrl, className = '', setApiUrl, value: { isChild, 
   );
 
   return (
-    <StyledDiv className={`${className}${isSelected ? ' isSelected highlight--border' : ''}${isUnreachable ? ' isUnreachable' : ''}`}>
+    <StyledDiv className={`${className}${isSelected ? ' isSelected isCurrent highlight--border' : ''}${isUnreachable ? ' isUnreachable' : ''}${isJamUrl() ? ' highlight--border' : ''}`}>
       <div
         className={`endpointSection${isChild ? ' isChild' : ''}`}
         onClick={isUnreachable ? undefined : _selectUrl}

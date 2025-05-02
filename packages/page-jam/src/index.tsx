@@ -7,13 +7,32 @@ import { Route, Routes } from 'react-router';
 import { Tabs } from '@polkadot/react-components';
 
 import Home from './Home.js';
+import CoreDetailPage from './pages/core/index.js';
+import ServiceDetailPage from './pages/service/index.js';
+import WorkPackageDetailPage from './pages/workpackage/index.js';
+import PreimageDetailPage from './pages/preimage/index.js';
+import SegmentDetailPage from './pages/segment/index.js';
+import ServiceValueDetailPage from './pages/servicevalue/index.js';
+import ValidatorIndexDetailPage from './pages/validator/index.js';
+import ValidatorKeyDetailPage from './pages/validator-key/index.js';
+import BlockListPage from './pages/list-block/index.js';
+import ExtrinsicListPage from './pages/list-extrinsic/index.js';
+import WorkReportListPage from './pages/list-workreport/index.js';
+import BlockOverviewPage from './pages/block/index.js';
+import ExtrinsicDetailsPage from './pages/block-extrinsic/index.js';
+import BlockWorkReportsPage from './pages/block-workreports/index.js';
+import WorkReportDetailPage from './pages/block-workreport/index.js';
+import GameOfLifeViewer from './pages/game-of-life/index.js';
+
 import RpcApp from './rpc/index.js';
 import JsApp from './javascript/index.js'
 import CodecApp from './codec/index.js';
 import StorageApp from './storage/index.js';
 import BlockMain from './BlockMain/index.js';
 import BlockInfo from './BlockMain/BlockInfo/index.js';
+
 import { useTranslation } from './translate.js';
+import { WsRpcProvider } from './contexts/WSRpcContext/index.js';
 
 interface Props {
   basePath: string;
@@ -59,19 +78,40 @@ function JamApp (props: Props): React.ReactElement<Props> {
   ]);
 
   return (
-      <main className={className}>
+    <main className={className}>
+      <WsRpcProvider>
         <Tabs
           basePath={basePath}
           items={tabsRef.current}
         />
         <Routes>
           <Route path={basePath}>
+            {/* route for explorer app start */}
             <Route
               element={
                 <Home />
               }
               index
             />
+            <Route path="core/:coreIndex" element={<CoreDetailPage/>} />
+            <Route path="service/:serviceId" element={<ServiceDetailPage />} />
+            <Route path="workpackage/:workPackageHash" element={<WorkPackageDetailPage />} />
+            <Route path="preimage/:serviceId/:preimageHash" element={<PreimageDetailPage />} />
+            <Route path="segment/:workPackageHash/:index" element={<SegmentDetailPage />} />
+            <Route path="servicevalue/:service/:key/:headerhash" element={<ServiceValueDetailPage />} />
+            <Route path="validator/:index" element={<ValidatorIndexDetailPage />} />
+            <Route path="validator/:index/:hash" element={<ValidatorIndexDetailPage />} />
+            <Route path="validator/key/:key" element={<ValidatorKeyDetailPage />} />
+            <Route path="validator/key/:key/:hash" element={<ValidatorKeyDetailPage />} />
+            <Route path="list/block" element={<BlockListPage />} />
+            <Route path="list/extrinsic" element={<ExtrinsicListPage />} />
+            <Route path="list/workreport" element={<WorkReportListPage />} />
+            <Route path="block/:headerhash" element={<BlockOverviewPage/>} />
+            <Route path="block/:headerhash/extrinsic" element={<ExtrinsicDetailsPage />} />
+            <Route path="block/:headerhash/workreport" element={<BlockWorkReportsPage />} />
+            <Route path="block/:headerhash/workreport/:workPackageHash" element={<WorkReportDetailPage />} />
+            <Route path="game-of-life-viwer" element={<GameOfLifeViewer />} />
+            {/* route for explorer app end */}
             <Route path="rpc" element={<RpcApp />} />
             <Route path="javascript" element={<JsApp {...props} />} />
             <Route path="codec" element={<CodecApp {...props} />} />
@@ -80,8 +120,9 @@ function JamApp (props: Props): React.ReactElement<Props> {
             <Route path='1/query/:value?' element={<BlockInfo />}/>
           </Route>
         </Routes>
-      </main>
-    );
+      </WsRpcProvider>
+    </main>
+  );
 }
 
 export default React.memo(JamApp);
