@@ -147,6 +147,7 @@ export interface Header {
 export interface AccordionSubSection {
   title: string;
   count: number;
+  // eslint-disable-next-line no-undef
   children: React.ReactNode;
 }
 
@@ -293,6 +294,7 @@ export interface AccountData {
   service: AccountService;
   preimages: AccountPreimage[];
   lookup_meta: AccountLookupMeta[];
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   storage: unknown | null; // could be null or some object
 }
 

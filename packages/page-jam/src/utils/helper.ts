@@ -58,13 +58,13 @@ export function formatDate (timestamp: number, type?: string) {
   if (type === 'long') {
     return new Date(timestamp)
       .toLocaleString('en-US', {
-        timeZone: 'UTC',
-        year: 'numeric',
-        month: 'numeric',
         day: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-        second: 'numeric'
+        month: 'numeric',
+        second: 'numeric',
+        timeZone: 'UTC',
+        year: 'numeric'
       })
       .replace(',', '');
   }

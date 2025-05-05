@@ -1,28 +1,35 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+interface ServiceResponse {
+  jsonrpc: string;
+  id: number;
+  result?: unknown;
+  error?: unknown;
+}
+
 export async function fetchServiceInfo (
   id: string,
   rpcUrl: string
-): Promise<any> {
+): Promise<ServiceResponse | null> {
   console.log('[RPC-CALL] Fetching service by id: ', id);
   const payload = {
-    jsonrpc: '2.0',
     id: 1,
+    jsonrpc: '2.0',
     method: 'jam.ServiceInfo',
     params: [id]
   };
 
   try {
     const response = await fetch(rpcUrl, {
-      method: 'POST',
+      body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      method: 'POST'
     });
 
-    return await response.json();
-  } catch (err) {
-    // console.error("Error fetching service:", err);
+    return await response.json() as ServiceResponse;
+  } catch (_err) {
+    // console.error("Error fetching service:", _err);
     return null;
   }
 }
@@ -34,15 +41,15 @@ export async function fetchServiceValue (
 ): Promise<string> {
   console.log('[RPC-CALL] Fetching service value by id: ', id);
   const payload = {
-    jsonrpc: '2.0',
     id: 1,
+    jsonrpc: '2.0',
     method: 'jam.ServiceValue',
     params: [id, hash]
   };
   const response = await fetch(rpcUrl, {
-    method: 'POST',
+    body: JSON.stringify(payload),
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    method: 'POST'
   });
   const text = await response.text();
 

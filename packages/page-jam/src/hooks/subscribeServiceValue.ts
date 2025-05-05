@@ -47,11 +47,14 @@ export function useSubscribeServiceValue ({ endpoint,
         };
 
         ws.onmessage = (event) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
           const msg = JSON.parse(event.data);
 
           console.log('[WS-LOG] servicevalue', msg);
 
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           if (msg.method === 'subscribeServiceValue' && msg.result) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
             setStatus(msg.result);
           }
         };

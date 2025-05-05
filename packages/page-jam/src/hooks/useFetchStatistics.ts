@@ -1,31 +1,39 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+interface JsonRpcResponse {
+  jsonrpc: string;
+  id: number;
+  result?: unknown;
+  error?: unknown;
+}
+
 export async function fetchStatistics (
   hash: string,
   rpcUrl: string
-): Promise<any | null> {
+): Promise<JsonRpcResponse | null> {
   console.log('[RPC-CALL] Fetching statistics for ', hash);
 
   // Decide on method and parameter based on type.
   const methodName = 'jam.Statistics';
 
   const payload = {
-    jsonrpc: '2.0',
     id: 1,
+    jsonrpc: '2.0',
     method: methodName,
     params: [hash]
   };
 
   try {
     const response = await fetch(rpcUrl, {
-      method: 'POST',
+      body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      method: 'POST'
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await response.json();
-  } catch (err) {
+  } catch (_err) {
     // console.error("Error fetching block:", err);
     return null;
   }

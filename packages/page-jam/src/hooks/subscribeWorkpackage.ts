@@ -43,11 +43,14 @@ export function useSubscribeWorkpackage ({ endpoint, hash, setStatus }: Params) 
         };
 
         ws.onmessage = (event) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
           const msg = JSON.parse(event.data);
 
           console.log('[WS-LOG] workpackage', msg);
 
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           if (msg.method === 'subscribeWorkPackage' && msg.result) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
             setStatus(msg.result.status);
           }
         };

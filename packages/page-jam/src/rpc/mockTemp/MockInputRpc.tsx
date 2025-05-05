@@ -35,42 +35,54 @@ export default function MockInputRpc ({ className = '',
 
   // whenever either changes, emit the new DefinitionRpcExt
   useEffect(() => {
-    if (onChange && jsonrpc[section] && jsonrpc[section][method]) {
-      onChange(jsonrpc[section][method]);
-    }
+    onChange?.(jsonrpc[section]?.[method]);
   }, [section, method, onChange, jsonrpc]);
+
+  const handleSectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSection(e.target.value);
+  };
+
+  const handleMethodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setMethod(e.target.value);
+  };
 
   return (
     <div className={className}>
       {/* Section selector – small */}
       <select
         className='small'
-        onChange={(e) => setSection(e.target.value)}
+        // eslint-disable-next-line react/jsx-no-bind
+        onChange={handleSectionChange}
         value={section}
       >
-        {sections.map((sec) => (
-          <option
-            key={sec}
-            value={sec}
-          >
-            {sec}
-          </option>
-        ))}
+        {sections.map(function renderSection (sec) {
+          return (
+            <option
+              key={sec}
+              value={sec}
+            >
+              {sec}
+            </option>
+          );
+        })}
       </select>
       {/* Method selector – large */}
       <select
         className='large'
-        onChange={(e) => setMethod(e.target.value)}
+        // eslint-disable-next-line react/jsx-no-bind
+        onChange={handleMethodChange}
         value={method}
       >
-        {methods.map((m) => (
-          <option
-            key={m}
-            value={m}
-          >
-            {m}
-          </option>
-        ))}
+        {methods.map(function renderMethod (m) {
+          return (
+            <option
+              key={m}
+              value={m}
+            >
+              {m}
+            </option>
+          );
+        })}
       </select>
     </div>
   );

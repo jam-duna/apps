@@ -13,7 +13,9 @@ import { fetchState } from './useFetchState.js';
 export function useBlockOverview (input: string, type: 'hash' | 'slot') {
   const [blockRecord, setBlockRecord] = useState<Block | null>(null);
   const [stateRecord, setStateRecord] = useState<State | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [prevHash, setPrevHash] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [nextHash, setNextHash] = useState<string | null>(null);
   const wsEndpoint = localStorage.getItem('customWsEndpoint') || null;
   const rpcUrl = getRpcUrlFromWs(wsEndpoint || localStorage.getItem('jamUrl') || 'dot-0.jamduna.org');
@@ -55,6 +57,7 @@ export function useBlockOverview (input: string, type: 'hash' | 'slot') {
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
         const dbData = await fetchDbData(input, type);
@@ -90,5 +93,5 @@ export function useBlockOverview (input: string, type: 'hash' | 'slot') {
     })();
   }, [input, type, rpcUrl]);
 
-  return { blockRecord, stateRecord, prevHash, nextHash };
+  return { blockRecord, nextHash, prevHash, stateRecord };
 }

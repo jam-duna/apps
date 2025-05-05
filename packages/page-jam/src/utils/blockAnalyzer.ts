@@ -186,8 +186,8 @@ export const filterActiveValidators = async (
 
           if (isExist === false) {
             validators.push({
-              index: validator.validator_index,
               hash: block.overview?.headerHash || '0x00',
+              index: validator.validator_index,
               lastSeenTime: block.overview?.createdAt || 0
             });
           }
@@ -254,8 +254,8 @@ export const filterPreimagesFromService = async (
           hashes = hashes + (guarantee.report.package_spec.hash + ' ');
         });
         const preimage: PreimageProps = {
-          preimage: preimg,
           package_hash: hashes,
+          preimage: preimg,
           timestamp: block.overview?.createdAt || 0
         };
 
@@ -384,11 +384,11 @@ export const filterCoreStatistics = async (
 export const fetchServiceStatisticsFromId = async (
   serviceId: number,
   active: boolean
-): Promise<{ time: number; stat: ServiceStatistics }[]> => {
+): Promise<{ stat: ServiceStatistics; time: number }[]> => {
   const statistics = await sortStatistics();
   const hashes = await getActiveBlocks();
 
-  const data: { time: number; stat: ServiceStatistics }[] = [];
+  const data: { stat: ServiceStatistics; time: number }[] = [];
 
   statistics.forEach((item) => {
     const isActive =
@@ -402,7 +402,7 @@ export const fetchServiceStatisticsFromId = async (
       );
 
       if (serviceStat !== undefined) {
-        data.push({ time: item.timestamp, stat: serviceStat.record });
+        data.push({ stat: serviceStat.record, time: item.timestamp });
       }
     }
   });
@@ -425,15 +425,13 @@ export const fetchAggregateCoreStatistics = async (active: boolean) => {
 
       if (isActive) {
         result[item.timestamp] = {
-          gas_used: item.cores[0].gas_used + item.cores[1].gas_used,
-          imports: item.cores[0].imports + item.cores[1].imports,
-          extrinsic_count:
-            item.cores[0].extrinsic_count + item.cores[1].extrinsic_count,
-          extrinsic_size:
-            item.cores[0].extrinsic_size + item.cores[1].extrinsic_size,
-          exports: item.cores[0].exports + item.cores[1].exports,
           bundle_size: item.cores[0].bundle_size + item.cores[1].bundle_size,
           da_load: item.cores[0].da_load + item.cores[1].da_load,
+          exports: item.cores[0].exports + item.cores[1].exports,
+          extrinsic_count: item.cores[0].extrinsic_count + item.cores[1].extrinsic_count,
+          extrinsic_size: item.cores[0].extrinsic_size + item.cores[1].extrinsic_size,
+          gas_used: item.cores[0].gas_used + item.cores[1].gas_used,
+          imports: item.cores[0].imports + item.cores[1].imports,
           popularity: item.cores[0].popularity + item.cores[1].popularity
         };
       }
@@ -447,61 +445,45 @@ export const fetchAggregateServiceStatistics = async (active: boolean) => {
   const statistics = await sortStatistics();
   const hashes = await getActiveBlocks();
 
-  const data: { time: number; stat: ServiceStatistics }[] = [];
+  const data: { stat: ServiceStatistics; time: number }[] = [];
 
-  statistics.forEach((item) => {
-    (async () => {
-      const isActive =
-        active === false
-          ? true
-          : hashes.findIndex((hash) => hash === item.hash) !== -1;
+  await Promise.all(statistics.map((item) => {
+    const isActive =
+      active === false
+        ? true
+        : hashes.findIndex((hash) => hash === item.hash) !== -1;
 
-      if (isActive) {
-        let aggStatistics: ServiceStatistics | undefined;
+    if (isActive) {
+      let aggStatistics: ServiceStatistics | undefined;
 
-        item.services.forEach((service) => {
-          if (aggStatistics === undefined) {
-            aggStatistics = service.record;
-          } else {
-            aggStatistics = {
-              provided_count:
-                aggStatistics.provided_count + service.record.provided_count,
-              provided_size:
-                aggStatistics.provided_size + service.record.provided_size,
-              refinement_count:
-                aggStatistics.refinement_count +
-                service.record.refinement_count,
-              refinement_gas_used:
-                aggStatistics.refinement_gas_used +
-                service.record.refinement_gas_used,
-              imports: aggStatistics.imports + service.record.imports,
-              exports: aggStatistics.exports + service.record.exports,
-              extrinsic_size:
-                aggStatistics.extrinsic_size + service.record.extrinsic_size,
-              extrinsic_count:
-                aggStatistics.extrinsic_count + service.record.extrinsic_count,
-              accumulate_count:
-                aggStatistics.accumulate_count +
-                service.record.accumulate_count,
-              accumulate_gas_used:
-                aggStatistics.accumulate_gas_used +
-                service.record.accumulate_gas_used,
-              on_transfers_count:
-                aggStatistics.on_transfers_count +
-                service.record.on_transfers_count,
-              on_transfers_gas_used:
-                aggStatistics.on_transfers_gas_used +
-                service.record.on_transfers_gas_used
-            };
-          }
-        });
-
-        if (aggStatistics !== undefined) {
-          data.push({ time: item.timestamp, stat: aggStatistics });
+      item.services.forEach((service) => {
+        if (aggStatistics === undefined) {
+          aggStatistics = service.record;
+        } else {
+          aggStatistics = {
+            accumulate_count: aggStatistics.accumulate_count + service.record.accumulate_count,
+            accumulate_gas_used: aggStatistics.accumulate_gas_used + service.record.accumulate_gas_used,
+            exports: aggStatistics.exports + service.record.exports,
+            extrinsic_count: aggStatistics.extrinsic_count + service.record.extrinsic_count,
+            extrinsic_size: aggStatistics.extrinsic_size + service.record.extrinsic_size,
+            imports: aggStatistics.imports + service.record.imports,
+            on_transfers_count: aggStatistics.on_transfers_count + service.record.on_transfers_count,
+            on_transfers_gas_used: aggStatistics.on_transfers_gas_used + service.record.on_transfers_gas_used,
+            provided_count: aggStatistics.provided_count + service.record.provided_count,
+            provided_size: aggStatistics.provided_size + service.record.provided_size,
+            refinement_count: aggStatistics.refinement_count + service.record.refinement_count,
+            refinement_gas_used: aggStatistics.refinement_gas_used + service.record.refinement_gas_used
+          };
         }
+      });
+
+      if (aggStatistics !== undefined) {
+        data.push({ stat: aggStatistics, time: item.timestamp });
       }
-    })();
-  });
+    }
+
+    return undefined;
+  }));
 
   return data.length > 9 ? data.slice(0, 8) : data;
 };
@@ -523,19 +505,32 @@ export interface ValidatorResult {
   staging: KeyedItem;
 }
 
+interface StateResponse {
+  kappa: KeyedItem[];
+  lambda: KeyedItem[];
+  iota: KeyedItem[];
+  gamma: {
+    gamma_k: KeyedItem[];
+  };
+  pi: {
+    vals_current: PiEntry[];
+    vals_last: PiEntry[];
+  };
+}
+
 export const getValidator = async (
   index: number,
   hash: string
 ): Promise<ValidatorResult | null> => {
-  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org'));
+  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')) as StateResponse | null;
 
   let result = null;
 
-  if (state !== null) {
+  if (state !== null && 'kappa' in state && 'lambda' in state && 'iota' in state && 'gamma' in state) {
     result = {
-      previous: state.iota[index],
       current: state.kappa[index],
       next: state.lambda[index],
+      previous: state.iota[index],
       staging: state.gamma.gamma_k[index]
     };
   }
@@ -552,11 +547,11 @@ export const fetchValidatorStatistics = async (
   index: number,
   hash: string
 ): Promise<ValidatorStatistics | null> => {
-  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org'));
+  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')) as StateResponse | null;
 
   let result: ValidatorStatistics | null = null;
 
-  if (state !== null) {
+  if (state !== null && 'pi' in state) {
     result = {
       current: state.pi.vals_current[index],
       last: state.pi.vals_last[index]
@@ -578,11 +573,11 @@ export const fetchValidatorFromKey = async (
   key: string,
   hash: string
 ): Promise<ValidatorKey | null> => {
-  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org'));
+  const state = await fetchState(hash, getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')) as StateResponse | null;
 
   let result: ValidatorKey | null = null;
 
-  if (state !== null) {
+  if (state !== null && 'iota' in state && 'kappa' in state && 'lambda' in state && 'gamma' in state) {
     const prevIndex = state.iota.findIndex(
       (item: { bandersnatch: string; bls: string; ed25519: string; }) =>
         item.bandersnatch === key || item.bls === key || item.ed25519 === key
@@ -602,35 +597,35 @@ export const fetchValidatorFromKey = async (
 
     if (prevIndex !== -1) {
       result = {
-        previous: prevIndex,
         current: curIndex,
+        item: state.iota[prevIndex],
         next: nextIndex,
-        staging: stagIndex,
-        item: state.iota[prevIndex]
+        previous: prevIndex,
+        staging: stagIndex
       };
     } else if (curIndex !== -1) {
       result = {
-        previous: prevIndex,
         current: curIndex,
+        item: state.kappa[curIndex],
         next: nextIndex,
-        staging: stagIndex,
-        item: state.kappa[curIndex]
+        previous: prevIndex,
+        staging: stagIndex
       };
     } else if (nextIndex !== -1) {
       result = {
-        previous: prevIndex,
         current: curIndex,
+        item: state.lambda[nextIndex],
         next: nextIndex,
-        staging: stagIndex,
-        item: state.lambda[nextIndex]
+        previous: prevIndex,
+        staging: stagIndex
       };
     } else if (stagIndex !== -1) {
       result = {
-        previous: prevIndex,
         current: curIndex,
+        item: state.gamma.gamma_k[stagIndex],
         next: nextIndex,
-        staging: stagIndex,
-        item: state.gamma.gamma_k[stagIndex]
+        previous: prevIndex,
+        staging: stagIndex
       };
     }
   }

@@ -35,7 +35,7 @@ export function getRpcUrlFromWs (wsEndpoint: string): string {
     }
 
     return parsed.toString();
-  } catch (error) {
+  } catch (_error) {
     // Fallback: Remove trailing slashes and add "/rpc" if necessary.
     urlStr = urlStr.replace(/\/+$/, '');
 
@@ -81,7 +81,7 @@ export function normalizeEndpoint (input: string): string {
     }
 
     return parsed.toString();
-  } catch (error) {
+  } catch (_error) {
     // Fallback: remove trailing slashes and add "/ws" if necessary.
     url = url.replace(/\/+$/, '');
 

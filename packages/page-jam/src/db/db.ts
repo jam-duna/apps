@@ -57,6 +57,7 @@ export class JamDB extends Dexie {
       blocks: 'overview.headerHash,overview.slot,overview.createdAt',
       states: 'overview.headerHash,overview.slot,overview.createdAt',
       statistics: 'hash,timestamp',
+      // eslint-disable-next-line sort-keys
       blocksFetchBlockHash: 'overview.blockHash',
       statesFetchBlockHash: 'overview.blockHash'
     });

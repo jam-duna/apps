@@ -4,21 +4,22 @@
 export async function fetchListServices (rpcUrl: string): Promise<any[]> {
   console.log('[RPC-CALL] Fetching serive list');
   const payload = {
-    jsonrpc: '2.0',
     id: 1,
+    jsonrpc: '2.0',
     method: 'jam.ListServices',
     params: []
   };
 
   try {
     const response = await fetch(rpcUrl, {
-      method: 'POST',
+      body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      method: 'POST'
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await response.json();
-  } catch (err) {
+  } catch (_err) {
     // console.error("Error fetching service:", err);
     return [];
   }

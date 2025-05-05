@@ -19,6 +19,7 @@ export function fallbackCopyTextToClipboard (text: string) {
   textArea.select();
 
   try {
+    // eslint-disable-next-line deprecation/deprecation
     const successful = document.execCommand('copy');
 
     console.log('Fallback copy was', successful ? 'successful' : 'unsuccessful');

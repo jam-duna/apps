@@ -43,11 +43,11 @@ export function calculateExtrinsicCounts (
     preimagesCount;
 
   return {
-    ticketsCount,
-    disputesCount,
     assurancesCount,
+    disputesCount,
     guaranteesCount,
     preimagesCount,
+    ticketsCount,
     totalExtrinsics
   };
 }

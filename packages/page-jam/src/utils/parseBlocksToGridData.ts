@@ -59,10 +59,10 @@ export function parseBlocksToGridData (
         grid[coreIndex] = {
           ...grid[coreIndex],
           [timestamp]: {
-            serviceName,
-            workPackageHash: finalHash,
             headerHash,
-            isBusy: finalHash !== ''
+            isBusy: finalHash !== '',
+            serviceName,
+            workPackageHash: finalHash
           }
         };
       });
@@ -71,10 +71,10 @@ export function parseBlocksToGridData (
         grid[defaultCore] = {
           ...grid[defaultCore],
           [timestamp]: {
-            serviceName: [],
-            workPackageHash: '',
             headerHash: '',
-            isBusy: false
+            isBusy: false,
+            serviceName: [],
+            workPackageHash: ''
           }
         };
       });
@@ -87,10 +87,10 @@ export function parseBlocksToGridData (
 
       if (!grid[coreIndex][timestamp]) {
         grid[coreIndex][timestamp] = {
-          serviceName: [],
-          workPackageHash: '',
           headerHash: '',
-          isBusy: false
+          isBusy: false,
+          serviceName: [],
+          workPackageHash: ''
         };
       }
     });
@@ -110,25 +110,25 @@ export function parseBlocksToGridData (
         coreStatistics[coreValue][timeslotValue] =
           cores === undefined
             ? {
-              gas_used: -1,
-              imports: -1,
-              extrinsic_count: -1,
-              extrinsic_size: -1,
-              exports: -1,
               bundle_size: -1,
               da_load: -1,
+              exports: -1,
+              extrinsic_count: -1,
+              extrinsic_size: -1,
+              gas_used: -1,
+              imports: -1,
               popularity: -1
             }
             : cores[coreIndex];
-      } catch (err) {
+      } catch (_err) {
         coreStatistics[coreValue][timeslotValue] = {
-          gas_used: -1,
-          imports: -1,
-          extrinsic_count: -1,
-          extrinsic_size: -1,
-          exports: -1,
           bundle_size: -1,
           da_load: -1,
+          exports: -1,
+          extrinsic_count: -1,
+          extrinsic_size: -1,
+          gas_used: -1,
+          imports: -1,
           popularity: -1
         };
       }
@@ -138,10 +138,10 @@ export function parseBlocksToGridData (
   });
 
   return {
+    coreStatistics,
+    cores: Array.from(cores).sort((a, b) => a - b),
     data: grid,
     timeslots: Array.from(timeslots).sort((a, b) => a - b),
-    timestamps: Array.from(timestamps).sort((a, b) => a - b),
-    cores: Array.from(cores).sort((a, b) => a - b),
-    coreStatistics
+    timestamps: Array.from(timestamps).sort((a, b) => a - b)
   };
 }

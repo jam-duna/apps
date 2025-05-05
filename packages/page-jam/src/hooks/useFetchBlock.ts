@@ -26,21 +26,22 @@ export async function fetchBlock (
   }
 
   const payload = {
-    jsonrpc: '2.0',
     id: 1,
+    jsonrpc: '2.0',
     method: methodName,
     params: [paramValue]
   };
 
   try {
     const response = await fetch(rpcUrl, {
-      method: 'POST',
+      body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      method: 'POST'
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await response.json();
-  } catch (err) {
+  } catch (_err) {
     // console.error("Error fetching block:", err);
     return null;
   }

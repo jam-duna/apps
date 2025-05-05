@@ -27,6 +27,7 @@ export function useWorkReportStatuses (
         let foundStatus = 'Pending';
         let checks = 0;
 
+        // eslint-disable-next-line no-unmodified-loop-condition
         while (checks < maxChecks && !cancelled) {
           const nextBlock = await db.blocks
             .where('overview.slot')
@@ -66,6 +67,7 @@ export function useWorkReportStatuses (
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     updateStatuses();
 
     return () => {
