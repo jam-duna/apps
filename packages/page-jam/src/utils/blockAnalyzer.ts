@@ -397,12 +397,12 @@ export const fetchServiceStatisticsFromId = async (
         : hashes.findIndex((hash) => hash === item.hash) !== -1;
 
     if (isActive) {
-      const serviceStat = item.services.find(
-        (stat) => stat.id.toString() === serviceId.toString()
+      const serviceStat = Object.entries(item.services).find(
+        ([_key, stat]) => stat.id !== undefined && stat.id.toString() === serviceId.toString()
       );
 
       if (serviceStat !== undefined) {
-        data.push({ stat: serviceStat.record, time: item.timestamp });
+        data.push({ stat: serviceStat[1].record, time: item.timestamp });
       }
     }
   });
@@ -456,7 +456,7 @@ export const fetchAggregateServiceStatistics = async (active: boolean) => {
     if (isActive) {
       let aggStatistics: ServiceStatistics | undefined;
 
-      item.services.forEach((service) => {
+      Object.entries(item.services).forEach(([_key, service]) => {
         if (aggStatistics === undefined) {
           aggStatistics = service.record;
         } else {

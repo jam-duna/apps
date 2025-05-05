@@ -263,7 +263,7 @@ function Home () {
               />
             </Grid>
             <Grid size={12}>
-              <ListServices services={serviceList} />
+              <ListServices services={serviceList.slice(0, 12)} />
             </Grid>
           </Grid>
         </Grid>
