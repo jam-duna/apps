@@ -42,7 +42,7 @@ export const WsRpcProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentStatistics, setCurrentStatistics] = useState<Statistics | null>(
     null
   );
-  const [wsEndpoint, setWsEndpoint] = useState<string>(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org');
+  const wsEndpoint = (localStorage.getItem('jamUrl') || 'dot-0.jamduna.org');
   const [now, setNow] = useState(Date.now());
 
   const wsRef = useRef<WebSocket | null>(null);
