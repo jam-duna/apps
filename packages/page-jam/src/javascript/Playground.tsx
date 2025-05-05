@@ -88,7 +88,6 @@ function Playground ({ className = '' }: Props): React.ReactElement<Props> {
   const [options, setOptions] = useState<Snippet[]>([]);
   const [selected, setSelected] = useState(snippets[0]);
 
-
   // initialize all options
   useEffect((): void => {
     // add snippets if not already available (global)

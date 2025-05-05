@@ -64,4 +64,8 @@ const apiUrl = getApiUrl();
 // set the default as retrieved here
 settings.set({ apiUrl });
 
+if (localStorage.getItem('jamUrl') === null) {
+  localStorage.setItem('jamUrl', 'wss://dot-0.jamduna.org/ws'); // set dot-0 as default
+}
+
 networkOrUrl(apiUrl);

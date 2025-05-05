@@ -193,6 +193,16 @@ function Endpoints ({ className = '', offset, onClose }: Props): React.ReactElem
     return result;
   }, [apiUrl, storedCustomEndpoints]);
 
+  const isJamUrl = useMemo(() => {
+    const jamNetworks = groups.find((group) => group.header?.toString() === 'JAM Implementers Testnets');
+
+    if (jamNetworks !== undefined) {
+      return jamNetworks.networks.find((network) => network.providers.find((provider) => provider.url.toString() === apiUrl.toString())) !== undefined;
+    }
+
+    return false;
+  }, [apiUrl, groups]);
+
   const _changeGroup = useCallback(
     (groupIndex: number) => setApiUrl((state) => ({ ...state, groupIndex })),
     []
@@ -245,17 +255,24 @@ function Endpoints ({ className = '', offset, onClose }: Props): React.ReactElem
 
   const _onApply = useCallback(
     (): void => {
-      store.set('localFork', '');
-      settings.set({ ...(settings.get()), apiUrl });
-      window.location.assign(`${window.location.origin}${window.location.pathname}?rpc=${encodeURIComponent(apiUrl)}${window.location.hash}`);
-
-      if (!hasUrlChanged) {
+      if (isJamUrl) { // if jam implementers testnets
+        console.log('DeepLook apiUrl is jam implementers testnets url', apiUrl);
+        localStorage.setItem('jamUrl', apiUrl);
+        localStorage.setItem('jamReset', 'true');
         window.location.reload();
+      } else { // if other polkadot-js testnets
+        store.set('localFork', '');
+        settings.set({ ...(settings.get()), apiUrl });
+        window.location.assign(`${window.location.origin}${window.location.pathname}?rpc=${encodeURIComponent(apiUrl)}${window.location.hash}`);
+
+        if (!hasUrlChanged) {
+          window.location.reload();
+        }
       }
 
       onClose();
     },
-    [apiUrl, onClose, hasUrlChanged]
+    [apiUrl, hasUrlChanged, isJamUrl, onClose]
   );
 
   const _onLocalFork = useCallback(

@@ -1,8 +1,7 @@
 // Copyright 2017-2025 @polkadot/app-storage authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AppProps  } from '@polkadot/react-components/types';
-import type { QueryTypes, ParitalQueryTypes } from './types.js';
+import type { ParitalQueryTypes, QueryTypes } from './types.js';
 
 import React, { useCallback, useState } from 'react';
 
@@ -18,19 +17,18 @@ interface Props {
 
 let id = -1;
 
-function CodecApp ({ basePath, className = '' }: Props): React.ReactElement<Props> {
+function CodecApp ({ className = '' }: Props): React.ReactElement<Props> {
   const [queue, setQueue] = useState<QueryTypes[]>([]);
 
-  
   const onAdd = useCallback(
     (query: QueryTypes) => setQueue((queue: QueryTypes[]) => [query, ...queue]),
     []
   );
 
   const _onAdd = useCallback(
-      (query: ParitalQueryTypes) => onAdd({ ...query, id: ++id }),
-      [onAdd]
-    );
+    (query: ParitalQueryTypes) => onAdd({ ...query, id: ++id }),
+    [onAdd]
+  );
 
   const _onRemove = useCallback(
     (id: number) => setQueue((queue: QueryTypes[]) => queue.filter((item) => item.id !== id)),

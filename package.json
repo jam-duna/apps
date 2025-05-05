@@ -121,5 +121,15 @@
     "@polkadot/x-textencoder": "^13.4.4",
     "@polkadot/x-ws": "^13.4.4",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "@mui/x-charts": "^8.1.0",
+    "dexie": "^4.0.11",
+    "json-edit-react": "^1.26.2",
+    "usehooks-ts": "^3.1.1"
   }
 }

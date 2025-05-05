@@ -5,6 +5,7 @@ import type { TFunction, TOptions } from '../types.js';
 import type { LinkOption } from './types.js';
 
 import { createCustom, createDev, createOwn } from './development.js';
+import { jamChains } from './jam.js';
 import { prodChains, prodRelayKusama, prodRelayPolkadot } from './production.js';
 import { testChains, testRelayWestend } from './testing.js';
 import { testRelayPaseo } from './testingRelayPaseo.js';
@@ -83,6 +84,15 @@ export function createWsEndpoints (t: TFunction = defaultT, firstOnly = false, w
       value: ''
     },
     ...expandEndpoints(t, testChains, firstOnly, withSort),
+    {
+      isDisabled: false,
+      isHeader: true,
+      text: t('rpc.header.jam', 'JAM Implementers Testnets', { ns: 'apps-config' }),
+      textBy: '',
+      ui: {},
+      value: ''
+    },
+    ...expandEndpoints(t, jamChains, firstOnly, withSort),
     {
       isDevelopment: true,
       isDisabled: false,

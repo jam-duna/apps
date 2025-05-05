@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from 'react';
+// Copyright 2017-2025 @polkadot/app-jam authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import type { DefinitionRpcExt } from '@polkadot/types/types';
+
+import React, { useEffect, useState } from 'react';
 
 interface MockInputRpcProps {
   className?: string;
@@ -12,13 +16,11 @@ interface MockInputRpcProps {
   onChange?: (value: DefinitionRpcExt) => void;
 }
 
-export default function MockInputRpc({
-  className = '',
-  jsonrpc,
-  defaultSection,
+export default function MockInputRpc ({ className = '',
   defaultMethod,
-  onChange
-}: MockInputRpcProps): React.ReactElement {
+  defaultSection,
+  jsonrpc,
+  onChange }: MockInputRpcProps): React.ReactElement {
   // 1) only one section: 'jam'
   const sections = Object.keys(jsonrpc);
   const [section, setSection] = useState<string>(defaultSection || sections[0]);
@@ -33,37 +35,54 @@ export default function MockInputRpc({
 
   // whenever either changes, emit the new DefinitionRpcExt
   useEffect(() => {
-    if (onChange && jsonrpc[section] && jsonrpc[section][method]) {
-      onChange(jsonrpc[section][method]);
-    }
+    onChange?.(jsonrpc[section]?.[method]);
   }, [section, method, onChange, jsonrpc]);
+
+  const handleSectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSection(e.target.value);
+  };
+
+  const handleMethodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setMethod(e.target.value);
+  };
 
   return (
     <div className={className}>
       {/* Section selector – small */}
       <select
-        className="small"
+        className='small'
+        // eslint-disable-next-line react/jsx-no-bind
+        onChange={handleSectionChange}
         value={section}
-        onChange={(e) => setSection(e.target.value)}
       >
-        {sections.map((sec) => (
-          <option key={sec} value={sec}>
-            {sec}
-          </option>
-        ))}
+        {sections.map(function renderSection (sec) {
+          return (
+            <option
+              key={sec}
+              value={sec}
+            >
+              {sec}
+            </option>
+          );
+        })}
       </select>
-
       {/* Method selector – large */}
       <select
-        className="large"
+        className='large'
+        // eslint-disable-next-line react/jsx-no-bind
+        onChange={handleMethodChange}
         value={method}
-        onChange={(e) => setMethod(e.target.value)}
       >
-        {methods.map((m) => (
-          <option key={m} value={m}>
-            {m}
-          </option>
-        ))}
+        {methods.map(function renderMethod (m) {
+          return (
+            <option
+              key={m}
+              value={m}
+            >
+              {m}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
