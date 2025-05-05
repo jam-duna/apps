@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 interface ServiceRequestResponse {
+  status: number;
   jsonrpc: string;
   id: number;
   result?: unknown;

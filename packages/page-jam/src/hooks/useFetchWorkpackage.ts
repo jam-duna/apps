@@ -1,17 +1,11 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-interface JsonRpcResponse {
-  jsonrpc: string;
-  id: number;
-  result?: unknown;
-  error?: unknown;
-}
-
 export async function fetchWorkPackage (
   hash: string,
   rpcUrl: string
-): Promise<JsonRpcResponse | null> {
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+): Promise<any | null> {
   console.log('[RPC-CALL] Fetching work packge by hash: ', hash);
   const payload = {
     id: 1,

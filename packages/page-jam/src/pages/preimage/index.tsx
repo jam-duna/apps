@@ -17,7 +17,9 @@ import { getRpcUrlFromWs } from '../../utils/ws.js';
 
 export default function PreimageDetailPage () {
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const serviceId = params.service!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const preimageHash = params.hash!;
 
   const [preimage, setPreimage] = useState<ServicePreimage | null>(null);
@@ -34,10 +36,11 @@ export default function PreimageDetailPage () {
         getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')
       );
 
-      setPreimage(data);
+      setPreimage(data as unknown as ServicePreimage);
       setLoadingP(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchPreimage();
   }, [serviceId, preimageHash]);
 
@@ -51,27 +54,29 @@ export default function PreimageDetailPage () {
           getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')
         );
 
-        if (data.length === 0) {
+        if (!data) {
           setStatus('solicited but not available');
-        } else if (data.length === 1) {
+        } else if (data.status === 1) {
           setStatus('available');
-        } else if (data.length === 2) {
+        } else if (data.status === 2) {
           setStatus('forgotten/not available');
-        } else if (data.length === 3) {
+        } else if (data.status === 3) {
           setStatus('available again');
         }
 
         setLoadingS(false);
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       fetchRequest();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preimage]);
 
   useSubscribeServicePreimage({
     endpoint: localStorage.getItem('jamUrl') || 'dot-0.jamduna.org',
-    serviceID: serviceId,
     hash: preimageHash,
+    serviceID: serviceId,
     setPreimage: (preimage: ServicePreimage) => {
       setPreimage(preimage);
     },
@@ -90,7 +95,7 @@ export default function PreimageDetailPage () {
       maxWidth='lg'
       sx={{ mt: 4 }}
     >
-      <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 2 }}>
+      <Box sx={{ alignItems: 'center', display: 'inline-flex', mb: 2 }}>
         <Preimage
           hash={preimageHash}
           mode={ItemMode.Large}
@@ -98,7 +103,7 @@ export default function PreimageDetailPage () {
         />
       </Box>
       <Paper
-        sx={{ p: 3, marginBlock: 3 }}
+        sx={{ marginBlock: 3, p: 3 }}
         variant='outlined'
       >
         <LabeledRow
@@ -108,7 +113,7 @@ export default function PreimageDetailPage () {
           value={<Service
             mode={ItemMode.Table}
             name={serviceId}
-                 />}
+          />}
         />
         <LabeledRow
           icon='status'

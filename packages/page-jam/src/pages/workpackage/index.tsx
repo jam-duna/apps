@@ -20,6 +20,7 @@ import { getRpcUrlFromWs } from '../../utils/ws.js';
 
 export default function WorkPackageDetailPage () {
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const workPackageHash = params.workPackageHash!;
 
   const [workPackageStatus, setWorkPackageStatus] = useState<string>('-');
@@ -46,24 +47,27 @@ export default function WorkPackageDetailPage () {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const data = await fetchWorkPackage(
         workPackageHash,
         getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')
       );
 
-      if (data) {
-        setWorkPackageInfo(data);
-      }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      setWorkPackageInfo(data);
     })();
   }, [workPackageHash]);
 
   const fetchAudit = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await fetchAuditWorkPackage(
       workPackageHash,
       getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     setAuditData(data);
   };
 
@@ -85,7 +89,7 @@ export default function WorkPackageDetailPage () {
       maxWidth='lg'
       sx={{ mt: 4 }}
     >
-      <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 4 }}>
+      <Box sx={{ alignItems: 'center', display: 'inline-flex', mb: 4 }}>
         <WorkPackage
           hash={workPackageHash}
           mode={ItemMode.Large}
@@ -229,7 +233,7 @@ export default function WorkPackageDetailPage () {
               {Array.from(
                 { length: workPackageInfo.package_spec.exports_count },
                 (_, i) => i
-              ).map((item, itemIndex) => (
+              ).map((_item, itemIndex) => (
                 <Segment
                   hash={workPackageHash}
                   index={itemIndex}
@@ -243,9 +247,9 @@ export default function WorkPackageDetailPage () {
                 >
                   <Typography
                     sx={{
+                      cursor: 'pointer',
                       ml: 1,
-                      textDecoration: 'underline',
-                      cursor: 'pointer'
+                      textDecoration: 'underline'
                     }}
                   >
                     Game of Life Viewer
@@ -262,17 +266,18 @@ export default function WorkPackageDetailPage () {
         />
       </Paper>
       <Paper
-        sx={{ p: 3, marginBlock: 3 }}
+        sx={{ marginBlock: 3, p: 3 }}
         variant='outlined'
       >
         <Button
+          // eslint-disable-next-line react/jsx-no-bind, @typescript-eslint/no-misused-promises
           onClick={fetchAudit}
           variant='contained'
         >
           Audit Work Package
         </Button>
         {auditData !== null && (
-          <Box sx={{ maxWidth: '100%', margin: '0 auto', p: 2 }}>
+          <Box sx={{ margin: '0 auto', maxWidth: '100%', p: 2 }}>
             <Box
               alignItems='center'
               display='flex'
@@ -287,12 +292,13 @@ export default function WorkPackageDetailPage () {
                 title={copied ? 'Copied!' : 'Copy'}
               >
                 <IconButton
+                  // eslint-disable-next-line react/jsx-no-bind, @typescript-eslint/no-misused-promises
                   onClick={handleCopy}
                   sx={{
-                    position: 'absolute',
                     border: '1px solid #888',
                     borderRadius: '4px',
                     p: '6px',
+                    position: 'absolute',
                     right: '6px',
                     top: '6px'
                   }}
@@ -300,12 +306,12 @@ export default function WorkPackageDetailPage () {
                   {!copied
                     ? (
                       <ContentCopy
-                        sx={{ width: '12px', height: '12px', color: '#444444' }}
+                        sx={{ color: '#444444', height: '12px', width: '12px' }}
                       />
                     )
                     : (
                       <Check
-                        sx={{ width: '12px', height: '12px', color: '#444444' }}
+                        sx={{ color: '#444444', height: '12px', width: '12px' }}
                       />
                     )}
                 </IconButton>

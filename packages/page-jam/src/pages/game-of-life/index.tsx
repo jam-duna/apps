@@ -28,12 +28,14 @@ function segmentToPage (raw: string): Uint8Array {
     const bytes = new Uint8Array(4104);
 
     for (let i = 0; i < bytes.length; i++) {
+      // eslint-disable-next-line deprecation/deprecation
       bytes[i] = parseInt(data.substr(i * 2, 2), 16);
     }
 
     return bytes.subarray(8);
   }
 
+  // eslint-disable-next-line deprecation/deprecation
   const bin = atob(data);
   const bytes = new Uint8Array(bin.length);
 
@@ -45,7 +47,7 @@ function segmentToPage (raw: string): Uint8Array {
 }
 
 export default function GameOfLifeViewer () {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const hash = searchParams.get('hash') || '';
 
   const [pages, setPages] = useState<(Uint8Array | null)[]>(
@@ -60,6 +62,7 @@ export default function GameOfLifeViewer () {
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async () => {
       try {
         const raws = await Promise.all(

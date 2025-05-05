@@ -27,6 +27,7 @@ export default function ValidatorKeyDetailPage () {
       setLoading(true);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchValidator();
   }, [key, hash]);
 
@@ -42,10 +43,10 @@ export default function ValidatorKeyDetailPage () {
     >
       <Box
         sx={{
-          display: 'inline-flex',
           alignItems: 'center',
-          mb: 3,
-          gap: '10px'
+          display: 'inline-flex',
+          gap: '10px',
+          mb: 3
         }}
       >
         <ValidatorIcon
@@ -72,19 +73,19 @@ export default function ValidatorKeyDetailPage () {
         <>
           <Paper
             sx={{
-              px: 2,
-              py: 1,
-              my: 4,
-              boxShadow: 'none',
               border: '1px solid #ccc',
-              borderRadius: '4px'
+              borderRadius: '4px',
+              boxShadow: 'none',
+              my: 4,
+              px: 2,
+              py: 1
             }}
           >
             <Box
               sx={{
+                alignItems: 'flex-start',
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start'
+                flexDirection: 'column'
               }}
             >
               <LabeledRow

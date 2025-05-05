@@ -21,8 +21,11 @@ import { getRpcUrlFromWs } from '../../utils/ws.js';
 export default function ServiceValueDetailPage () {
   const params = useParams();
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const serviceId = params.service!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const key = params.key!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const headerhash = params.headerhash!;
 
   const [serviceValue, setServiceValue] = useState<ServiceValue | null>(null);
@@ -49,12 +52,12 @@ export default function ServiceValueDetailPage () {
 
         if (data === null) {
           data = {
-            serviceID: Number.parseInt(serviceId),
-            key,
             hash,
             headerHash: headerhash,
-            value,
-            slot: 0
+            key,
+            serviceID: Number.parseInt(serviceId),
+            slot: 0,
+            value
           };
         } else {
           data.value = value;
@@ -71,9 +74,12 @@ export default function ServiceValueDetailPage () {
         setLLoading(false);
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       fetchService();
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       fetchListService();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serviceId, key, headerhash]);
 
   useEffect(() => {
@@ -84,6 +90,7 @@ export default function ServiceValueDetailPage () {
         setLastTime(getRelativeTime(time));
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       setTimeout(fetchTimeFromSlot, 10000);
     }
   }, [serviceValue]);
@@ -114,7 +121,7 @@ export default function ServiceValueDetailPage () {
       maxWidth='lg'
       sx={{ mt: 4 }}
     >
-      <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 3 }}>
+      <Box sx={{ alignItems: 'center', display: 'inline-flex', mb: 3 }}>
         <Typography
           color='#444'
           fontSize='28px'
@@ -126,7 +133,7 @@ export default function ServiceValueDetailPage () {
       {!serviceValue
         ? (
           <Paper
-            sx={{ p: 3, marginBlock: 3 }}
+            sx={{ marginBlock: 3, p: 3 }}
             variant='outlined'
           >
             <Typography
@@ -141,14 +148,14 @@ export default function ServiceValueDetailPage () {
         )
         : (
           <Paper
-            sx={{ p: 2, marginBlock: 3 }}
+            sx={{ marginBlock: 3, p: 2 }}
             variant='outlined'
           >
             <Box
               sx={{
+                alignItems: 'flex-start',
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start'
+                flexDirection: 'column'
               }}
             >
               <LabeledRow

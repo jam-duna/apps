@@ -17,6 +17,7 @@ import { getRpcUrlFromWs } from '../../utils/ws.js';
 export default function BlockWorkReportsPage () {
   const navigate = useNavigate();
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const headerHash = params.headerhash!;
 
   const [workReports, setWorkReports] = useState<Guarantee[]>([]);
@@ -38,6 +39,7 @@ export default function BlockWorkReportsPage () {
         setWorkReports(reports);
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       prepareData();
     }
   }, [headerHash]);
@@ -62,7 +64,7 @@ export default function BlockWorkReportsPage () {
       sx={{ mt: 4 }}
     >
       <Typography
-        sx={{ fontWeight: 'bold', mb: 2, fontSize: '32px' }}
+        sx={{ fontSize: '32px', fontWeight: 'bold', mb: 2 }}
         variant='h2'
       >
         Work Report List
@@ -120,6 +122,7 @@ export default function BlockWorkReportsPage () {
                       <TableRow
                         hover
                         key={index}
+                        // eslint-disable-next-line react/jsx-no-bind
                         onClick={() => handleRowClick(pkgSpecHash)}
                         sx={{ cursor: 'pointer' }}
                       >

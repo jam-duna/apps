@@ -17,8 +17,9 @@ import { getRpcUrlFromWs } from '../../utils/ws.js';
 
 export default function BlockOverviewPage () {
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const headerHash = params.headerhash!;
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const queryType = searchParams.get('type') as 'hash' | 'slot';
 
   const { blockRecord, nextHash, prevHash, stateRecord } = useBlockOverview(
@@ -36,26 +37,31 @@ export default function BlockOverviewPage () {
       getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')
     );
 
-    setTraceData(data);
+    setTraceData(data ? [data] : null);
   };
 
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async (e: React.MouseEvent) => {
+  const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault(); // prevent link navigation if used inside <Link>
 
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(JSON.stringify(traceData));
-      } else {
-        fallbackCopyTextToClipboard(JSON.stringify(traceData));
-      }
+    const copyToClipboard = async () => {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(JSON.stringify(traceData));
+        } else {
+          fallbackCopyTextToClipboard(JSON.stringify(traceData));
+        }
 
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500); // Reset after 1.5s
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500); // Reset after 1.5s
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    copyToClipboard();
   };
 
   if (!blockRecord) {
@@ -65,13 +71,13 @@ export default function BlockOverviewPage () {
         maxWidth='lg'
         sx={{ mt: 4 }}
       >
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 5 }}>
+        <Box sx={{ alignItems: 'center', display: 'inline-flex', mb: 5 }}>
           <BlockIcon
             color={'#555'}
             size={24}
           />
           <Typography
-            sx={{ fontWeight: 'bold', fontSize: '32px' }}
+            sx={{ fontSize: '32px', fontWeight: 'bold' }}
             variant='h2'
           >
             Block Details
@@ -94,14 +100,14 @@ export default function BlockOverviewPage () {
       sx={{ mt: 4 }}
     >
       <Box
-        sx={{ display: 'inline-flex', gap: '5px', alignItems: 'center', mb: 5 }}
+        sx={{ alignItems: 'center', display: 'inline-flex', gap: '5px', mb: 5 }}
       >
         <BlockIcon
           color={'#555'}
           size={24}
         />
         <Typography
-          sx={{ fontWeight: 'bold', fontSize: '32px' }}
+          sx={{ fontSize: '32px', fontWeight: 'bold' }}
           variant='h2'
         >
           Block
@@ -114,7 +120,7 @@ export default function BlockOverviewPage () {
         </Typography>
       </Box>
       <DetailToggleButtons
-        onTabChange={(tab) => setSelectedTab(tab)}
+        onTabChange={setSelectedTab}
         selectedTab={selectedTab}
       />
       {selectedTab === 'block' && (
@@ -138,17 +144,21 @@ export default function BlockOverviewPage () {
         </Paper>
       )}
       <Paper
-        sx={{ p: 3, marginBlock: 3 }}
+        sx={{ marginBlock: 3, p: 3 }}
         variant='outlined'
       >
         <Button
-          onClick={fetchTrace}
+          // eslint-disable-next-line react/jsx-no-bind
+          onClick={function handleTraceClick () {
+            // eslint-disable-next-line no-void
+            void fetchTrace();
+          }}
           variant='contained'
         >
           Trace Block
         </Button>
         {traceData !== null && (
-          <Box sx={{ maxWidth: '100%', margin: '0 auto', p: 2 }}>
+          <Box sx={{ margin: '0 auto', maxWidth: '100%', p: 2 }}>
             <Box
               alignItems='center'
               display='flex'
@@ -163,12 +173,13 @@ export default function BlockOverviewPage () {
                 title={copied ? 'Copied!' : 'Copy'}
               >
                 <IconButton
+                  // eslint-disable-next-line react/jsx-no-bind
                   onClick={handleCopy}
                   sx={{
-                    position: 'absolute',
                     border: '1px solid #888',
                     borderRadius: '4px',
                     p: '6px',
+                    position: 'absolute',
                     right: '6px',
                     top: '6px'
                   }}
@@ -176,12 +187,12 @@ export default function BlockOverviewPage () {
                   {!copied
                     ? (
                       <ContentCopy
-                        sx={{ width: '12px', height: '12px', color: '#444444' }}
+                        sx={{ color: '#444444', height: '12px', width: '12px' }}
                       />
                     )
                     : (
                       <Check
-                        sx={{ width: '12px', height: '12px', color: '#444444' }}
+                        sx={{ color: '#444444', height: '12px', width: '12px' }}
                       />
                     )}
                 </IconButton>

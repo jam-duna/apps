@@ -91,7 +91,9 @@ export default function ValidatorIndexDetailPage () {
       setLoadingStatistics(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchValidator();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchStatistics();
   }, [index, hash]);
 
@@ -132,9 +134,13 @@ export default function ValidatorIndexDetailPage () {
       setLoadingServices(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchBlocks();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchStates();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchService();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBlock, currentState, now]);
 
   if (isLoading()) {
@@ -149,10 +155,10 @@ export default function ValidatorIndexDetailPage () {
     >
       <Box
         sx={{
-          display: 'inline-flex',
           alignItems: 'center',
-          mb: 3,
-          gap: '10px'
+          display: 'inline-flex',
+          gap: '10px',
+          mb: 3
         }}
       >
         <ValidatorIcon

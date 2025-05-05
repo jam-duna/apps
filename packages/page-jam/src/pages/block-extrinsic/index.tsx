@@ -13,6 +13,7 @@ import { db } from '../../db/db.js';
 
 export default function ExtrinsicDetailsPage () {
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const headerHash = params.headerhash!;
 
   const [blockRecord, setBlockRecord] = useState<Block | null>(null);
@@ -77,7 +78,7 @@ export default function ExtrinsicDetailsPage () {
       >
         <Typography
           gutterBottom
-          sx={{ mb: 3, fontWeight: 'bold', fontSize: '32px' }}
+          sx={{ fontSize: '32px', fontWeight: 'bold', mb: 3 }}
           variant='h2'
         >
           Extrinsics Details

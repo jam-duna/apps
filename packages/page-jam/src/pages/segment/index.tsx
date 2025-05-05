@@ -13,7 +13,9 @@ import { getRpcUrlFromWs } from '../../utils/ws.js';
 
 export default function SegmentDetailPage () {
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const hash = params.workPackageHash!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const index = params.index!;
 
   const [segmentData, setSegmentData] = useState<string>('');
@@ -31,6 +33,7 @@ export default function SegmentDetailPage () {
       setLoading(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchPreimage();
   }, [hash, index]);
 
@@ -44,7 +47,7 @@ export default function SegmentDetailPage () {
       maxWidth='lg'
       sx={{ mt: 4 }}
     >
-      <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 2 }}>
+      <Box sx={{ alignItems: 'center', display: 'inline-flex', mb: 2 }}>
         <Segment
           hash={hash}
           index={Number.parseInt(index)}
@@ -52,7 +55,7 @@ export default function SegmentDetailPage () {
         />
       </Box>
       <Paper
-        sx={{ p: 3, marginBlock: 3 }}
+        sx={{ marginBlock: 3, p: 3 }}
         variant='outlined'
       >
         <LabeledRow

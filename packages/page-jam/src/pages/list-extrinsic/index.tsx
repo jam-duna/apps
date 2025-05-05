@@ -65,9 +65,9 @@ export default function ExtrinsicListPage () {
       maxWidth='lg'
       sx={{ mt: 4, py: 4 }}
     >
-      <Box sx={{ display: 'flex-col', alignItems: 'center', mb: 2 }}>
+      <Box sx={{ alignItems: 'center', display: 'flex-col', mb: 2 }}>
         <Typography
-          sx={{ fontWeight: 'bold', fontSize: '28px' }}
+          sx={{ fontSize: '28px', fontWeight: 'bold' }}
           variant='h2'
         >
           All Extrinsics List

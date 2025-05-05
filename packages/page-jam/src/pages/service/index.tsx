@@ -28,6 +28,7 @@ import { getRpcUrlFromWs } from '../../utils/ws.js';
 
 export default function ServiceDetailPage () {
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const serviceId = params.serviceId!;
   const serviceIdNumber = Number.parseInt(serviceId);
 
@@ -42,11 +43,11 @@ export default function ServiceDetailPage () {
   { time: number; stat: ServiceStatistics }[]
   >([]);
   const [gridData, setGridData] = useState<GridData>({
+    coreStatistics: {},
+    cores: [],
     data: {},
     timeslots: [],
-    timestamps: [],
-    cores: [],
-    coreStatistics: {}
+    timestamps: []
   });
 
   const [isLoadingServiceInfo, setIsLoadingServiceInfo] = useState(true);
@@ -117,11 +118,17 @@ export default function ServiceDetailPage () {
       setIsLoadingServiceList(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchBlocks();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchStates();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchActiveStates();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchRecentPreimages();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchListService();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBlock, currentState, now]);
 
   // useffect hook for fetching service statistics dynamically using subscribe functionality
@@ -136,7 +143,9 @@ export default function ServiceDetailPage () {
       setIsLoadingStatistics(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchServiceStatistics();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStatistics, showOnlyWorkPackages]);
 
   // useffect hook for filtering grid data from blocks on db
@@ -145,27 +154,26 @@ export default function ServiceDetailPage () {
 
     setGridData(data);
     setIsLoadingGridData(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredBlocks]);
 
   // useffect hook for fetching service info and value
   useEffect(() => {
     if (serviceId) {
       const fetchService = async () => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const info = await fetchServiceInfo(
           serviceId,
           getRpcUrlFromWs(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org')
         );
 
-        // const value = await fetchServiceValue(
-        //   serviceId,
-        //   "",
-        //   getRpcUrlFromWs(localStorage.getItem("jamUrl") || "dot-0.jamduna.org")
-        // ); //todo-
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setServiceInfo(info);
         setIsLoadingServiceInfo(false);
         // setServiceValue(value);
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       fetchService();
     }
   }, [serviceId]);
@@ -214,7 +222,7 @@ export default function ServiceDetailPage () {
       maxWidth='lg'
       sx={{ mt: 4 }}
     >
-      <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 2 }}>
+      <Box sx={{ alignItems: 'center', display: 'inline-flex', mb: 2 }}>
         <Service
           mode={ItemMode.Large}
           name={serviceId}
@@ -223,7 +231,7 @@ export default function ServiceDetailPage () {
       {!serviceInfo
         ? (
           <Paper
-            sx={{ p: 3, marginBlock: 3 }}
+            sx={{ marginBlock: 3, p: 3 }}
             variant='outlined'
           >
             <Typography
@@ -245,7 +253,7 @@ export default function ServiceDetailPage () {
       {serviceValue.length === 0
         ? (
           <Paper
-            sx={{ p: 3, marginBlock: 3 }}
+            sx={{ marginBlock: 3, p: 3 }}
             variant='outlined'
           >
             <Typography
@@ -274,6 +282,7 @@ export default function ServiceDetailPage () {
           control={
             <CustomToggle
               checked={showOnlyWorkPackages}
+              // eslint-disable-next-line react/jsx-no-bind
               onChange={() => setShowOnlyWorkPackages((prev) => !prev)}
             />
           }

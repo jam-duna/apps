@@ -35,11 +35,11 @@ export default function CoreDetailPage () {
     []
   );
   const [gridData, setGridData] = useState<GridData>({
+    coreStatistics: {},
+    cores: [],
     data: {},
     timeslots: [],
-    timestamps: [],
-    cores: [],
-    coreStatistics: {}
+    timestamps: []
   });
   const [statistics, setStatistics] = useState<Record<
   number,
@@ -96,11 +96,17 @@ export default function CoreDetailPage () {
       setIsLoadingValidators(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchBlocks();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchStates();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchActiveStates();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchListService();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchActiveValidators();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBlock, currentState, now]);
 
   useEffect(() => {
@@ -114,7 +120,9 @@ export default function CoreDetailPage () {
       setIsLoadingStatistics(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchCoreStatistics();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStatistics, showOnlyWorkPackages]);
 
   useEffect(() => {
@@ -123,6 +131,7 @@ export default function CoreDetailPage () {
     data.cores = [coreIndexNumber];
     setGridData(data);
     setIsLoadingGridData(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredBlocks]);
 
   const isAllLoaded = !(
@@ -145,7 +154,7 @@ export default function CoreDetailPage () {
       maxWidth='lg'
       sx={{ mt: 4 }}
     >
-      <Box sx={{ display: 'inline-flex', alignItems: 'center', mb: 5 }}>
+      <Box sx={{ alignItems: 'center', display: 'inline-flex', mb: 5 }}>
         <Core
           index={coreIndexNumber}
           mode={ItemMode.Large}
@@ -161,6 +170,7 @@ export default function CoreDetailPage () {
           control={
             <CustomToggle
               checked={showOnlyWorkPackages}
+              // eslint-disable-next-line react/jsx-no-bind
               onChange={() => setShowOnlyWorkPackages((prev) => !prev)}
             />
           }

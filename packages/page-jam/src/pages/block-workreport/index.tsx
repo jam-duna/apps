@@ -18,7 +18,9 @@ import { getRpcUrlFromWs } from '../../utils/ws.js';
 
 export default function WorkReportDetailPage () {
   const params = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const headerHash = params.headerhash!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const workReportHash = params.workPackageHash!;
 
   const [workReport, setWorkReport] = useState<Guarantee | null>(null);
@@ -37,6 +39,7 @@ export default function WorkReportDetailPage () {
         setBlockRecord(data);
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       prepareData();
     }
   }, [headerHash]);
@@ -44,6 +47,7 @@ export default function WorkReportDetailPage () {
   // Fetch the work report from the current block's guarantees.
   useEffect(() => {
     if (headerHash && workReportHash) {
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
       if (blockRecord && blockRecord.header && blockRecord.extrinsic) {
         const reports = blockRecord.extrinsic.guarantees || [];
         const found = reports.find(
@@ -53,6 +57,7 @@ export default function WorkReportDetailPage () {
         setWorkReport(found ?? null);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockRecord]);
 
   // Use the custom hook to get the status for the single work report.
@@ -73,7 +78,7 @@ export default function WorkReportDetailPage () {
       >
         <Paper sx={{ p: 3 }}>
           <Typography
-            sx={{ fontWeight: 'bold', mb: 2, fontSize: '32px' }}
+            sx={{ fontSize: '32px', fontWeight: 'bold', mb: 2 }}
             variant='h2'
           >
             Work Report Details
@@ -88,6 +93,7 @@ export default function WorkReportDetailPage () {
 
   // Destructure fields from the work report.
   const { report, signatures, slot } = workReport;
+  // eslint-disable-next-line camelcase
   const { auth_output, authorizer_hash, context, core_index, package_spec } =
     report;
 
@@ -103,11 +109,11 @@ export default function WorkReportDetailPage () {
         gap={0.5}
         justifyContent='start'
         sx={{
-          cursor: 'pointer',
-          width: '100%',
-          height: '100%',
           color: '#444444',
-          my: '10px'
+          cursor: 'pointer',
+          height: '100%',
+          my: '10px',
+          width: '100%'
         }}
       >
         <WorkReportIcon
@@ -153,13 +159,16 @@ export default function WorkReportDetailPage () {
                   )
                   : item.label === 'Core Index:'
                     ? (
+                      // eslint-disable-next-line camelcase
                       core_index ?? 'N/A'
                     )
                     : item.label === 'Report Status:'
                       ? (
+                        // eslint-disable-next-line camelcase
                         statuses[package_spec.hash] || 'N/A'
                       )
                       : (
+                        // eslint-disable-next-line camelcase
                         package_spec.hash
                       )
             }
@@ -181,21 +190,26 @@ export default function WorkReportDetailPage () {
             value={
               item.label === 'Length:'
                 ? (
+                  // eslint-disable-next-line camelcase
                   package_spec.length ?? 'N/A'
                 )
                 : item.label === 'Erasure Root:'
                   ? (
+                    // eslint-disable-next-line camelcase
                     <Hash hash={package_spec.erasure_root}></Hash>
                   )
                   : item.label === 'Exports Root:'
                     ? (
+                      // eslint-disable-next-line camelcase
                       <Hash hash={package_spec.exports_root}></Hash>
                     )
                     : item.label === 'Exports Count:'
                       ? (
+                        // eslint-disable-next-line camelcase
                         package_spec.exports_count
                       )
                       : (
+                        // eslint-disable-next-line camelcase
                         <Hash hash={package_spec.hash}></Hash>
                       )
             }
@@ -272,10 +286,12 @@ export default function WorkReportDetailPage () {
             value={
               item.label === 'Authorizer Hash:'
                 ? (
+                  // eslint-disable-next-line camelcase
                   <Hash hash={authorizer_hash}></Hash>
                 )
                 : item.label === 'Auth Output:'
                   ? (
+                    // eslint-disable-next-line camelcase
                     auth_output || '0x'
                   )
                   : (
