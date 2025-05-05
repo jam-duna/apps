@@ -89,7 +89,8 @@ export function Segment (param: SegmentProps) {
                 color: '#444444',
                 height: '12px',
                 width: '12px'
-              }} />
+              }}
+              />
             )}
         </IconButton>
       </Tooltip>
