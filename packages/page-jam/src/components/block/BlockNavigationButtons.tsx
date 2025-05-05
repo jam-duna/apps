@@ -1,4 +1,4 @@
-// [object Object]
+// Copyright 2017-2025 @polkadot/app-jamm author & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 'use client';

@@ -1,9 +1,9 @@
-// [object Object]
+// Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { SquareContent } from '@/components/home/MainViewGrid';
-import type { Block, State } from '@/db/db';
-import type { CoreStatistics } from '@/types';
+import type { SquareContent } from '../components/home/MainViewGrid.js';
+import type { Block, State } from '../db/db.js';
+import type { CoreStatistics } from '../types/index.js';
 
 export interface GridData {
   data: Record<number, Record<number, SquareContent>>;

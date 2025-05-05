@@ -1,3 +1,6 @@
+// Copyright 2017-2025 @polkadot/app-jam authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { State } from '../../../db/db.js';
 import type { AccountItem, BetaItem, ChiItem, GammaItem, KeyedItem, PiItem, PsiItem, RhoItem, ThetaItem } from '../../../types/index.js';

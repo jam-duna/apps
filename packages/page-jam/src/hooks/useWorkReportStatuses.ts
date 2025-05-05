@@ -1,4 +1,6 @@
-// useWorkReportStatuses.ts
+// Copyright 2017-2025 @polkadot/app-jam authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { useEffect, useState } from 'react';
 
 import { db } from '../db/db.js';

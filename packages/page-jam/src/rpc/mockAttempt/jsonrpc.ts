@@ -1,6 +1,7 @@
 // mock/jsonrpc.js
 // ↑ add this at the very top of the file:
 // @ts-nocheck
+/* eslint-disable */
 
 import { objectSpread } from '@polkadot/util';
 

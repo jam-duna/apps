@@ -1,3 +1,6 @@
+// Copyright 2017-2025 @polkadot/app-jamm author & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 // createJsonRedirectButtonDefinition.ts
 import type { NodeData } from 'json-edit-react';
 

@@ -30,15 +30,14 @@ function Home () {
   const [workPackages, setWorkPackages] = useState<ReportWithTime[]>([]);
   const [serviceList, setServiceList] = useState<ServiceInfoDetail[]>([]);
   const [gridData, setGridData] = useState<GridData>({
+    coreStatistics: {},
+    cores: [],
     data: {},
     timeslots: [],
-    timestamps: [],
-    cores: [],
-    coreStatistics: {}
+    timestamps: []
   });
   const [showOnlyWorkPackages, setShowOnlyWorkPackages] = useState(true);
-  const [coreStatistics, setCoreStatistics] = useState<Record<
-  number,
+  const [coreStatistics, setCoreStatistics] = useState<Record<number,
   CoreStatistics
   > | null>(null);
   const [serviceStatistics, setServiceStatistics] = useState<
@@ -84,9 +83,13 @@ function Home () {
       setIsServicesLoaded(true);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchBlocks();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchStates();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchWorkPackages();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchListService();
   }, [currentBlock, currentState, now]);
 
@@ -102,6 +105,7 @@ function Home () {
       setIsStatsLoaded(true);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchAggregateStatistics();
   }, [currentStatistics, showOnlyWorkPackages]);
 
@@ -110,7 +114,7 @@ function Home () {
 
     setGridData(data);
     setIsGridLoaded(true);
-  }, [filteredBlocks]);
+  }, [filteredBlocks, filteredStates]);
 
   const isLoaded = () => {
     return (
@@ -136,11 +140,11 @@ function Home () {
       {/* header display */}
       <Box
         sx={{
-          display: 'inline-flex',
           alignItems: 'center',
+          display: 'inline-flex',
+          gap: '10px',
           mb: 3,
-          ml: 1,
-          gap: '10px'
+          ml: 1
         }}
       >
         <HomeIcon
@@ -167,6 +171,7 @@ function Home () {
           control={
             <CustomToggle
               checked={showOnlyWorkPackages}
+              // eslint-disable-next-line react/jsx-no-bind
               onChange={() => setShowOnlyWorkPackages((prev) => !prev)}
             />
           }
@@ -195,6 +200,7 @@ function Home () {
           control={
             <CustomToggle
               checked={showStatistics}
+              // eslint-disable-next-line react/jsx-no-bind
               onChange={() => setShowStatistics((prev) => !prev)}
             />
           }
@@ -216,7 +222,7 @@ function Home () {
                   variant='h6'
                   width='100%'
                 >
-              Loading core statistics...
+                  Loading core statistics...
                 </Typography>
               )
           )
@@ -232,7 +238,7 @@ function Home () {
                 variant='h6'
                 width='100%'
               >
-            Loading service statistics...
+                Loading service statistics...
               </Typography>
             )}
       </Box>

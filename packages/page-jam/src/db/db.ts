@@ -1,4 +1,4 @@
-// [object Object]
+// Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import type { AccountItem, BetaItem, ChiItem, CoreStatistics, Extrinsic, GammaItem, Header, KeyedItem, Overview, PiItem, PsiItem, RhoItem, ServiceStatsSet, ThetaItem } from '../types/index.js';
