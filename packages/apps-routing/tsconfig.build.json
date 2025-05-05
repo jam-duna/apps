@@ -25,6 +25,7 @@
     { "path": "../page-fellowship/tsconfig.build.json" },
     { "path": "../page-files/tsconfig.build.json" },
     { "path": "../page-gilt/tsconfig.build.json" },
+    { "path": "../page-jam/tsconfig.build.json" },
     { "path": "../page-js/tsconfig.build.json" },
     { "path": "../page-membership/tsconfig.build.json" },
     { "path": "../page-nfts/tsconfig.build.json" },
