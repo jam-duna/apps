@@ -22,8 +22,6 @@ interface WsRpcContextProps {
   currentStatistics: Statistics | null;
   now: number;
   wsEndpoint: string;
-  setWsEndpoint: (value: string) => void;
-  savedEndpoints: string[];
 }
 
 const WsRpcContext = createContext<WsRpcContextProps | undefined>(undefined);
@@ -46,7 +44,6 @@ export const WsRpcProvider = ({ children }: { children: React.ReactNode }) => {
   );
   const [wsEndpoint, setWsEndpoint] = useState<string>(localStorage.getItem('jamUrl') || 'dot-0.jamduna.org');
   const [now, setNow] = useState(Date.now());
-  const [savedEndpoints, setSavedEndpoints] = useState<string[]>([]);
 
   const wsRef = useRef<WebSocket | null>(null);
 
@@ -84,7 +81,6 @@ export const WsRpcProvider = ({ children }: { children: React.ReactNode }) => {
             const rpcUrl = getRpcUrlFromWs(wsEndpoint);
             const fetchedBlock = await fetchBlock(headerHash, rpcUrl, 'hash');
             const fetchedState = await fetchState(headerHash, rpcUrl);
-            const nowTimestamp = Date.now();
             const slot =
               fetchedBlock?.header?.slot !== undefined
                 ? fetchedBlock.header.slot
@@ -320,9 +316,7 @@ export const WsRpcProvider = ({ children }: { children: React.ReactNode }) => {
         currentState,
         currentStatistics,
         now,
-        wsEndpoint,
-        setWsEndpoint,
-        savedEndpoints
+        wsEndpoint
       }}
     >
       {children}

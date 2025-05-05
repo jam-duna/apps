@@ -1,17 +1,10 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-interface JsonRpcResponse {
-  jsonrpc: string;
-  id: number;
-  result?: unknown;
-  error?: unknown;
-}
-
 export async function fetchStatistics (
   hash: string,
   rpcUrl: string
-): Promise<JsonRpcResponse | null> {
+): Promise<any> {
   console.log('[RPC-CALL] Fetching statistics for ', hash);
 
   // Decide on method and parameter based on type.

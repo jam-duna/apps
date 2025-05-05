@@ -1,6 +1,8 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable camelcase */
+
 'use client';
 
 import CropSquareIcon from '@mui/icons-material/CropSquare';
@@ -12,24 +14,26 @@ import { truncateHash } from '../../../../utils/helper.js';
 
 export interface ServiceListItemProps {
   serviceItem: {
-    codeHash: string;
+    code_hash: string;
     balance: number;
-    minItemGas: number;
-    minMemoGas: number;
+    min_item_gas: number;
+    min_memo_gas: number;
     bytes: number;
     items: number;
   };
 }
 
 export default function ServiceListItem ({ serviceItem }: ServiceListItemProps) {
-  const { balance, bytes, codeHash, items, minItemGas, minMemoGas } =
+  // eslint-disable-next-line camelcase
+  const { balance, bytes, code_hash, items, min_item_gas, min_memo_gas } =
     serviceItem;
-  const shortHash = truncateHash(codeHash, 'long');
+  const shortHash = truncateHash(code_hash, 'long');
 
   return (
     <Link
       style={{ color: 'inherit', textDecoration: 'none' }}
-      to={`/jam/service/${codeHash}`}
+      // eslint-disable-next-line camelcase
+      to={`/jam/service/${code_hash}`}
     >
       <Box
         sx={{
@@ -65,7 +69,7 @@ export default function ServiceListItem ({ serviceItem }: ServiceListItemProps) 
             color='textSecondary'
             variant='body2'
           >
-            min_item_gas: {minItemGas} | min_memo_gas: {minMemoGas}
+            min_item_gas: {min_item_gas} | min_memo_gas: {min_memo_gas}
           </Typography>
           <Typography
             color='textSecondary'

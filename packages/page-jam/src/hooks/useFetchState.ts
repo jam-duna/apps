@@ -3,17 +3,10 @@
 
 import type { State } from '../db/db.js';
 
-interface JsonRpcResponse {
-  jsonrpc: string;
-  id: number;
-  result?: State;
-  error?: unknown;
-}
-
 export async function fetchState (
   hash: string,
   rpcUrl: string
-): Promise<JsonRpcResponse | null> {
+): Promise<State | null> {
   console.log('[RPC-CALL] Fetching state for hash: ', hash);
   const payload = {
     id: 1,
@@ -29,8 +22,7 @@ export async function fetchState (
       method: 'POST'
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await response.json();
+    return await response.json() as State;
   } catch (_err) {
     // console.error("Error fetching state:", err);
     return null;

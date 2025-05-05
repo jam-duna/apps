@@ -1,13 +1,6 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-interface SegmentResponse {
-  jsonrpc: string;
-  id: number;
-  segment?: string;
-  error?: unknown;
-}
-
 function base64ToHex (base64: string): string {
   const buffer = Buffer.from(base64, 'base64');
 
@@ -35,13 +28,16 @@ export async function fetchSegment (
       headers: { 'Content-Type': 'application/json' },
       method: 'POST'
     });
-    const result = await response.json() as SegmentResponse;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const result = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const base64Data = result.segment;
 
     if (!base64Data) {
       return null;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const hexData = base64ToHex(base64Data);
 
     return hexData;

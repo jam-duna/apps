@@ -22,7 +22,7 @@ export default function BlockOverviewPage () {
   const [searchParams] = useSearchParams();
   const queryType = searchParams.get('type') as 'hash' | 'slot';
 
-  const { blockRecord, nextHash, prevHash, stateRecord } = useBlockOverview(
+  const { blockRecord, stateRecord } = useBlockOverview(
     headerHash,
     queryType
   );
@@ -127,8 +127,8 @@ export default function BlockOverviewPage () {
         <BlockTab
           blockRecord={blockRecord}
           hash={headerHash}
-          nextHash={nextHash}
-          prevHash={prevHash}
+          nextHash={null}
+          prevHash={null}
           type={queryType}
         />
       )}
