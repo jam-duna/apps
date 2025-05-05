@@ -197,7 +197,7 @@ function Endpoints ({ className = '', offset, onClose }: Props): React.ReactElem
     const jamNetworks = groups.find((group) => group.header?.toString() === 'JAM Implementers Testnets');
 
     if (jamNetworks !== undefined) {
-      return jamNetworks.networks.find((network) => network.providers.find((provider) => provider.url.toString() == apiUrl.toString())) !== undefined;
+      return jamNetworks.networks.find((network) => network.providers.find((provider) => provider.url.toString() === apiUrl.toString())) !== undefined;
     }
 
     return false;
@@ -272,7 +272,7 @@ function Endpoints ({ className = '', offset, onClose }: Props): React.ReactElem
 
       onClose();
     },
-    [apiUrl, onClose, hasUrlChanged]
+    [apiUrl, hasUrlChanged, isJamUrl, onClose]
   );
 
   const _onLocalFork = useCallback(

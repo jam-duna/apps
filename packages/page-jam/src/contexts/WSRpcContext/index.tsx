@@ -153,7 +153,7 @@ export const WsRpcProvider = ({ children }: { children: React.ReactNode }) => {
               const hash = msg.result.headerHash;
               const matchBlock = await db.blocks.get(hash);
 
-              if (matchBlock && matchBlock.overview !== undefined) {
+              if (matchBlock?.overview !== undefined) {
                 matchBlock.overview.finalized = true;
                 await db.blocks.put(matchBlock);
               }

@@ -7,12 +7,9 @@ import type { KeyedEvent } from '@polkadot/react-hooks/ctx/types';
 import React from 'react';
 
 import { Columar } from '@polkadot/react-components';
-import { useBlockAuthors, useBlockEvents } from '@polkadot/react-hooks';
+import { useBlockAuthors } from '@polkadot/react-hooks';
 
 import BlockHeaders from './BlockHeaders.js';
-import Events from './Events.js';
-import Query from './Query.js';
-import Summary from './Summary.js';
 
 interface Props {
   eventCount: number;
