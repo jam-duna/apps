@@ -16,12 +16,12 @@ export function ValidatorStatisticsTable ({ current, last, title }: Props) {
   return (
     <Paper
       sx={{
-        px: 2,
-        py: 1,
-        my: 4,
-        boxShadow: 'none',
         border: '1px solid #ccc',
-        borderRadius: '4px'
+        borderRadius: '4px',
+        boxShadow: 'none',
+        my: 4,
+        px: 2,
+        py: 1
       }}
     >
       <Box

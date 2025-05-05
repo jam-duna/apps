@@ -9,7 +9,7 @@ import type { Result } from '../../../types/index.js';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
-import { Box, Paper, Typography } from '@mui/material'; // Report icon
+import { Box, Paper, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -23,36 +23,41 @@ interface ServiceListItemProps {
   createdAt: number;
 }
 
+interface WorkResult {
+  createdAt: number | undefined;
+  item: Result;
+}
+
 function ServiceListItem ({ createdAt, result }: ServiceListItemProps) {
   return (
     <Link
       key={result.service_id}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      style={{ color: 'inherit', textDecoration: 'none' }}
       to={`/jam/service/${result.service_id}/`}
     >
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 1.5,
-          borderRadius: 1,
-          transition: 'background-color 0.2s',
           '&:hover': { backgroundColor: '#f9f9f9' },
-          borderBottom: '1px solid #ddd'
+          alignItems: 'center',
+          borderBottom: '1px solid #ddd',
+          borderRadius: 1,
+          display: 'flex',
+          p: 1.5,
+          transition: 'background-color 0.2s'
         }}
       >
         {/* Left icon */}
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: 1,
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#fff',
             border: '1px solid #ddd',
-            mr: 2
+            borderRadius: 1,
+            display: 'flex',
+            height: 40,
+            justifyContent: 'center',
+            mr: 2,
+            width: 40
           }}
         >
           <AssignmentIcon fontSize='small' />
@@ -92,14 +97,14 @@ function ServiceListItem ({ createdAt, result }: ServiceListItemProps) {
 export function RecentServices ({ coreIndex, states }: RecentServiceProps) {
   const displayStates = states.slice(0, 8);
 
-  const workResults = () => {
-    const results: { item: Result; createdAt: number | undefined }[] = [];
+  const workResults = (): WorkResult[] => {
+    const results: WorkResult[] = [];
 
     displayStates.forEach((state) => {
-      state.rho.forEach((rhoItem: any) => {
-        if (rhoItem?.report.core_index === coreIndex) {
+      state.rho.forEach((rhoItem) => {
+        if (rhoItem && rhoItem.report.core_index === coreIndex) {
           rhoItem.report.results.forEach((item: Result) => {
-            results.push({ item, createdAt: state.overview?.createdAt });
+            results.push({ createdAt: state.overview?.createdAt, item });
           });
         }
       });
@@ -112,14 +117,20 @@ export function RecentServices ({ coreIndex, states }: RecentServiceProps) {
     <Paper variant='outlined'>
       <Typography
         gutterBottom
-        sx={{ mb: 2, px: 1.5, py: 2, borderBottom: '1px solid #ccc', m: 0 }}
+        sx={{
+          borderBottom: '1px solid #ccc',
+          m: 0,
+          mb: 2,
+          px: 1.5,
+          py: 2
+        }}
         variant='h6'
       >
         Recent Services
       </Typography>
       {displayStates && displayStates.length > 0
         ? (
-          workResults().map((result, resultIndex) => {
+          workResults().map((result: WorkResult, resultIndex: number) => {
             return (
               <ServiceListItem
                 createdAt={result.createdAt || 0}
@@ -131,7 +142,10 @@ export function RecentServices ({ coreIndex, states }: RecentServiceProps) {
         )
         : (
           <Typography
-            sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+            sx={{
+              '&:hover': { backgroundColor: '#f9f9f9' },
+              p: 2
+            }}
             variant='subtitle2'
           >
           No recent services

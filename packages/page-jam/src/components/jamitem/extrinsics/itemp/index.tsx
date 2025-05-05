@@ -18,15 +18,15 @@ export function ExtrP (param: ExtrinsicsProps) {
         display='flex'
         justifyContent='center'
         sx={{
-          cursor: 'pointer',
-          paddingInline: '5px',
-          transition: 'all 0.3s ease-in-out',
-          color: '#ffffff',
-          backgroundColor: '#311b92',
-          borderRadius: '4px',
           ':hover': {
             backgroundColor: '#311b92c0'
-          }
+          },
+          backgroundColor: '#311b92',
+          borderRadius: '4px',
+          color: '#ffffff',
+          cursor: 'pointer',
+          paddingInline: '5px',
+          transition: 'all 0.3s ease-in-out'
         }}
       >
         <Typography

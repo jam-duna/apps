@@ -34,27 +34,7 @@ export function StateTab ({ stateRecord }: StateTabProps) {
   // Example test data.
   const testData = [
     {
-      id: 0,
       data: {
-        service: {
-          code_hash:
-            '0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d',
-          balance: 10000000000,
-          min_item_gas: 100,
-          min_memo_gas: 100,
-          bytes: 1157,
-          items: 4
-        },
-        preimages: [
-          {
-            hash: '0x8c30f2c101674af1da31769e96ce72e81a4a44c89526d7d3ff0a1a511d5f3c9f',
-            blob: '0x00000000000000000020000a00000000000628023307320015'
-          },
-          {
-            hash: '0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d',
-            blob: '0x0000000000000200002000bb030000040283464001e2017d02b00228ab...'
-          }
-        ],
         lookup_meta: [
           {
             key: {
@@ -71,8 +51,27 @@ export function StateTab ({ stateRecord }: StateTabProps) {
             value: [0]
           }
         ],
+        preimages: [
+          {
+            blob: '0x00000000000000000020000a00000000000628023307320015',
+            hash: '0x8c30f2c101674af1da31769e96ce72e81a4a44c89526d7d3ff0a1a511d5f3c9f'
+          },
+          {
+            blob: '0x0000000000000200002000bb030000040283464001e2017d02b00228ab...',
+            hash: '0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d'
+          }
+        ],
+        service: {
+          balance: 10000000000,
+          bytes: 1157,
+          code_hash: '0xbd87fb6de829abf2bb25a15b82618432c94e82848d9dd204f5d775d4b880ae0d',
+          items: 4,
+          min_item_gas: 100,
+          min_memo_gas: 100
+        },
         storage: null
-      }
+      },
+      id: 0
     }
   ];
 
@@ -91,6 +90,7 @@ export function StateTab ({ stateRecord }: StateTabProps) {
       variant='outlined'
     >
       <Button
+        // eslint-disable-next-line react/jsx-no-bind
         onClick={toggleView}
         sx={{ mb: 2 }}
         variant='contained'

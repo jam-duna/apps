@@ -1,6 +1,9 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable no-void */
+
 import { Check, ContentCopy } from '@mui/icons-material';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react';
@@ -38,8 +41,8 @@ export function Hash ({ hash }: HashProps) {
       gap='2px'
       justifyContent='start'
       sx={{
-        cursor: 'pointer',
-        color: '#444444'
+        color: '#444444',
+        cursor: 'pointer'
       }}
     >
       <Tooltip
@@ -59,10 +62,10 @@ export function Hash ({ hash }: HashProps) {
         placement='top'
         title={copied ? 'Copied!' : 'Copy hash'}
       >
-        <IconButton onClick={handleCopy}>
+        <IconButton onClick={(e) => void handleCopy(e)}>
           {!copied
-            ? <ContentCopy sx={{ width: '12px', height: '12px', color: '#444444' }} />
-            : <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+            ? <ContentCopy sx={{ color: '#444444', height: '12px', width: '12px' }} />
+            : <Check sx={{ color: '#444444', height: '12px', width: '12px' }} />
           }
         </IconButton>
       </Tooltip>

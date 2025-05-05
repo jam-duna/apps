@@ -44,9 +44,10 @@ const JsonRedirectButton: React.FC<JsonRedirectButtonProps> = ({ headerHash,
 
   return (
     <Button
+      // eslint-disable-next-line react/jsx-no-bind
       onClick={handleClick}
       size='small'
-      sx={{ p: 0, minWidth: 'unset' }}
+      sx={{ minWidth: 'unset', p: 0 }}
       variant='text'
     >
       <LaunchRoundedIcon fontSize='small' />
@@ -55,12 +56,12 @@ const JsonRedirectButton: React.FC<JsonRedirectButtonProps> = ({ headerHash,
 };
 
 export const JsonRedirectButtonDefinition = {
-  condition: (key: string, value: unknown) =>
-    key === 'header_hash' || key === 'hash',
-  matches: (key: string, value: unknown): key is 'header_hash' | 'hash' =>
-    key === 'header_hash' || key === 'hash',
   Element: JsonRedirectButton,
-  onClick: (nodeData: NodeData, e: React.MouseEvent) => {
+  condition: (key: string, _value: unknown) =>
+    key === 'header_hash' || key === 'hash',
+  matches: (key: string, _value: unknown): key is 'header_hash' | 'hash' =>
+    key === 'header_hash' || key === 'hash',
+  onClick: (nodeData: NodeData, _e: React.MouseEvent) => {
     console.log('Custom button onClick, key:', nodeData.key);
   }
 };

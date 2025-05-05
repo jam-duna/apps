@@ -46,35 +46,56 @@ export default function BlockListItem ({ blockItem }: BlockListItemProps) {
     }
   };
 
+  function handleCopyClick (e: React.MouseEvent) {
+    handleCopy(e).catch(console.error);
+  }
+
+  const copyButton = (
+    // eslint-disable-next-line react/jsx-no-bind
+    <IconButton onClick={handleCopyClick}>
+      {!copied
+        ? (
+          <ContentCopy
+            sx={{ color: '#444444', height: '12px', width: '12px' }}
+          />
+        )
+        : (
+          <Check
+            sx={{ color: '#444444', height: '12px', width: '12px' }}
+          />
+        )}
+    </IconButton>
+  );
+
   return (
     <Link
       key={headerHash}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      style={{ color: 'inherit', textDecoration: 'none' }}
       to={`/jam/block/${headerHash}?type=hash`}
     >
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 1.5,
-          borderRadius: 1,
-          transition: 'background-color 0.2s',
           '&:hover': { backgroundColor: '#f9f9f9' },
-          borderBottom: '1px solid #ddd'
+          alignItems: 'center',
+          borderBottom: '1px solid #ddd',
+          borderRadius: 1,
+          display: 'flex',
+          p: 1.5,
+          transition: 'background-color 0.2s'
         }}
       >
         {/* Left icon */}
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: 1,
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#fff',
             border: '1px solid #ddd',
-            mr: 2
+            borderRadius: 1,
+            display: 'flex',
+            height: 40,
+            justifyContent: 'center',
+            mr: 2,
+            width: 40
           }}
         >
           <BlockIcon
@@ -86,10 +107,10 @@ export default function BlockListItem ({ blockItem }: BlockListItemProps) {
         <Box sx={{ flex: 1 }}>
           <Box
             sx={{
-              display: 'flex',
               alignItems: 'center',
-              justifyContent: 'start',
-              gap: '5px'
+              display: 'flex',
+              gap: '5px',
+              justifyContent: 'start'
             }}
           >
             <SlotIcon
@@ -143,19 +164,7 @@ export default function BlockListItem ({ blockItem }: BlockListItemProps) {
               placement='top'
               title={copied ? 'Copied!' : 'Copy block header_hash'}
             >
-              <IconButton onClick={handleCopy}>
-                {!copied
-                  ? (
-                    <ContentCopy
-                      sx={{ width: '12px', height: '12px', color: '#444444' }}
-                    />
-                  )
-                  : (
-                    <Check
-                      sx={{ width: '12px', height: '12px', color: '#444444' }}
-                    />
-                  )}
-              </IconButton>
+              {copyButton}
             </Tooltip>
           </Box>
           <Box

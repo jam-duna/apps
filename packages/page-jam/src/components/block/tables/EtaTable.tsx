@@ -4,7 +4,7 @@
 'use client';
 
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { truncateHash } from '../../../utils/helper.js';
 
@@ -14,6 +14,11 @@ interface EtaTableProps {
 
 export default function EtaTable ({ data }: EtaTableProps) {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
+
+  const handleRowClick = useCallback((idx: number) => (event: React.MouseEvent) => {
+    event.preventDefault();
+    setExpandedRow(expandedRow === idx ? null : idx);
+  }, [expandedRow]);
 
   if (!data || data.length === 0) {
     return <Typography>No eta data available.</Typography>;
@@ -43,7 +48,7 @@ export default function EtaTable ({ data }: EtaTableProps) {
                 <TableRow
                   hover
                   key={idx}
-                  onClick={() => setExpandedRow(expanded ? null : idx)}
+                  onClick={handleRowClick(idx)}
                   sx={{ cursor: 'pointer' }}
                 >
                   <TableCell>{idx}</TableCell>

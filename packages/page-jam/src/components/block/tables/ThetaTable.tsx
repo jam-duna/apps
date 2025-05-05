@@ -1,6 +1,9 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 'use client';
 
 import type { ThetaItem } from '../../../types/index.js';
@@ -62,6 +65,7 @@ export default function ThetaTable ({ data, headerHash }: ThetaTableProps) {
                 return null;
               }
 
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               const { dependencies, report } = item;
 
               return (

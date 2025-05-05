@@ -16,11 +16,11 @@ export default function PreimageItem ({ idx, preimage }: PreimageItemProps) {
   return (
     <Box
       sx={{
-        py: 1,
         borderTop: '1px solid #ccc',
+        overflowWrap: 'anywhere',
+        py: 1,
         whiteSpace: 'normal',
-        wordBreak: 'break-word',
-        overflowWrap: 'anywhere'
+        wordBreak: 'break-word'
       }}
     >
       <Typography

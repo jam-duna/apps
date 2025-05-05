@@ -4,6 +4,7 @@
 'use client';
 
 import { Box, Container } from '@mui/material';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import SearchBar from '../home/SearchBar.js';
@@ -21,11 +22,11 @@ export default function Navbar () {
       <Container
         maxWidth='lg'
         sx={{
-          display: 'flex',
           alignItems: 'center',
+          display: 'flex',
           justifyContent: 'space-between',
-          paddingInline: '20px',
-          paddingBlock: '10px'
+          paddingBlock: '10px',
+          paddingInline: '20px'
         }}
       >
         <Link to='/'>
@@ -46,9 +47,12 @@ export default function Navbar () {
           display='flex'
           justifyContent='end'
           sx={{
-            width: '640px',
+            alignItems: 'center',
+            display: 'flex',
             height: '54px',
-            paddingInline: '25px'
+            justifyContent: 'end',
+            paddingInline: '25px',
+            width: '640px'
           }}
         >
           <SearchBar />

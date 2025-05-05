@@ -8,37 +8,37 @@ import type { PiEntry, PiItem } from '../../../types/index.js';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TableViewIcon from '@mui/icons-material/TableView';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Dialog, DialogContent, DialogTitle, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 // Helper to sum an array of PiEntry values.
 function sumEntries (entries: PiEntry[]): PiEntry {
   if (!entries) {
     return {
+      assurances: 0,
       blocks: 0,
-      tickets: 0,
+      guarantees: 0,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 0,
-      assurances: 0
+      tickets: 0
     };
   }
 
   return entries.reduce(
     (acc, entry) => ({
+      assurances: acc.assurances + entry.assurances,
       blocks: acc.blocks + entry.blocks,
-      tickets: acc.tickets + entry.tickets,
+      guarantees: acc.guarantees + entry.guarantees,
       pre_images: acc.pre_images + entry.pre_images,
       pre_images_size: acc.pre_images_size + entry.pre_images_size,
-      guarantees: acc.guarantees + entry.guarantees,
-      assurances: acc.assurances + entry.assurances
+      tickets: acc.tickets + entry.tickets
     }),
     {
+      assurances: 0,
       blocks: 0,
-      tickets: 0,
+      guarantees: 0,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 0,
-      assurances: 0
+      tickets: 0
     }
   );
 }
@@ -197,8 +197,15 @@ export default function PiTable ({ data, isHomePage = false }: PiTableProps) {
   const lastTotals = sumEntries(data.vals_last);
   const [openComparison, setOpenComparison] = useState(false);
 
-  const handleOpenComparison = () => setOpenComparison(true);
-  const handleCloseComparison = () => setOpenComparison(false);
+  const handleOpenComparison = useCallback((event: React.MouseEvent) => {
+    event.preventDefault();
+    setOpenComparison(true);
+  }, []);
+
+  const handleCloseComparison = useCallback((event: React.MouseEvent) => {
+    event.preventDefault();
+    setOpenComparison(false);
+  }, []);
 
   return (
     <Box sx={{ my: 4 }}>
@@ -211,7 +218,7 @@ export default function PiTable ({ data, isHomePage = false }: PiTableProps) {
           <Typography variant='h5'>Validator statistics</Typography>
           <IconButton
             onClick={handleOpenComparison}
-            sx={{ ml: 3, border: '1px solid #ddd' }}
+            sx={{ border: '1px solid #ddd', ml: 3 }}
           >
             <TableViewIcon />
           </IconButton>
@@ -224,7 +231,7 @@ export default function PiTable ({ data, isHomePage = false }: PiTableProps) {
             <DialogTitle>Comparison</DialogTitle>
             <DialogContent>
               {renderComparisonTable(currentTotals, lastTotals)}
-              <Box sx={{ textAlign: 'right', mt: 2 }}>
+              <Box sx={{ mt: 2, textAlign: 'right' }}>
                 <Button onClick={handleCloseComparison}>Close</Button>
               </Box>
             </DialogContent>

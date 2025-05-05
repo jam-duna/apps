@@ -45,6 +45,10 @@ export default function PsiTable ({ data }: PsiTableProps) {
     return <Typography>No Psi data available.</Typography>;
   }
 
+  const handleRowClick = (idx: number) => {
+    setExpandedRow(expandedRow === idx ? null : idx);
+  };
+
   return (
     <Box sx={{ my: 4 }}>
       <Typography
@@ -76,7 +80,8 @@ export default function PsiTable ({ data }: PsiTableProps) {
                 <TableRow
                   hover
                   key={idx}
-                  onClick={() => setExpandedRow(expanded ? null : idx)}
+                  // eslint-disable-next-line react/jsx-no-bind, brace-style
+                  onClick={() => handleRowClick(idx)}
                   sx={{ cursor: 'pointer' }}
                 >
                   <TableCell>{idx}</TableCell>

@@ -12,6 +12,10 @@ interface DecodedTicket {
   vrf_output: string;
 }
 
+interface ApiResponse {
+  result: string | DecodedTicket;
+}
+
 interface TicketItemProps {
   ticket: Ticket;
   idx: number;
@@ -29,12 +33,12 @@ export default function TicketItem ({ expanded, idx, ticket }: TicketItemProps) 
       const response = await fetch(
         'https://jam.bayeseer.com/api/bandersnatch',
         {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            objectType: 'GetTicketVRF',
-            inputText: JSON.stringify(ticket)
-          })
+            inputText: JSON.stringify(ticket),
+            objectType: 'GetTicketVRF'
+          }),
+          headers: { 'Content-Type': 'application/json' },
+          method: 'POST'
         }
       );
 
@@ -42,18 +46,18 @@ export default function TicketItem ({ expanded, idx, ticket }: TicketItemProps) 
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data = await response.json() as ApiResponse;
       let result = data.result;
 
       if (typeof result === 'string') {
         try {
-          result = JSON.parse(result);
+          result = JSON.parse(result) as DecodedTicket;
         } catch (parseError) {
           console.error('Error parsing result string:', parseError);
         }
       }
 
-      setDecoded(result);
+      setDecoded(result as DecodedTicket);
       console.log('Decoded ticket result:', result);
     } catch (error) {
       console.error('Error decoding ticket:', error);
@@ -65,24 +69,29 @@ export default function TicketItem ({ expanded, idx, ticket }: TicketItemProps) 
 
   useEffect(() => {
     if (expanded && !decoded && !loading) {
-      decodeTicketSignature();
+      decodeTicketSignature().catch(console.error);
     }
   }, [expanded, decoded, loading, decodeTicketSignature]);
+
+  const handleDecodeClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    decodeTicketSignature().catch(console.error);
+  }, [decodeTicketSignature]);
 
   return (
     <Box
       sx={{
         borderTop: '1px solid #ccc',
+        overflowWrap: 'anywhere',
         whiteSpace: 'normal',
-        wordBreak: 'break-word',
-        overflowWrap: 'anywhere'
+        wordBreak: 'break-word'
       }}
     >
       <Accordion
         disableGutters
         sx={{
-          boxShadow: 'none',
-          '&:before': { display: 'none' }
+          '&:before': { display: 'none' },
+          boxShadow: 'none'
         }}
       >
         <AccordionSummary sx={{ p: 0 }}>
@@ -110,7 +119,7 @@ export default function TicketItem ({ expanded, idx, ticket }: TicketItemProps) 
                 : (
                   <MuiLink
                     component='button'
-                    onClick={decodeTicketSignature}
+                    onClick={handleDecodeClick}
                     sx={{ textDecoration: 'underline' }}
                   >
                     {`Signature: ${ticket.signature}`}

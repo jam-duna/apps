@@ -33,6 +33,10 @@ export default function TableFormat2 ({ data }: TableFormat2Props) {
     (_, idx) => `Value ${idx}`
   );
 
+  const handleRowClick = (rowIndex: number) => {
+    setExpandedRow(expandedRow === rowIndex ? null : rowIndex);
+  };
+
   return (
     <Box sx={{ my: 4 }}>
       <TableContainer
@@ -47,14 +51,14 @@ export default function TableFormat2 ({ data }: TableFormat2Props) {
             <TableRow>
               {/* Index header for transposed rows */}
               <TableCell
-                sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
+                sx={{ backgroundColor: '#f5f5f5', fontWeight: 'bold' }}
               >
                 #
               </TableCell>
               {headerCells.map((header, idx) => (
                 <TableCell
                   key={idx}
-                  sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
+                  sx={{ backgroundColor: '#f5f5f5', fontWeight: 'bold' }}
                 >
                   {header}
                 </TableCell>
@@ -66,9 +70,8 @@ export default function TableFormat2 ({ data }: TableFormat2Props) {
               <TableRow
                 hover
                 key={rowIndex}
-                onClick={() =>
-                  setExpandedRow(expandedRow === rowIndex ? null : rowIndex)
-                }
+                // eslint-disable-next-line react/jsx-no-bind
+                onClick={() => handleRowClick(rowIndex)}
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell>{rowIndex}</TableCell>

@@ -35,11 +35,11 @@ export function LabeledRow ({ icon = 'info',
       {/* Fixed-width label + tooltip */}
       <Box
         sx={{
-          display: 'flex',
           alignItems: 'start',
-          minWidth: labelWidth,
+          display: 'flex',
+          flexShrink: 0,
           maxWidth: labelWidth,
-          flexShrink: 0
+          minWidth: labelWidth
         }}
       >
         <Tooltip title={tooltip}>
@@ -165,8 +165,8 @@ export function LabeledRow ({ icon = 'info',
         </Tooltip>
         <Typography
           sx={{
-            whiteSpace: 'nowrap', // keep the label on one line
-            marginTop: mtl
+            marginTop: mtl,
+            whiteSpace: 'nowrap' // keep the label on one line
           }}
           variant={labelVariant}
         >
@@ -176,12 +176,12 @@ export function LabeledRow ({ icon = 'info',
       {/* Value area (wraps text) */}
       <Box
         sx={{
+          alignSelf: 'center',
           flex: 1,
           ml: 1,
-          whiteSpace: 'normal',
-          wordBreak: 'break-word',
           overflowWrap: 'anywhere',
-          alignSelf: 'center'
+          whiteSpace: 'normal',
+          wordBreak: 'break-word'
         }}
       >
         {value}

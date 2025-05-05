@@ -33,11 +33,11 @@ const GraphCompoment = ({ axis,
     <Grid
       container
       key={title}
-      size={{ xs: 12, sm: 6, md: 3 }}
+      size={{ md: 3, sm: 6, xs: 12 }}
     >
       <Paper
         elevation={3}
-        sx={{ paddingY: 2, height: 250 }}
+        sx={{ height: 250, paddingY: 2 }}
       >
         <Typography
           fontSize='15px'
@@ -51,7 +51,7 @@ const GraphCompoment = ({ axis,
           <LineChart
             height={200}
             series={[{ data: series }]}
-            xAxis={[{ scaleType: 'band', data: axis, reverse: true }]}
+            xAxis={[{ data: axis, reverse: true, scaleType: 'band' }]}
             yAxis={[{ valueFormatter: yAxisFormatter }]}
           />
         </div>

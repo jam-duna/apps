@@ -17,7 +17,7 @@ export default function GeneralInfoBar () {
       'https://api.coingecko.com/api/v3/simple/price?ids=polkadot&vs_currencies=usd'
     )
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: { polkadot?: { usd: number } }) => {
         if (data?.polkadot?.usd) {
           setDotPrice(`$${data.polkadot.usd}`);
         } else {
@@ -37,22 +37,22 @@ export default function GeneralInfoBar () {
 
   return (
     <Paper
-      sx={{ p: 2, mb: 4 }}
+      sx={{ mb: 4, p: 2 }}
       variant='outlined'
     >
       <Grid
         container
         spacing={2}
       >
-        <Grid columns={{ xs: 12, sm: 4 }}>
+        <Grid columns={{ sm: 4, xs: 12 }}>
           <Typography variant='h6'>DOT Price</Typography>
           <Typography variant='subtitle1'>{dotPrice}</Typography>
         </Grid>
-        <Grid columns={{ xs: 12, sm: 4 }}>
+        <Grid columns={{ sm: 4, xs: 12 }}>
           <Typography variant='h6'>Average Block Time</Typography>
           <Typography variant='subtitle1'>{blockTime}</Typography>
         </Grid>
-        <Grid columns={{ xs: 12, sm: 4 }}>
+        <Grid columns={{ sm: 4, xs: 12 }}>
           <Typography variant='h6'>Active Validators</Typography>
           <Typography variant='subtitle1'>{validators}</Typography>
         </Grid>

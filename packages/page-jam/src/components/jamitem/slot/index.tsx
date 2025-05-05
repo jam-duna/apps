@@ -31,16 +31,16 @@ export function Slot (param: SlotProps) {
           gap='5px'
           justifyContent='center'
           sx={{
+            ':hover': {
+              backgroundColor: '#64b5f6'
+            },
+            backgroundColor: '#90caf9',
+            color: '#ffffff',
             cursor: 'pointer',
-            width: '100%',
             height: '100%',
             paddingInline: '10px',
             transition: 'all 0.3s ease-in-out',
-            color: '#ffffff',
-            backgroundColor: '#90caf9',
-            ':hover': {
-              backgroundColor: '#64b5f6'
-            }
+            width: '100%'
           }}
         >
           <SlotIcon

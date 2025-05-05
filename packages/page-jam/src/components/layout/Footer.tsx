@@ -9,20 +9,20 @@ const Footer: React.FC = () => {
     <Box
       component='footer'
       sx={{
-        color: '#555',
         backgroundColor: '#F8F9FA',
+        color: '#555',
         marginTop: 8
       }}
     >
       <Container maxWidth='lg'>
         {/* Top Section */}
-        <Box sx={{ px: 4, pb: 4, pt: 2 }}>
+        <Box sx={{ pb: 4, pt: 2, px: 4 }}>
           <Grid
             container
             spacing={3}
           >
             {/* Community Section */}
-            <Grid columns={{ xs: 12, sm: 4 }}>
+            <Grid columns={{ sm: 4, xs: 12 }}>
               <Typography
                 color='textSecondary'
                 fontSize='16px'
@@ -75,7 +75,7 @@ const Footer: React.FC = () => {
               </Box>
             </Grid>
             {/* Ecosystem Section */}
-            <Grid columns={{ xs: 12, sm: 4 }}>
+            <Grid columns={{ sm: 4, xs: 12 }}>
               <Typography
                 color='textSecondary'
                 fontSize='16px'
@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
               </Box>
             </Grid>
             {/* Resources Section */}
-            <Grid columns={{ xs: 12, sm: 4 }}>
+            <Grid columns={{ sm: 4, xs: 12 }}>
               <Typography
                 color='textSecondary'
                 fontSize='16px'
@@ -151,9 +151,9 @@ const Footer: React.FC = () => {
         {/* Bottom Section */}
         <Box
           sx={{
+            alignItems: 'center',
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center',
             px: 4,
             py: 2
           }}

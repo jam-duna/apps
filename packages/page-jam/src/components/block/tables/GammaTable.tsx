@@ -6,7 +6,7 @@
 import type { GammaItem } from '../../../types/index.js'; // Ensure GammaItem and related types are defined
 
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { LabeledRow } from '../../../components/display/LabeledRow.js';
 import { truncateHash } from '../../../utils/helper.js';
@@ -22,7 +22,7 @@ export default function GammaTable ({ data }: GammaTableProps) {
     data.map(() => false)
   );
 
-  const toggleExpanded = (idx: number) => {
+  const toggleExpanded = useCallback((idx: number) => {
     setExpandedStates((prev) => {
       const newStates = [...prev];
 
@@ -30,7 +30,12 @@ export default function GammaTable ({ data }: GammaTableProps) {
 
       return newStates;
     });
-  };
+  }, []);
+
+  const handleExpandClick = useCallback((idx: number) => (event: React.MouseEvent) => {
+    event.preventDefault();
+    toggleExpanded(idx);
+  }, [toggleExpanded]);
 
   if (!data || data.length === 0) {
     return <Typography>No gamma items available.</Typography>;
@@ -44,14 +49,14 @@ export default function GammaTable ({ data }: GammaTableProps) {
           sx={{ mb: 4, p: 2 }}
         >
           {/* 1. Separate Gamma Z out of table */}
-          <Box sx={{ mb: 2, pb: 3, borderBottom: '1px solid #aaa' }}>
+          <Box sx={{ borderBottom: '1px solid #aaa', mb: 2, pb: 3 }}>
             <LabeledRow
               label={'Gamma Z'}
               labelVariant='h6'
               tooltip={'Gamma Z Description'}
               value={
                 <Typography
-                  onClick={() => toggleExpanded(idx)}
+                  onClick={handleExpandClick(idx)}
                   sx={{ cursor: 'pointer' }}
                   variant='body1'
                 >
@@ -64,7 +69,7 @@ export default function GammaTable ({ data }: GammaTableProps) {
           </Box>
           {/* 2. Table only containing Gamma S Tickets and Gamma A */}
 
-          <Box sx={{ my: 2, pt: 3, pb: 7, borderBottom: '1px solid #aaa' }}>
+          <Box sx={{ borderBottom: '1px solid #aaa', mb: 2, pb: 7, pt: 3 }}>
             <LabeledRow
               label={'Gamma S Tickets & Gamma A'}
               labelVariant='h6'
@@ -87,35 +92,17 @@ export default function GammaTable ({ data }: GammaTableProps) {
                     <TableCell sx={{ fontWeight: 'bold' }}>
                       Gamma S Keys
                     </TableCell>
-                    {/* <TableCell sx={{ fontWeight: "bold" }}>Gamma A</TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {Array.from({
-                    length:
-                      item.gamma_s && item.gamma_s.keys
-                        ? item.gamma_s.keys.length
-                        : 0
+                    length: item.gamma_s?.keys?.length ?? 0
                   }).map((_, i) => (
                     <TableRow key={i}>
                       <TableCell>{i}</TableCell>
                       <TableCell>
-                        {item.gamma_s &&
-                        item.gamma_s.keys &&
-                        item.gamma_s.keys[i]
-                          ? `${item.gamma_s.keys[i]}`
-                          : 'N/A'}
+                        {item.gamma_s?.keys?.[i] ?? 'N/A'}
                       </TableCell>
-                      {/* <TableCell>
-                        {item.gamma_a && item.gamma_a[i]
-                          ? expandedStates[idx]
-                            ? `${item.gamma_a[i].id} (attempt: ${item.gamma_a[i].attempt})`
-                            : `${truncateHash(
-                                item.gamma_a[i].id,
-                                "long"
-                              )} (attempt: ${item.gamma_a[i].attempt})`
-                          : "N/A"}
-                      </TableCell> */}
                     </TableRow>
                   ))}
                 </TableBody>

@@ -27,32 +27,32 @@ export default function WorkReportListItem ({ blockItem }: WorkReportListItemPro
   return (
     <Link
       key={headerHash}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      style={{ color: 'inherit', textDecoration: 'none' }}
       to={`/jam/block/${headerHash}/workreport`}
     >
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 1.5,
-          borderRadius: 1,
-          transition: 'background-color 0.2s',
           '&:hover': { backgroundColor: '#f9f9f9' },
-          borderBottom: '1px solid #ddd'
+          alignItems: 'center',
+          borderBottom: '1px solid #ddd',
+          borderRadius: 1,
+          display: 'flex',
+          p: 1.5,
+          transition: 'background-color 0.2s'
         }}
       >
         {/* Left icon */}
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: 1,
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#fff',
             border: '1px solid #ddd',
-            mr: 2
+            borderRadius: 1,
+            display: 'flex',
+            height: 40,
+            justifyContent: 'center',
+            mr: 2,
+            width: 40
           }}
         >
           <AssignmentIcon fontSize='small' />

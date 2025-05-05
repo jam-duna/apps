@@ -12,48 +12,48 @@ import { truncateHash } from '../../../../utils/helper.js';
 
 export interface ServiceListItemProps {
   serviceItem: {
-    code_hash: string;
+    codeHash: string;
     balance: number;
-    min_item_gas: number;
-    min_memo_gas: number;
+    minItemGas: number;
+    minMemoGas: number;
     bytes: number;
     items: number;
   };
 }
 
 export default function ServiceListItem ({ serviceItem }: ServiceListItemProps) {
-  const { balance, bytes, code_hash, items, min_item_gas, min_memo_gas } =
+  const { balance, bytes, codeHash, items, minItemGas, minMemoGas } =
     serviceItem;
-  const shortHash = truncateHash(code_hash, 'long');
+  const shortHash = truncateHash(codeHash, 'long');
 
   return (
     <Link
-      style={{ textDecoration: 'none', color: 'inherit' }}
-      to={`/jam/service/${code_hash}`}
+      style={{ color: 'inherit', textDecoration: 'none' }}
+      to={`/jam/service/${codeHash}`}
     >
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 1.5,
-          borderRadius: 1,
-          transition: 'background-color 0.2s',
           '&:hover': { backgroundColor: '#f9f9f9' },
-          borderBottom: '1px solid #ddd'
+          alignItems: 'center',
+          borderBottom: '1px solid #ddd',
+          borderRadius: 1,
+          display: 'flex',
+          p: 1.5,
+          transition: 'background-color 0.2s'
         }}
       >
         {/* Left Icon */}
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: 1,
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#fff',
             border: '1px solid #ddd',
-            mr: 2
+            borderRadius: 1,
+            display: 'flex',
+            height: 40,
+            justifyContent: 'center',
+            mr: 2,
+            width: 40
           }}
         >
           <CropSquareIcon fontSize='small' />
@@ -65,7 +65,7 @@ export default function ServiceListItem ({ serviceItem }: ServiceListItemProps) 
             color='textSecondary'
             variant='body2'
           >
-            min_item_gas: {min_item_gas} | min_memo_gas: {min_memo_gas}
+            min_item_gas: {minItemGas} | min_memo_gas: {minMemoGas}
           </Typography>
           <Typography
             color='textSecondary'

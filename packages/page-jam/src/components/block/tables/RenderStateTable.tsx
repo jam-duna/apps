@@ -33,81 +33,175 @@ interface TableConfig<T> {
 // If needed, headerHash is captured for components that require it.
 const getTableConfigs = (
   headerHash: string
-): Partial<Record<keyof State, TableConfig<any>>> => ({
+): Partial<Record<keyof State, TableConfig<unknown>>> => ({
+  accounts: {
+    predicate: (data): data is AccountItem[] =>
+      Array.isArray(data) && data.length > 0,
+    render: (data: unknown) => {
+      if (Array.isArray(data) && data.length > 0) {
+        return <AccountTable accounts={data as AccountItem[]} />;
+      }
+
+      return <></>;
+    }
+  },
   alpha: {
     predicate: (data): data is string[][] =>
-      Array.isArray(data) && data.length > 0 && typeof data[0][0] === 'string',
-    render: (data) => <TableFormat2 data={data} />
-  },
-  varphi: {
-    predicate: (data): data is string[][] =>
-      Array.isArray(data) && data.length > 0 && typeof data[0][0] === 'string',
-    render: (data) => <TableFormat2 data={data} />
-  },
-  iota: {
-    predicate: (data): data is KeyedItem[] =>
-      Array.isArray(data) && data.length > 0,
-    render: (data) => <TableFormat1 data={data} />
-  },
-  kappa: {
-    predicate: (data): data is KeyedItem[] =>
-      Array.isArray(data) && data.length > 0,
-    render: (data) => <TableFormat1 data={data} />
-  },
-  lambda: {
-    predicate: (data): data is KeyedItem[] =>
-      Array.isArray(data) && data.length > 0,
-    render: (data) => <TableFormat1 data={data} />
+      Array.isArray(data) && data.length > 0 && Array.isArray(data[0]) && typeof data[0][0] === 'string',
+    render: (data: unknown) => {
+      if (Array.isArray(data) && data.length > 0 && Array.isArray(data[0]) && typeof data[0][0] === 'string') {
+        return <TableFormat2 data={data as string[][]} />;
+      }
+
+      return <></>;
+    }
   },
   beta: {
     predicate: (data): data is BetaItem[] =>
       Array.isArray(data) && data.length > 0,
-    render: (data) => <BetaTable data={data} />
+    render: (data: unknown) => {
+      if (Array.isArray(data) && data.length > 0) {
+        return <BetaTable data={data as BetaItem[]} />;
+      }
+
+      return <></>;
+    }
   },
   chi: {
     predicate: (data): data is ChiItem => data !== undefined && data !== null,
-    render: (data) => <ChiTable data={[data]} />
+    render: (data: unknown) => {
+      if (data !== undefined && data !== null) {
+        return <ChiTable data={[data as ChiItem]} />;
+      }
+
+      return <></>;
+    }
   },
   eta: {
     predicate: (data): data is string[] => Array.isArray(data),
-    render: (data) => <EtaTable data={data} />
+    render: (data: unknown) => {
+      if (Array.isArray(data)) {
+        return <EtaTable data={data as string[]} />;
+      }
+
+      return <></>;
+    }
   },
   gamma: {
     predicate: (data): data is GammaItem => data !== undefined && data !== null,
-    render: (data) => <GammaTable data={[data]} />
+    render: (data: unknown) => {
+      if (data !== undefined && data !== null) {
+        return <GammaTable data={[data as GammaItem]} />;
+      }
+
+      return <></>;
+    }
+  },
+  iota: {
+    predicate: (data): data is KeyedItem[] =>
+      Array.isArray(data) && data.length > 0,
+    render: (data: unknown) => {
+      if (Array.isArray(data) && data.length > 0) {
+        return <TableFormat1 data={data as KeyedItem[]} />;
+      }
+
+      return <></>;
+    }
+  },
+  kappa: {
+    predicate: (data): data is KeyedItem[] =>
+      Array.isArray(data) && data.length > 0,
+    render: (data: unknown) => {
+      if (Array.isArray(data) && data.length > 0) {
+        return <TableFormat1 data={data as KeyedItem[]} />;
+      }
+
+      return <></>;
+    }
+  },
+  lambda: {
+    predicate: (data): data is KeyedItem[] =>
+      Array.isArray(data) && data.length > 0,
+    render: (data: unknown) => {
+      if (Array.isArray(data) && data.length > 0) {
+        return <TableFormat1 data={data as KeyedItem[]} />;
+      }
+
+      return <></>;
+    }
   },
   pi: {
     predicate: (data): data is PiItem => data !== undefined && data !== null,
-    render: (data) => <PiTable data={data} />
+    render: (data: unknown) => {
+      if (data !== undefined && data !== null) {
+        return <PiTable data={data as PiItem} />;
+      }
+
+      return <></>;
+    }
   },
   psi: {
     predicate: (data): data is PsiItem => data !== undefined && data !== null,
-    render: (data) => <PsiTable data={data} />
+    render: (data: unknown) => {
+      if (data !== undefined && data !== null) {
+        return <PsiTable data={data as PsiItem} />;
+      }
+
+      return <></>;
+    }
   },
   rho: {
     predicate: (data): data is RhoItem => data !== undefined && data !== null,
-    render: (data) => <RhoTable
-      data={data}
-      headerHash={headerHash}
-                      />
+    render: (data: unknown) => {
+      if (data !== undefined && data !== null) {
+        return (
+          <RhoTable
+            data={data as RhoItem}
+            headerHash={headerHash}
+          />
+        );
+      }
+
+      return <></>;
+    }
   },
   theta: {
     predicate: (data): data is ThetaItem =>
       Array.isArray(data) && data.flat(Infinity).length > 0,
-    render: (data) => <ThetaTable
-      data={data}
-      headerHash={headerHash}
-                      />
+    render: (data: unknown) => {
+      if (Array.isArray(data) && data.flat(Infinity).length > 0) {
+        return (
+          <ThetaTable
+            data={data as ThetaItem}
+            headerHash={headerHash}
+          />
+        );
+      }
+
+      return <></>;
+    }
+  },
+  varphi: {
+    predicate: (data): data is string[][] =>
+      Array.isArray(data) && data.length > 0 && Array.isArray(data[0]) && typeof data[0][0] === 'string',
+    render: (data: unknown) => {
+      if (Array.isArray(data) && data.length > 0 && Array.isArray(data[0]) && typeof data[0][0] === 'string') {
+        return <TableFormat2 data={data as string[][]} />;
+      }
+
+      return <></>;
+    }
   },
   xi: {
     predicate: (data): data is string[][] =>
       Array.isArray(data) && data.length > 0,
-    render: (data) => <XiTable data={data} />
-  },
-  accounts: {
-    predicate: (data): data is AccountItem[] =>
-      Array.isArray(data) && data.length > 0,
-    render: (data) => <AccountTable accounts={data} />
+    render: (data: unknown) => {
+      if (Array.isArray(data) && data.length > 0) {
+        return <XiTable data={data as string[][]} />;
+      }
+
+      return <></>;
+    }
   }
 });
 

@@ -36,6 +36,10 @@ export default function TableFormat1 ({ data }: TableFormat1Props) {
   // Assume that all objects have the same keys.
   const keys = Object.keys(data[0]);
 
+  const handleRowClick = (idx: number) => {
+    setExpandedRow(expandedRow === idx ? null : idx);
+  };
+
   return (
     <Box sx={{ my: 1 }}>
       <TableContainer
@@ -50,14 +54,14 @@ export default function TableFormat1 ({ data }: TableFormat1Props) {
             <TableRow>
               {/* New column for row index */}
               <TableCell
-                sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
+                sx={{ backgroundColor: '#f5f5f5', fontWeight: 'bold' }}
               >
                 #
               </TableCell>
               {keys.map((key) => (
                 <TableCell
                   key={key}
-                  sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
+                  sx={{ backgroundColor: '#f5f5f5', fontWeight: 'bold' }}
                 >
                   {key.toUpperCase()}
                 </TableCell>
@@ -69,7 +73,8 @@ export default function TableFormat1 ({ data }: TableFormat1Props) {
               <TableRow
                 hover
                 key={idx}
-                onClick={() => setExpandedRow(expandedRow === idx ? null : idx)}
+                // eslint-disable-next-line react/jsx-no-bind
+                onClick={() => handleRowClick(idx)}
                 sx={{ cursor: 'pointer' }}
               >
                 {/* Row index */}

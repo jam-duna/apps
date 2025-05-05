@@ -29,16 +29,16 @@ export default function GuaranteeItem ({ guarantee,
     <Box
       sx={{
         borderTop: '1px solid #ccc',
+        overflowWrap: 'anywhere',
         whiteSpace: 'normal',
-        wordBreak: 'break-word',
-        overflowWrap: 'anywhere'
+        wordBreak: 'break-word'
       }}
     >
       <Accordion
         disableGutters
         sx={{
-          boxShadow: 'none',
-          '&:before': { display: 'none' }
+          '&:before': { display: 'none' },
+          boxShadow: 'none'
         }}
       >
         <AccordionSummary sx={{ p: 0 }}>

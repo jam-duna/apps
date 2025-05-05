@@ -46,8 +46,8 @@ export default function MainViewGrid ({ cores,
       if (!showActive) {
         return {
           filteredCores: cores,
-          filteredTimestamps: timestamps.slice(-8),
-          filteredTimeslots: timeslots.slice(-8)
+          filteredTimeslots: timeslots.slice(-8),
+          filteredTimestamps: timestamps.slice(-8)
         };
       }
 
@@ -91,8 +91,8 @@ export default function MainViewGrid ({ cores,
       });
       filteredTimeslots = filteredTimeslots.slice(-8);
 
-      return { filteredCores, filteredTimestamps, filteredTimeslots };
-    }, [showActive, cores, timestamps, timeslots, data]);
+      return { filteredCores, filteredTimeslots, filteredTimestamps };
+    }, [showActive, cores, timestamps, timeslots, data, serviceId]);
 
   const getService = (id: number) => {
     const service = services.find((item) => item.service === id);
@@ -122,22 +122,26 @@ export default function MainViewGrid ({ cores,
     return str.slice(0, maxLen) + '...';
   };
 
+  const handleServiceClick = (item: string) => {
+    navigate(`/jam/service/${item}`);
+  };
+
   return (
     <>
       <TableContainer
         component={Paper}
-        sx={{ width: '100%', mb: 4 }}
+        sx={{ mb: 4, width: '100%' }}
       >
         <Table
           size='small'
-          sx={{ width: '100%', tableLayout: 'fixed' }}
+          sx={{ tableLayout: 'fixed', width: '100%' }}
         >
           <TableHead>
             <TableRow>
               {/* Top-left cell: Blocks */}
               <TableCell
                 align='center'
-                sx={{ padding: 0, height: '60px', width: '120px' }}
+                sx={{ height: '60px', padding: 0, width: '120px' }}
               >
                 <Blocks />
               </TableCell>
@@ -146,7 +150,7 @@ export default function MainViewGrid ({ cores,
                 <TableCell
                   align='center'
                   key={timestamp}
-                  sx={{ padding: 0, height: '60px' }}
+                  sx={{ height: '60px', padding: 0 }}
                 >
                   <Slot
                     mode={ItemMode.Small}
@@ -168,7 +172,7 @@ export default function MainViewGrid ({ cores,
                 {/* Left cell: Core */}
                 <TableCell
                   align='center'
-                  sx={{ padding: 0, height: '80px', border: 'none' }}
+                  sx={{ border: 'none', height: '80px', padding: 0 }}
                 >
                   <Core
                     index={coreIndex}
@@ -183,7 +187,7 @@ export default function MainViewGrid ({ cores,
                     <TableCell
                       align='center'
                       key={slot}
-                      sx={{ padding: 0, height: '80px', border: 'none' }}
+                      sx={{ border: 'none', height: '80px', padding: 0 }}
                     >
                       {cell.serviceName.length > 0 &&
                       cell.workPackageHash.length > 0
@@ -196,8 +200,8 @@ export default function MainViewGrid ({ cores,
                             sx={{
                               backgroundColor: '#e8f5e9',
                               cursor: 'pointer',
-                              width: '100%',
-                              height: '100%'
+                              height: '100%',
+                              width: '100%'
                             }}
                           >
                             <Box
@@ -206,10 +210,10 @@ export default function MainViewGrid ({ cores,
                               gap='3px'
                               justifyContent='start'
                               sx={{
+                                color: '#444444',
                                 cursor: 'pointer',
                                 paddingInline: '5px',
-                                transition: 'all 0.3s ease-in-out',
-                                color: '#444444'
+                                transition: 'all 0.3s ease-in-out'
                               }}
                             >
                               <ServiceIcon
@@ -225,9 +229,8 @@ export default function MainViewGrid ({ cores,
                                 >
                                   <Typography
                                     fontSize='12px'
-                                    onClick={() => {
-                                      navigate(`/jam/service/${item}`);
-                                    }}
+                                    // eslint-disable-next-line react/jsx-no-bind
+                                    onClick={() => handleServiceClick(item)}
                                     sx={{
                                       ':hover': {
                                         color: '#311b92'

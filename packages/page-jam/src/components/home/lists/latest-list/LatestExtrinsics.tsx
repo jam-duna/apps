@@ -27,7 +27,7 @@ export default function ExtrinsicLists ({ latestBlocks }: ExtrinsicListsProps) {
       variant='outlined'
     >
       <Typography
-        sx={{ px: 1.5, py: 2, borderBottom: '1px solid #ccc' }}
+        sx={{ borderBottom: '1px solid #ccc', px: 1.5, py: 2 }}
         variant='h6'
       >
         Extrinsic Lists
@@ -40,14 +40,14 @@ export default function ExtrinsicLists ({ latestBlocks }: ExtrinsicListsProps) {
       ))}
       <Link
         style={{
-          textDecoration: 'none',
           color: 'inherit',
-          textAlign: 'center'
+          textAlign: 'center',
+          textDecoration: 'none'
         }}
         to='/jam/list/extrinsic'
       >
         <Typography
-          sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+          sx={{ '&:hover': { backgroundColor: '#f9f9f9' }, p: 2 }}
           variant='subtitle2'
         >
           View All Extrinsics

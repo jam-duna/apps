@@ -18,7 +18,7 @@ export default function LatestBlocks ({ latestBlocks }: LatestBlocksProps) {
     <Paper variant='outlined'>
       <Typography
         gutterBottom
-        sx={{ px: 1.5, py: 2, borderBottom: '1px solid #ccc', m: 0 }}
+        sx={{ borderBottom: '1px solid #ccc', m: 0, px: 1.5, py: 2 }}
         variant='h6'
       >
         Latest Blocks
@@ -31,14 +31,14 @@ export default function LatestBlocks ({ latestBlocks }: LatestBlocksProps) {
       ))}
       <Link
         style={{
-          textDecoration: 'none',
           color: 'inherit',
-          textAlign: 'center'
+          textAlign: 'center',
+          textDecoration: 'none'
         }}
         to={'/jam/list/block'}
       >
         <Typography
-          sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+          sx={{ '&:hover': { backgroundColor: '#f9f9f9' }, p: 2 }}
           variant='subtitle2'
         >
           View All Blocks

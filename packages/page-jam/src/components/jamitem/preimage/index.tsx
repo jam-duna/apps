@@ -1,6 +1,9 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable no-void */
+
 import { Check, ContentCopy } from '@mui/icons-material';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react';
@@ -44,14 +47,14 @@ export function Preimage ({ hash, mode, service }: PreimageProps) {
       gap='2px'
       justifyContent='start'
       sx={{
-        cursor: 'pointer',
-        paddingInline: '5px',
-        paddingBlock: '2px',
-        transition: 'all 0.3s ease-in-out',
-        color: '#444444',
         ':hover': {
           color: '#1b5e20'
-        }
+        },
+        color: '#444444',
+        cursor: 'pointer',
+        paddingBlock: '2px',
+        paddingInline: '5px',
+        transition: 'all 0.3s ease-in-out'
       }}
     >
       <WorkPackageIcon
@@ -77,15 +80,15 @@ export function Preimage ({ hash, mode, service }: PreimageProps) {
         placement='top'
         title={copied ? 'Copied!' : 'Copy workpackage hash'}
       >
-        <IconButton onClick={handleCopy}>
+        <IconButton onClick={(e) => void handleCopy(e)}>
           {!copied
             ? (
               <ContentCopy
-                sx={{ width: '12px', height: '12px', color: '#444444' }}
+                sx={{ color: '#444444', height: '12px', width: '12px' }}
               />
             )
             : (
-              <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+              <Check sx={{ color: '#444444', height: '12px', width: '12px' }} />
             )}
         </IconButton>
       </Tooltip>
@@ -95,7 +98,7 @@ export function Preimage ({ hash, mode, service }: PreimageProps) {
   const mediumRender = (
     <Link
       key={hash}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      style={{ color: 'inherit', textDecoration: 'none' }}
       to={`/jam/preimage/${service}/${hash}/`}
     >
       <Box
@@ -104,14 +107,14 @@ export function Preimage ({ hash, mode, service }: PreimageProps) {
         gap='2px'
         justifyContent='start'
         sx={{
-          cursor: 'pointer',
-          transition: 'all 0.3s ease-in-out',
-          color: '#444444',
-          textDecoration: 'none',
           ':hover': {
             color: '#311b92c0',
             textDecoration: 'underline'
-          }
+          },
+          color: '#444444',
+          cursor: 'pointer',
+          textDecoration: 'none',
+          transition: 'all 0.3s ease-in-out'
         }}
       >
         <Tooltip
@@ -131,15 +134,15 @@ export function Preimage ({ hash, mode, service }: PreimageProps) {
           placement='top'
           title={copied ? 'Copied!' : 'Copy preimage hash'}
         >
-          <IconButton onClick={handleCopy}>
+          <IconButton onClick={(e) => void handleCopy(e)}>
             {!copied
               ? (
                 <ContentCopy
-                  sx={{ width: '12px', height: '12px', color: '#444444' }}
+                  sx={{ color: '#444444', height: '12px', width: '12px' }}
                 />
               )
               : (
-                <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+                <Check sx={{ color: '#444444', height: '12px', width: '12px' }} />
               )}
           </IconButton>
         </Tooltip>
@@ -154,10 +157,10 @@ export function Preimage ({ hash, mode, service }: PreimageProps) {
       gap='5px'
       justifyContent='start'
       sx={{
+        color: '#444444',
         cursor: 'pointer',
         paddingInline: '5px',
-        transition: 'all 0.3s ease-in-out',
-        color: '#444444'
+        transition: 'all 0.3s ease-in-out'
       }}
     >
       <PreimageIcon
@@ -175,9 +178,9 @@ export function Preimage ({ hash, mode, service }: PreimageProps) {
 
   return (
     <>
-      {mode == ItemMode.Small && smallRender}
-      {mode == ItemMode.Medium && mediumRender}
-      {mode == ItemMode.Large && largeRender}
+      {mode === ItemMode.Small && smallRender}
+      {mode === ItemMode.Medium && mediumRender}
+      {mode === ItemMode.Large && largeRender}
     </>
   );
 }

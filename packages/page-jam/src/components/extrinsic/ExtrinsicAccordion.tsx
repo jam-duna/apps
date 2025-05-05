@@ -5,8 +5,8 @@
 
 import type { Extrinsic } from '../../types/index.js';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
-import React from 'react';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Link as MuiLink, Typography } from '@mui/material';
+import React, { useCallback } from 'react';
 
 import { calculateExtrinsicCounts } from '../../utils/extrinsics.js';
 import { pluralize } from '../../utils/helper.js';
@@ -40,43 +40,51 @@ export default function ExtrinsicAccordion ({ extrinsic,
     initialExtrinsicExpanded
   );
 
+  const handlePreventDefault = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+  }, []);
+
+  const handleAccordionChange = useCallback((_: React.SyntheticEvent, isExpanded: boolean) => {
+    setExtrinsicExpanded(isExpanded);
+  }, []);
+
   return (
     <Accordion
       disableGutters
       expanded={extrinsicExpanded}
-      onChange={(_, isExpanded) => setExtrinsicExpanded(isExpanded)}
+      onChange={handleAccordionChange}
       sx={{
+        '&:before': { display: 'none' },
         border: 'none',
-        boxShadow: 'none',
-        '&:before': { display: 'none' }
+        boxShadow: 'none'
       }}
     >
       <AccordionSummary
         sx={{
-          px: 0,
-          minHeight: 'auto',
           '& .MuiAccordionSummary-content': { m: 0, p: 0 },
-          cursor: 'default'
+          cursor: 'default',
+          minHeight: 'auto',
+          px: 0
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0, ml: 0.5 }}>
+        <Box sx={{ alignItems: 'center', display: 'flex', flexShrink: 0, gap: 1.5, ml: 0.5 }}>
           <ExtrinsicIcon
             color={'#555'}
             size={18}
           />
           <Typography
-            sx={{ whiteSpace: 'nowrap', minWidth: '170px' }}
+            sx={{ minWidth: '170px', whiteSpace: 'nowrap' }}
             variant='body1'
           >
             Extrinsic Count:
           </Typography>
           <MuiLink
-            onClick={(e) => e.preventDefault()}
+            onClick={handlePreventDefault}
             sx={{
               color: '#1976d2',
-              textDecoration: 'none',
               cursor: 'pointer',
-              ml: -1
+              ml: -1,
+              textDecoration: 'none'
             }}
           >
             <Typography variant='body1'>

@@ -16,7 +16,6 @@ export * from './EpochIcon.js';
 export * from './ExtrinsicIcon.js';
 export * from './GuaranteeIcon.js';
 export * from './HomeIcon.js';
-export * from './InlineSVG.js';
 export * from './PreimageIcon.js';
 export * from './RefineIcon.js';
 export * from './SealIcon.js';

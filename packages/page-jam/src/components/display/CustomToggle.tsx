@@ -4,23 +4,23 @@
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 
-export const CustomToggle = styled(Switch)(({ theme }) => ({
-  padding: 8,
+export const CustomToggle = styled(Switch)(() => ({
+  '& .MuiSwitch-thumb': {
+    boxShadow: 'none',
+    height: 16,
+    margin: 2,
+    width: 16
+  },
   '& .MuiSwitch-track': {
-    borderRadius: 22 / 2,
     '&::before, &::after': {
       content: '""',
+      height: 16,
       position: 'absolute',
       top: '50%',
       transform: 'translateY(-50%)',
-      width: 16,
-      height: 16
-    }
+      width: 16
+    },
+    borderRadius: 22 / 2
   },
-  '& .MuiSwitch-thumb': {
-    boxShadow: 'none',
-    width: 16,
-    height: 16,
-    margin: 2
-  }
+  padding: 8
 }));

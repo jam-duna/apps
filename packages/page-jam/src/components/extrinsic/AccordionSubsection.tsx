@@ -26,22 +26,22 @@ export default function AccordionSubsection ({ children,
     <Accordion
       disableGutters
       sx={{
-        py: 1,
+        '&:before': { display: 'none' },
         border: 'none',
         boxShadow: 'none',
-        '&:before': { display: 'none' }
+        py: 1
       }}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         sx={{
-          px: 0,
-          py: 0,
+          '& .MuiAccordionSummary-content': { m: 0, p: 0 },
           minHeight: 'auto',
-          '& .MuiAccordionSummary-content': { m: 0, p: 0 }
+          px: 0,
+          py: 0
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ alignItems: 'center', display: 'flex' }}>
           <Tooltip title={`${title} details`}>
             <IconButton
               component='span'
@@ -75,7 +75,7 @@ export default function AccordionSubsection ({ children,
           </Typography>
         </Box>
       </AccordionSummary>
-      <AccordionDetails sx={{ px: 5, m: 0 }}>
+      <AccordionDetails sx={{ m: 0, px: 5 }}>
         {count > 0
           ? (
             children

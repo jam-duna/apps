@@ -1,6 +1,7 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable react/jsx-no-bind */
 'use client';
 
 import type { PreimageProps } from '../../../utils/blockAnalyzer.js';
@@ -22,12 +23,12 @@ function PreimageListItem (data: PreimageProps) {
 
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async (e: React.MouseEvent) => {
+  const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault(); // prevent link navigation if used inside <Link>
 
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(preimageHash);
+        navigator.clipboard.writeText(preimageHash).catch(console.error);
       } else {
         fallbackCopyTextToClipboard(preimageHash);
       }
@@ -42,32 +43,32 @@ function PreimageListItem (data: PreimageProps) {
   return (
     <Link
       key={preimageHash}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      style={{ color: 'inherit', textDecoration: 'none' }}
       to={`/preimages/${preimageHash}/${preimageSize}`}
     >
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 1.5,
-          borderRadius: 1,
-          transition: 'background-color 0.2s',
           '&:hover': { backgroundColor: '#f9f9f9' },
-          borderBottom: '1px solid #ddd'
+          alignItems: 'center',
+          borderBottom: '1px solid #ddd',
+          borderRadius: 1,
+          display: 'flex',
+          p: 1.5,
+          transition: 'background-color 0.2s'
         }}
       >
         {/* Left icon */}
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: 1,
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#fff',
             border: '1px solid #ddd',
-            mr: 2
+            borderRadius: 1,
+            display: 'flex',
+            height: 40,
+            justifyContent: 'center',
+            mr: 2,
+            width: 40
           }}
         >
           <PreimageIcon
@@ -100,12 +101,12 @@ function PreimageListItem (data: PreimageProps) {
             <Typography
               fontSize='13px'
               sx={{
-                color: '#444444',
-                textDecoration: 'none',
-                transition: 'all 0.3s ease-in-out',
                 ':hover': {
                   color: '#311b92c0'
-                }
+                },
+                color: '#444444',
+                textDecoration: 'none',
+                transition: 'all 0.3s ease-in-out'
               }}
               variant='body2'
             >
@@ -120,12 +121,12 @@ function PreimageListItem (data: PreimageProps) {
                 {!copied
                   ? (
                     <ContentCopy
-                      sx={{ width: '12px', height: '12px', color: '#444444' }}
+                      sx={{ color: '#444444', height: '12px', width: '12px' }}
                     />
                   )
                   : (
                     <Check
-                      sx={{ width: '12px', height: '12px', color: '#444444' }}
+                      sx={{ color: '#444444', height: '12px', width: '12px' }}
                     />
                   )}
               </IconButton>
@@ -153,7 +154,7 @@ export function RecentPreimages (data: RecentPreimagesProps) {
   return (
     <Paper variant='outlined'>
       <Typography
-        sx={{ mb: 2, px: 1.5, py: 2, borderBottom: '1px solid #ccc', m: 0 }}
+        sx={{ borderBottom: '1px solid #ccc', m: 0, mb: 2, px: 1.5, py: 2 }}
         variant='h6'
       >
         Recent Preimages
@@ -169,7 +170,7 @@ export function RecentPreimages (data: RecentPreimagesProps) {
         )
         : (
           <Typography
-            sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+            sx={{ '&:hover': { backgroundColor: '#f9f9f9' }, p: 2 }}
             variant='subtitle2'
           >
           No recent preimages

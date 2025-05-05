@@ -20,7 +20,7 @@ export function ServiceValueTable ({ serviceId,
   values }: ServiceValueTableProps) {
   return (
     <Paper
-      sx={{ p: 2, marginBlock: 3 }}
+      sx={{ marginBlock: 3, p: 2 }}
       variant='outlined'
     >
       <Typography

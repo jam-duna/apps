@@ -6,7 +6,7 @@
 import type { BetaItem } from '../../../types/index.js'; // Adjust the import path if needed
 
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { truncateHash } from '../../../utils/helper.js';
 
@@ -16,6 +16,11 @@ interface BetaTableProps {
 
 export default function BetaTable ({ data }: BetaTableProps) {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
+
+  const handleRowClick = useCallback((idx: number) => (event: React.MouseEvent) => {
+    event.preventDefault();
+    setExpandedRow(expandedRow === idx ? null : idx);
+  }, [expandedRow]);
 
   if (!data || data.length === 0) {
     return <Typography>No beta items available.</Typography>;
@@ -45,7 +50,7 @@ export default function BetaTable ({ data }: BetaTableProps) {
               <TableRow
                 hover
                 key={idx}
-                onClick={() => setExpandedRow(expandedRow === idx ? null : idx)}
+                onClick={handleRowClick(idx)}
                 sx={{ cursor: 'pointer' }}
               >
                 <TableCell>{idx}</TableCell>

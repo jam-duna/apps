@@ -18,15 +18,15 @@ export function ExtrD (param: ExtrinsicsProps) {
         display='flex'
         justifyContent='center'
         sx={{
-          cursor: 'pointer',
-          paddingInline: '5px',
-          transition: 'all 0.3s ease-in-out',
-          color: '#ffffff',
-          backgroundColor: '#ff1744',
-          borderRadius: '4px',
           ':hover': {
             backgroundColor: '#ff1744c0'
-          }
+          },
+          backgroundColor: '#ff1744',
+          borderRadius: '4px',
+          color: '#ffffff',
+          cursor: 'pointer',
+          paddingInline: '5px',
+          transition: 'all 0.3s ease-in-out'
         }}
       >
         <Typography

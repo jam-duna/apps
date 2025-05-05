@@ -1,6 +1,8 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable react/jsx-no-bind */
+
 import type { Report, ServiceInfoDetail } from '../../../types/index.js';
 
 import { Check, ContentCopy } from '@mui/icons-material';
@@ -29,21 +31,26 @@ export function WorkPackage ({ hash,
   timestamp = 0 }: WorkPackageProps) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async (e: React.MouseEvent) => {
+  const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault(); // prevent link navigation if used inside <Link>
 
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(hash);
-      } else {
-        fallbackCopyTextToClipboard(hash);
-      }
+    const copyToClipboard = async () => {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(hash);
+        } else {
+          fallbackCopyTextToClipboard(hash);
+        }
 
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500); // Reset after 1.5s
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500); // Reset after 1.5s
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    };
+
+    // eslint-disable-next-line no-void
+    void copyToClipboard();
   };
 
   const getService = (name: number) => {
@@ -65,13 +72,13 @@ export function WorkPackage ({ hash,
       gap='2px'
       justifyContent='start'
       sx={{
-        cursor: 'pointer',
-        paddingInline: '10px',
-        transition: 'all 0.3s ease-in-out',
-        color: '#444444',
         ':hover': {
           color: '#444444'
-        }
+        },
+        color: '#444444',
+        cursor: 'pointer',
+        paddingInline: '10px',
+        transition: 'all 0.3s ease-in-out'
       }}
     >
       <Tooltip
@@ -97,11 +104,21 @@ export function WorkPackage ({ hash,
           {!copied
             ? (
               <ContentCopy
-                sx={{ width: '12px', height: '12px', color: '#444444' }}
+                sx={{
+                  color: '#444444',
+                  height: '12px',
+                  width: '12px'
+                }}
               />
             )
             : (
-              <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+              <Check
+                sx={{
+                  color: '#444444',
+                  height: '12px',
+                  width: '12px'
+                }}
+              />
             )}
         </IconButton>
       </Tooltip>
@@ -115,14 +132,14 @@ export function WorkPackage ({ hash,
       gap='2px'
       justifyContent='start'
       sx={{
-        cursor: 'pointer',
-        paddingInline: '5px',
-        paddingBlock: '2px',
-        transition: 'all 0.3s ease-in-out',
-        color: '#444444',
         ':hover': {
           color: '#1b5e20'
-        }
+        },
+        color: '#444444',
+        cursor: 'pointer',
+        paddingBlock: '2px',
+        paddingInline: '5px',
+        transition: 'all 0.3s ease-in-out'
       }}
     >
       <WorkPackageIcon
@@ -152,11 +169,21 @@ export function WorkPackage ({ hash,
           {!copied
             ? (
               <ContentCopy
-                sx={{ width: '12px', height: '12px', color: '#444444' }}
+                sx={{
+                  color: '#444444',
+                  height: '12px',
+                  width: '12px'
+                }}
               />
             )
             : (
-              <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+              <Check
+                sx={{
+                  color: '#444444',
+                  height: '12px',
+                  width: '12px'
+                }}
+              />
             )}
         </IconButton>
       </Tooltip>
@@ -166,33 +193,33 @@ export function WorkPackage ({ hash,
   const mediumRender = (
     <Link
       key={hash}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      style={{ color: 'inherit', textDecoration: 'none' }}
       to={`/jam/workpackage/${hash}/`}
     >
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 1.5,
-          borderRadius: 1,
-          transition: 'background-color 0.2s',
           '&:hover': { backgroundColor: '#f9f9f9' },
-          borderBottom: '1px solid #ddd'
+          alignItems: 'center',
+          borderBottom: '1px solid #ddd',
+          borderRadius: 1,
+          display: 'flex',
+          p: 1.5,
+          transition: 'background-color 0.2s'
         }}
       >
         {/* Left icon */}
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: 1,
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#fff',
-            color: '#1b5e20',
             border: '1px solid #ddd',
-            mr: 2
+            borderRadius: 1,
+            color: '#1b5e20',
+            display: 'flex',
+            height: 40,
+            justifyContent: 'center',
+            mr: 2,
+            width: 40
           }}
         >
           <WorkPackageIcon
@@ -246,11 +273,11 @@ export function WorkPackage ({ hash,
               <Typography
                 fontSize='13px'
                 sx={{
-                  color: '#444444',
-                  transition: 'all 0.3s ease-in-out',
                   ':hover': {
                     color: '#1b5e20'
-                  }
+                  },
+                  color: '#444444',
+                  transition: 'all 0.3s ease-in-out'
                 }}
                 variant='subtitle2'
               >
@@ -266,12 +293,20 @@ export function WorkPackage ({ hash,
                 {!copied
                   ? (
                     <ContentCopy
-                      sx={{ width: '12px', height: '12px', color: '#444444' }}
+                      sx={{
+                        color: '#444444',
+                        height: '12px',
+                        width: '12px'
+                      }}
                     />
                   )
                   : (
                     <Check
-                      sx={{ width: '12px', height: '12px', color: '#444444' }}
+                      sx={{
+                        color: '#444444',
+                        height: '12px',
+                        width: '12px'
+                      }}
                     />
                   )}
               </IconButton>
@@ -296,14 +331,14 @@ export function WorkPackage ({ hash,
       gap='10px'
       justifyContent='start'
       sx={{
-        cursor: 'pointer',
-        paddingInline: '5px',
-        paddingBlock: '2px',
-        transition: 'all 0.3s ease-in-out',
-        color: '#444444',
         ':hover': {
           color: '#444444'
-        }
+        },
+        color: '#444444',
+        cursor: 'pointer',
+        paddingBlock: '2px',
+        paddingInline: '5px',
+        transition: 'all 0.3s ease-in-out'
       }}
     >
       <WorkPackageIcon
@@ -328,10 +363,10 @@ export function WorkPackage ({ hash,
 
   return (
     <>
-      {mode == ItemMode.Small && smallRender}
-      {mode == ItemMode.Grid && gridRender}
-      {mode == ItemMode.Medium && mediumRender}
-      {mode == ItemMode.Large && largeRender}
+      {mode === ItemMode.Small && smallRender}
+      {mode === ItemMode.Grid && gridRender}
+      {mode === ItemMode.Medium && mediumRender}
+      {mode === ItemMode.Large && largeRender}
     </>
   );
 }

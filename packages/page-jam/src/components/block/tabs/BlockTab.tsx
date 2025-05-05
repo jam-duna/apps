@@ -44,7 +44,7 @@ export function BlockTab ({ blockRecord,
         sx={{ p: 3 }}
         variant='outlined'
       >
-        <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+        <Box sx={{ alignItems: 'flex-start', display: 'flex' }}>
           <LabeledRow
             label={basicInfoMapping.blockHeight.label}
             tooltip={basicInfoMapping.blockHeight.tooltip}
@@ -55,11 +55,13 @@ export function BlockTab ({ blockRecord,
           {type === 'headerHash' && (
             <BlockNavigationButtons
               nextHash={nextHash}
+              // eslint-disable-next-line react/jsx-no-bind
               onNext={() => {
                 if (nextHash) {
                   navigate(`/jam/block/${nextHash}?type=hash`);
                 }
               }}
+              // eslint-disable-next-line react/jsx-no-bind
               onPrev={() => {
                 if (prevHash) {
                   navigate(`/jam/block/${prevHash}?type=hash`);
@@ -121,8 +123,8 @@ export function BlockTab ({ blockRecord,
           value={
             <Typography
               sx={{
-                textDecoration: 'underline',
                 color: '#1976d2',
+                textDecoration: 'underline',
                 textDecorationColor: '#1976d2'
               }}
               variant='body1'

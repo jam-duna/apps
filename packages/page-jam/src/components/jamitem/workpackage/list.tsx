@@ -27,7 +27,7 @@ export function RecentWorkPackages (param: RecentWorkPackageProps) {
     <Paper variant='outlined'>
       <Typography
         gutterBottom
-        sx={{ mb: 2, px: 1.5, py: 2, borderBottom: '1px solid #ccc', m: 0 }}
+        sx={{ borderBottom: '1px solid #ccc', m: 0, mb: 2, px: 1.5, py: 2 }}
         variant='h6'
       >
                 Recent Work Packages
@@ -46,7 +46,7 @@ export function RecentWorkPackages (param: RecentWorkPackageProps) {
           );
         }))
         : (<Typography
-          sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+          sx={{ '&:hover': { backgroundColor: '#f9f9f9' }, p: 2 }}
           variant='subtitle2'
         >
                     No work packages

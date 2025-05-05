@@ -1,18 +1,20 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable react/jsx-no-bind */
+
 'use client';
 
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
 interface StatsData {
+  assurances: number;
   blocks: number;
-  tickets: number;
+  guarantees: number;
   pre_images: number;
   pre_images_size: number;
-  guarantees: number;
-  assurances: number;
+  tickets: number;
 }
 
 interface DataObject {
@@ -23,102 +25,102 @@ interface DataObject {
 const sampleData: DataObject = {
   current: [
     {
+      assurances: 2,
       blocks: 0,
-      tickets: 0,
+      guarantees: 1,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 1,
-      assurances: 2
+      tickets: 0
     },
     {
+      assurances: 2,
       blocks: 1,
-      tickets: 0,
+      guarantees: 2,
       pre_images: 1,
       pre_images_size: 1175,
-      guarantees: 2,
-      assurances: 2
+      tickets: 0
     },
     {
+      assurances: 2,
       blocks: 2,
-      tickets: 3,
+      guarantees: 2,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 2,
-      assurances: 2
+      tickets: 3
     },
     {
+      assurances: 2,
       blocks: 2,
-      tickets: 3,
+      guarantees: 1,
       pre_images: 1,
       pre_images_size: 1041,
-      guarantees: 1,
-      assurances: 2
+      tickets: 3
     },
     {
+      assurances: 2,
       blocks: 1,
-      tickets: 3,
+      guarantees: 1,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 1,
-      assurances: 2
+      tickets: 3
     },
     {
+      assurances: 2,
       blocks: 2,
-      tickets: 3,
+      guarantees: 2,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 2,
-      assurances: 2
+      tickets: 3
     }
   ],
   last: [
     {
+      assurances: 3,
       blocks: 3,
-      tickets: 3,
+      guarantees: 1,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 1,
-      assurances: 3
+      tickets: 3
     },
     {
+      assurances: 3,
       blocks: 2,
-      tickets: 0,
+      guarantees: 2,
       pre_images: 2,
       pre_images_size: 2245,
-      guarantees: 2,
-      assurances: 3
+      tickets: 0
     },
     {
+      assurances: 3,
       blocks: 0,
-      tickets: 0,
+      guarantees: 2,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 2,
-      assurances: 3
+      tickets: 0
     },
     {
+      assurances: 3,
       blocks: 0,
-      tickets: 0,
+      guarantees: 2,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 2,
-      assurances: 3
+      tickets: 0
     },
     {
+      assurances: 3,
       blocks: 6,
-      tickets: 6,
+      guarantees: 1,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 1,
-      assurances: 3
+      tickets: 6
     },
     {
+      assurances: 3,
       blocks: 1,
-      tickets: 3,
+      guarantees: 1,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 1,
-      assurances: 3
+      tickets: 3
     }
   ]
 };
@@ -126,20 +128,20 @@ const sampleData: DataObject = {
 function sumStats (data: StatsData[]): StatsData {
   return data.reduce(
     (acc, curr) => ({
+      assurances: acc.assurances + curr.assurances,
       blocks: acc.blocks + curr.blocks,
-      tickets: acc.tickets + curr.tickets,
+      guarantees: acc.guarantees + curr.guarantees,
       pre_images: acc.pre_images + curr.pre_images,
       pre_images_size: acc.pre_images_size + curr.pre_images_size,
-      guarantees: acc.guarantees + curr.guarantees,
-      assurances: acc.assurances + curr.assurances
+      tickets: acc.tickets + curr.tickets
     }),
     {
+      assurances: 0,
       blocks: 0,
-      tickets: 0,
+      guarantees: 0,
       pre_images: 0,
       pre_images_size: 0,
-      guarantees: 0,
-      assurances: 0
+      tickets: 0
     }
   );
 }
@@ -152,19 +154,22 @@ export default function StatisticsAnalysis () {
 
   // Compute differences: current - last.
   const diff = {
+    assurances: currentTotals.assurances - lastTotals.assurances,
     blocks: currentTotals.blocks - lastTotals.blocks,
-    tickets: currentTotals.tickets - lastTotals.tickets,
+    guarantees: currentTotals.guarantees - lastTotals.guarantees,
     pre_images: currentTotals.pre_images - lastTotals.pre_images,
     pre_images_size: currentTotals.pre_images_size - lastTotals.pre_images_size,
-    guarantees: currentTotals.guarantees - lastTotals.guarantees,
-    assurances: currentTotals.assurances - lastTotals.assurances
+    tickets: currentTotals.tickets - lastTotals.tickets
   };
 
   // Helper to format difference (prepend '+' if positive)
   const formatDiff = (value: number) => (value > 0 ? `+${value}` : `${value}`);
 
+  const handleOpenDialog = () => setOpenDialog(true);
+  const handleCloseDialog = () => setOpenDialog(false);
+
   return (
-    <Box sx={{ mt: 4, p: 2, border: '1px solid #ddd', borderRadius: 2 }}>
+    <Box sx={{ border: '1px solid #ddd', borderRadius: 2, mt: 4, p: 2 }}>
       <Typography
         gutterBottom
         variant='h6'
@@ -178,14 +183,14 @@ export default function StatisticsAnalysis () {
       <Typography>Guarantees: {currentTotals.guarantees}</Typography>
       <Typography>Assurances: {currentTotals.assurances}</Typography>
       <Button
-        onClick={() => setOpenDialog(true)}
+        onClick={handleOpenDialog}
         sx={{ mt: 2 }}
         variant='outlined'
       >
         See Detailed Difference
       </Button>
       <Dialog
-        onClose={() => setOpenDialog(false)}
+        onClose={handleCloseDialog}
         open={openDialog}
       >
         <DialogTitle>Difference Analysis (Current vs Last)</DialogTitle>
@@ -216,7 +221,7 @@ export default function StatisticsAnalysis () {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Close</Button>
+          <Button onClick={handleCloseDialog}>Close</Button>
         </DialogActions>
       </Dialog>
     </Box>

@@ -1,6 +1,8 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable react/jsx-no-bind */
+
 import type { ServiceInfoDetail, ServiceStatistics } from '../../../types/index.js';
 
 import { Check, ContentCopy } from '@mui/icons-material';
@@ -27,12 +29,12 @@ export function Service (param: ServiceProps) {
   const statistics: ServiceStatistics | null =
     param.service?.statistics || null;
 
-  const handleCopy = async (e: React.MouseEvent) => {
+  const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault(); // prevent link navigation if used inside <Link>
 
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(param.name);
+        navigator.clipboard.writeText(param.name).catch(console.error);
       } else {
         fallbackCopyTextToClipboard(param.name);
       }
@@ -45,12 +47,22 @@ export function Service (param: ServiceProps) {
   };
 
   useEffect(() => {
-    (async () => {
-      const time = await getServiceLastSeenTime(Number.parseInt(param.name));
+    const fetchLastSeenTime = async () => {
+      try {
+        const time = await getServiceLastSeenTime(Number.parseInt(param.name));
 
-      setLastTime(time);
-    })();
+        setLastTime(time);
+      } catch (error) {
+        console.error('Failed to fetch last seen time:', error);
+      }
+    };
+
+    fetchLastSeenTime().catch(console.error);
   }, [param.name]);
+
+  const handleNavigate = () => {
+    navigate(`/jam/service/${param.name}`);
+  };
 
   const gridRender = (
     <Box
@@ -59,13 +71,13 @@ export function Service (param: ServiceProps) {
       gap='2px'
       justifyContent='start'
       sx={{
-        cursor: 'pointer',
-        paddingInline: '5px',
-        transition: 'all 0.3s ease-in-out',
-        color: '#444444',
         ':hover': {
           color: '#311b92'
-        }
+        },
+        color: '#444444',
+        cursor: 'pointer',
+        paddingInline: '5px',
+        transition: 'all 0.3s ease-in-out'
       }}
     >
       <ServiceIcon
@@ -79,9 +91,7 @@ export function Service (param: ServiceProps) {
       >
         <Typography
           fontSize='12px'
-          onClick={() => {
-            navigate(`/jam/service/${param.name}`);
-          }}
+          onClick={handleNavigate}
           variant='subtitle2'
         >
           {param.service === undefined
@@ -100,11 +110,11 @@ export function Service (param: ServiceProps) {
           {!copied
             ? (
               <ContentCopy
-                sx={{ width: '12px', height: '12px', color: '#444444' }}
+                sx={{ color: '#444444', height: '12px', width: '12px' }}
               />
             )
             : (
-              <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+              <Check sx={{ color: '#444444', height: '12px', width: '12px' }} />
             )}
         </IconButton>
       </Tooltip>
@@ -118,13 +128,13 @@ export function Service (param: ServiceProps) {
       gap='2px'
       justifyContent='start'
       sx={{
-        cursor: 'pointer',
-        paddingInline: '5px',
-        transition: 'all 0.3s ease-in-out',
-        color: '#444444',
         ':hover': {
           color: '#311b92'
-        }
+        },
+        color: '#444444',
+        cursor: 'pointer',
+        paddingInline: '5px',
+        transition: 'all 0.3s ease-in-out'
       }}
     >
       <Tooltip
@@ -134,9 +144,7 @@ export function Service (param: ServiceProps) {
       >
         <Typography
           fontSize='16px'
-          onClick={() => {
-            navigate(`/jam/service/${param.name}`);
-          }}
+          onClick={handleNavigate}
           variant='subtitle2'
         >
           {param.service === undefined
@@ -155,11 +163,11 @@ export function Service (param: ServiceProps) {
           {!copied
             ? (
               <ContentCopy
-                sx={{ width: '13px', height: '13px', color: '#444444' }}
+                sx={{ color: '#444444', height: '13px', width: '13px' }}
               />
             )
             : (
-              <Check sx={{ width: '13px', height: '13px', color: '#444444' }} />
+              <Check sx={{ color: '#444444', height: '13px', width: '13px' }} />
             )}
         </IconButton>
       </Tooltip>
@@ -173,13 +181,13 @@ export function Service (param: ServiceProps) {
       gap='2px'
       justifyContent='start'
       sx={{
-        cursor: 'pointer',
-        paddingInline: '5px',
-        transition: 'all 0.3s ease-in-out',
-        color: '#444444',
         ':hover': {
           color: '#311b92'
-        }
+        },
+        color: '#444444',
+        cursor: 'pointer',
+        paddingInline: '5px',
+        transition: 'all 0.3s ease-in-out'
       }}
     >
       <Tooltip
@@ -189,9 +197,7 @@ export function Service (param: ServiceProps) {
       >
         <Typography
           fontSize='12px'
-          onClick={() => {
-            navigate(`/jam/service/${param.name}`);
-          }}
+          onClick={handleNavigate}
           sx={{ maxWidth: '70px' }}
           variant='subtitle2'
         >
@@ -211,46 +217,46 @@ export function Service (param: ServiceProps) {
           {!copied
             ? (
               <ContentCopy
-                sx={{ width: '12px', height: '12px', color: '#444444' }}
+                sx={{ color: '#444444', height: '12px', width: '12px' }}
               />
             )
             : (
-              <Check sx={{ width: '12px', height: '12px', color: '#444444' }} />
+              <Check sx={{ color: '#444444', height: '12px', width: '12px' }} />
             )}
         </IconButton>
       </Tooltip>
     </Box>
   );
+
   const mediumRender = (
     <Link
       key={param.name}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      style={{ color: 'inherit', textDecoration: 'none' }}
       to={`/jam/service/${param.name}/`}
     >
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 1.5,
-          borderRadius: 1,
-          transition: 'background-color 0.2s',
           '&:hover': { backgroundColor: '#f9f9f9' },
-          borderBottom: '1px solid #ddd'
+          alignItems: 'center',
+          borderBottom: '1px solid #ddd',
+          borderRadius: 1,
+          display: 'flex',
+          p: 1.5,
+          transition: 'background-color 0.2s'
         }}
       >
-        {/* Left icon */}
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: 1,
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#fff',
-            color: '#311b92',
             border: '1px solid #ddd',
-            mr: 2
+            borderRadius: 1,
+            color: '#311b92',
+            display: 'flex',
+            height: 40,
+            justifyContent: 'center',
+            mr: 2,
+            width: 40
           }}
         >
           <ServiceIcon
@@ -313,10 +319,10 @@ export function Service (param: ServiceProps) {
               <Typography
                 fontSize='12px'
                 sx={{
-                  color: '#444444',
                   backgroundColor: '#00000030',
-                  paddingInline: '2px',
                   borderRadius: '4px',
+                  color: '#444444',
+                  paddingInline: '2px',
                   paddingTop: '2px'
                 }}
                 variant='subtitle2'
@@ -334,10 +340,10 @@ export function Service (param: ServiceProps) {
               <Typography
                 fontSize='12px'
                 sx={{
-                  color: '#444444',
                   backgroundColor: '#00000030',
-                  paddingInline: '2px',
                   borderRadius: '4px',
+                  color: '#444444',
+                  paddingInline: '2px',
                   paddingTop: '2px'
                 }}
                 variant='subtitle2'
@@ -355,10 +361,10 @@ export function Service (param: ServiceProps) {
               <Typography
                 fontSize='12px'
                 sx={{
-                  color: '#444444',
                   backgroundColor: '#00000030',
-                  paddingInline: '2px',
                   borderRadius: '4px',
+                  color: '#444444',
+                  paddingInline: '2px',
                   paddingTop: '2px'
                 }}
                 variant='subtitle2'
@@ -376,10 +382,10 @@ export function Service (param: ServiceProps) {
               <Typography
                 fontSize='12px'
                 sx={{
-                  color: '#444444',
                   backgroundColor: '#00000030',
-                  paddingInline: '2px',
                   borderRadius: '4px',
+                  color: '#444444',
+                  paddingInline: '2px',
                   paddingTop: '2px'
                 }}
                 variant='subtitle2'
@@ -397,10 +403,10 @@ export function Service (param: ServiceProps) {
               <Typography
                 fontSize='12px'
                 sx={{
-                  color: '#444444',
                   backgroundColor: '#00000030',
-                  paddingInline: '2px',
                   borderRadius: '4px',
+                  color: '#444444',
+                  paddingInline: '2px',
                   paddingTop: '2px'
                 }}
                 variant='subtitle2'
@@ -413,6 +419,7 @@ export function Service (param: ServiceProps) {
       </Box>
     </Link>
   );
+
   const largeRender = (
     <Box
       alignItems='center'
@@ -420,10 +427,10 @@ export function Service (param: ServiceProps) {
       gap='5px'
       justifyContent='start'
       sx={{
+        color: '#444444',
         cursor: 'pointer',
         paddingInline: '5px',
-        transition: 'all 0.3s ease-in-out',
-        color: '#444444'
+        transition: 'all 0.3s ease-in-out'
       }}
     >
       <ServiceIcon

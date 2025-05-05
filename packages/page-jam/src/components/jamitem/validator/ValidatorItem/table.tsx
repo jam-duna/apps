@@ -34,23 +34,24 @@ export function ValidatorTable ({ badge, hash, title, validator }: Props) {
   return (
     <Accordion
       expanded={expanded}
+      // eslint-disable-next-line react/jsx-no-bind
       onChange={handleChange}
       sx={{
-        px: 2,
-        py: 1,
-        my: 1,
-        boxShadow: 'none',
         border: '1px solid #ccc',
-        borderRadius: '4px'
+        borderRadius: '4px',
+        boxShadow: 'none',
+        my: 1,
+        px: 2,
+        py: 1
       }}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         sx={{
-          px: 0,
-          py: 0,
+          '& .MuiAccordionSummary-content': { m: 0, p: 0 },
           minHeight: 'auto',
-          '& .MuiAccordionSummary-content': { m: 0, p: 0 }
+          px: 0,
+          py: 0
         }}
       >
         <Box
@@ -66,13 +67,13 @@ export function ValidatorTable ({ badge, hash, title, validator }: Props) {
             {title}
           </Typography>
           <Typography
-            fontSize='12px'
             sx={{
-              px: '4px',
-              py: '0px',
               backgroundColor: '#888',
+              borderRadius: '4px',
               color: '#fff',
-              borderRadius: '4px'
+              fontSize: '12px',
+              px: '4px',
+              py: '0px'
             }}
             variant='body2'
           >
@@ -82,9 +83,9 @@ export function ValidatorTable ({ badge, hash, title, validator }: Props) {
       </AccordionSummary>
       <AccordionDetails
         sx={{
+          alignItems: 'flex-start',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start'
+          flexDirection: 'column'
         }}
       >
         <LabeledRow

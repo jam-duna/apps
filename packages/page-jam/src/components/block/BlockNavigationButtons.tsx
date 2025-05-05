@@ -20,9 +20,10 @@ export default function BlockNavigationButtons ({ nextHash,
   onPrev,
   prevHash }: BlockNavigationButtonsProps) {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box sx={{ alignItems: 'center', display: 'flex' }}>
       <IconButton
         disabled={!prevHash}
+        // eslint-disable-next-line react/jsx-no-bind
         onClick={(e) => {
           e.stopPropagation();
           onPrev();
@@ -34,6 +35,7 @@ export default function BlockNavigationButtons ({ nextHash,
       </IconButton>
       <IconButton
         disabled={!nextHash}
+        // eslint-disable-next-line react/jsx-no-bind
         onClick={(e) => {
           e.stopPropagation();
           onNext();

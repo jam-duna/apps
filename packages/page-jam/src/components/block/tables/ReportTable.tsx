@@ -76,7 +76,8 @@ function PackageSpecDisplay ({ headerHash,
         tooltip='Package hash'
         value={
           <MuiLink
-            onClick={handleWorkReportRedirect}
+            // eslint-disable-next-line react/jsx-no-bind
+            onClick={() => handleWorkReportRedirect()}
             sx={{ cursor: 'pointer', textDecoration: 'underline' }}
           >
             <ToggleHash hash={packageSpec.hash} />
@@ -116,7 +117,7 @@ function ResultDisplay ({ index, result }: { result: Result; index: number }) {
   };
 
   return (
-    <Box sx={{ borderBottom: '3px solid #eee', borderRadius: 1, p: 1, mb: 1 }}>
+    <Box sx={{ borderBottom: '3px solid #eee', borderRadius: 1, mb: 1, p: 1 }}>
       <Typography
         sx={{ mb: 2 }}
         variant='body1'
@@ -128,6 +129,7 @@ function ResultDisplay ({ index, result }: { result: Result; index: number }) {
         tooltip='Service ID'
         value={
           <MuiLink
+            // eslint-disable-next-line react/jsx-no-bind
             onClick={handleServiceRedirect}
             sx={{ cursor: 'pointer', textDecoration: 'underline' }}
           >
@@ -183,7 +185,7 @@ function SegmentRootLookupDisplay ({ lookups }: {
       {lookups.map((lookup, idx) => (
         <Box
           key={idx}
-          sx={{ border: '1px solid #eee', borderRadius: 1, p: 1, mb: 1 }}
+          sx={{ border: '1px solid #eee', borderRadius: 1, mb: 1, p: 1 }}
         >
           <LabeledRow
             label='Segment Tree Root'
@@ -205,7 +207,7 @@ interface ReportTableProps {
   data: Report;
   idx?: number;
   timeout?: number;
-  headerHash: string; // Pass headerHash so we can use it for redirection.
+  headerHash: string;
 }
 
 export default function ReportTable ({ data,
@@ -217,14 +219,14 @@ export default function ReportTable ({ data,
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       sx={{
-        px: 0,
-        py: 0.75,
-        minHeight: 'auto',
         '& .MuiAccordionSummary-content': { m: 0, p: 0 },
-        cursor: 'default'
+        cursor: 'default',
+        minHeight: 'auto',
+        px: 0,
+        py: 0.75
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+      <Box sx={{ alignItems: 'center', display: 'flex', flexShrink: 0 }}>
         <Tooltip
           sx={{ ml: 0.5, mr: 1.5 }}
           title={tooltipText}
@@ -232,7 +234,7 @@ export default function ReportTable ({ data,
           <InfoOutlinedIcon fontSize='small' />
         </Tooltip>
         <Typography
-          sx={{ whiteSpace: 'nowrap', minWidth: '170px' }}
+          sx={{ minWidth: '170px', whiteSpace: 'nowrap' }}
           variant='body1'
         >
           {title}
@@ -255,7 +257,6 @@ export default function ReportTable ({ data,
           )}
       </AccordionSummary>
       <AccordionDetails>
-        {/* Simple fields using workReportMapping for authorization and basicInfo */}
         <LabeledRow
           label={workReportMapping.authorization[1].label}
           tooltip={workReportMapping.authorization[1].tooltip}
@@ -271,14 +272,13 @@ export default function ReportTable ({ data,
           tooltip={workReportMapping.basicInfo[3].tooltip}
           value={data.core_index.toString()}
         />
-        {/* Sub-accordion for Context */}
         <Accordion
           sx={{
+            '&:before': { display: 'none' },
             border: 'none',
             boxShadow: 'none',
-            '&:before': { display: 'none' },
-            mt: 2,
             mb: 1,
+            mt: 2,
             px: 0
           }}
         >
@@ -287,12 +287,11 @@ export default function ReportTable ({ data,
             <ContextDisplay context={data.context} />
           </AccordionDetails>
         </Accordion>
-        {/* Sub-accordion for Package Spec */}
         <Accordion
           sx={{
+            '&:before': { display: 'none' },
             border: 'none',
             boxShadow: 'none',
-            '&:before': { display: 'none' },
             mb: 1,
             px: 0
           }}
@@ -308,12 +307,11 @@ export default function ReportTable ({ data,
             />
           </AccordionDetails>
         </Accordion>
-        {/* Sub-accordion for Results */}
         <Accordion
           sx={{
+            '&:before': { display: 'none' },
             border: 'none',
             boxShadow: 'none',
-            '&:before': { display: 'none' },
             mb: 1,
             px: 0
           }}
@@ -323,12 +321,11 @@ export default function ReportTable ({ data,
             <ResultsDisplay results={data.results} />
           </AccordionDetails>
         </Accordion>
-        {/* Sub-accordion for Segment Root Lookup */}
         <Accordion
           sx={{
+            '&:before': { display: 'none' },
             border: 'none',
             boxShadow: 'none',
-            '&:before': { display: 'none' },
             px: 0
           }}
         >

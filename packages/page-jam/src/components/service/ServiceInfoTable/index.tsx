@@ -20,7 +20,7 @@ export function ServiceInfoTable ({ metadata,
   serviceInfo }: ServiceInfoTableProps) {
   return (
     <Paper
-      sx={{ p: 2, marginBlock: 3 }}
+      sx={{ marginBlock: 3, p: 2 }}
       variant='outlined'
     >
       <Typography
@@ -32,9 +32,9 @@ export function ServiceInfoTable ({ metadata,
       </Typography>
       <Box
         sx={{
+          alignItems: 'flex-start',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start'
+          flexDirection: 'column'
         }}
       >
         <LabeledRow

@@ -1,6 +1,8 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable react/jsx-no-bind */
+
 import type { ValidatorShowCase } from '../../../../types/index.js';
 
 import { Check, ContentCopy } from '@mui/icons-material';
@@ -11,7 +13,6 @@ import { Link } from 'react-router-dom';
 import { fallbackCopyTextToClipboard } from '../../../../utils/clipboard.js';
 import { formatDate, truncateHash } from '../../../../utils/helper.js';
 import { ValidatorIcon } from '../../../Icons/index.js';
-import { ItemMode } from '../../index.js';
 
 interface ValidatorProps {
   mode: string;
@@ -21,53 +22,56 @@ interface ValidatorProps {
 export function Validator (param: ValidatorProps) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async (e: React.MouseEvent) => {
+  const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault(); // prevent link navigation if used inside <Link>
 
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(param.validator.hash);
-      } else {
-        fallbackCopyTextToClipboard(param.validator.hash);
-      }
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    (async () => {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(param.validator.hash);
+        } else {
+          fallbackCopyTextToClipboard(param.validator.hash);
+        }
 
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500); // Reset after 1.5s
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500); // Reset after 1.5s
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    })();
   };
 
   const mediumRender = (
     <Link
       key={param.validator.index}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      style={{ color: 'inherit', textDecoration: 'none' }}
       to={`/jam/validator/${param.validator.index}/${param.validator.hash}`}
     >
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 1.5,
-          borderRadius: 1,
-          transition: 'background-color 0.2s',
           '&:hover': { backgroundColor: '#f9f9f9' },
-          borderBottom: '1px solid #ddd'
+          alignItems: 'center',
+          borderBottom: '1px solid #ddd',
+          borderRadius: 1,
+          display: 'flex',
+          p: 1.5,
+          transition: 'background-color 0.2s'
         }}
       >
         {/* Left icon */}
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: 1,
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#fff',
-            color: '#311b92',
             border: '1px solid #ddd',
-            mr: 2
+            borderRadius: 1,
+            color: '#311b92',
+            display: 'flex',
+            height: 40,
+            justifyContent: 'center',
+            mr: 2,
+            width: 40
           }}
         >
           <ValidatorIcon
@@ -144,12 +148,12 @@ export function Validator (param: ValidatorProps) {
                 {!copied
                   ? (
                     <ContentCopy
-                      sx={{ width: '12px', height: '12px', color: '#444444' }}
+                      sx={{ color: '#444444', height: '12px', width: '12px' }}
                     />
                   )
                   : (
                     <Check
-                      sx={{ width: '12px', height: '12px', color: '#444444' }}
+                      sx={{ color: '#444444', height: '12px', width: '12px' }}
                     />
                   )}
               </IconButton>
@@ -160,5 +164,5 @@ export function Validator (param: ValidatorProps) {
     </Link>
   );
 
-  return <>{param.mode === ItemMode.Medium && mediumRender}</>;
+  return <>{param.mode === 'medium' && mediumRender}</>;
 }

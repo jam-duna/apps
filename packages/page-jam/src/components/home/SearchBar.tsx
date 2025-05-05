@@ -1,6 +1,8 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable react/jsx-no-bind */
+
 'use client';
 
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
@@ -82,11 +84,17 @@ export default function SearchBar () {
     if (isHex || newValue === '') {
       setSearchValue(newValue);
       setSearchType(isNumber ? 'slot' : 'hash');
-      // console.log(isNumber ? 'slot' : 'hash');
-    } else {
-      // console.log("Invalid input");
     }
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      // eslint-disable-next-line no-void
+      void handleSearch();
+    }
+  };
+
+  const handleCloseDialog = () => setOpenDialog(false);
 
   return (
     <Box
@@ -100,16 +108,10 @@ export default function SearchBar () {
           }
         }}
         InputProps={{
-          sx: {
-            fontSize: '14px', // input text size
-            '::placeholder': {
-              fontSize: '14px', // placeholder text size
-              opacity: 1 // ensure it's visible
-            }
-          },
           endAdornment: (
             <InputAdornment position='end'>
               <IconButton
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onClick={handleSearch}
                 sx={{ height: '32px' }}
               >
@@ -121,16 +123,19 @@ export default function SearchBar () {
                 </Box>
               </IconButton>
             </InputAdornment>
-          )
+          ),
+          sx: {
+            '::placeholder': {
+              fontSize: '14px', // placeholder text size
+              opacity: 1 // ensure it's visible
+            },
+            fontSize: '14px' // input text size
+          }
         }}
         fullWidth
         label='Query Block'
         onChange={handleChange}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleSearch();
-          }
-        }}
+        onKeyDown={handleKeyDown}
         placeholder='Enter slot index or header hash'
         size='small'
         value={searchValue}
@@ -138,7 +143,7 @@ export default function SearchBar () {
       />
       {/* Dialog for error handling */}
       <Dialog
-        onClose={() => setOpenDialog(false)}
+        onClose={handleCloseDialog}
         open={openDialog}
       >
         <DialogTitle>Invalid Input</DialogTitle>
@@ -148,16 +153,16 @@ export default function SearchBar () {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Close</Button>
+          <Button onClick={handleCloseDialog}>Close</Button>
         </DialogActions>
       </Dialog>
       {/* Loading Modal */}
       <Dialog open={isFetching}>
         <DialogContent
           sx={{
+            alignItems: 'center',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
             py: 4
           }}
         >

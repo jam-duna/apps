@@ -15,6 +15,7 @@ export default function ToggleHash ({ hash }: ToggleHashProps) {
 
   return (
     <Typography
+      // eslint-disable-next-line react/jsx-no-bind
       onClick={handleToggle}
       sx={{ cursor: 'pointer', display: 'inline' }}
       title='Click to toggle full hash'

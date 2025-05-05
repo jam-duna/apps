@@ -21,14 +21,14 @@ export function Blocks () {
           gap={0.5}
           justifyContent='center'
           sx={{
-            cursor: 'pointer',
-            width: '100%',
-            height: '100%',
-            transition: 'all 0.3s ease-in-out',
-            color: '#444444',
             ':hover': {
               color: '#224444D0'
-            }
+            },
+            color: '#444444',
+            cursor: 'pointer',
+            height: '100%',
+            transition: 'all 0.3s ease-in-out',
+            width: '100%'
           }}
         >
           <BlockIcon

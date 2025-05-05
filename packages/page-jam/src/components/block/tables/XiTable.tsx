@@ -34,15 +34,15 @@ export default function XiTable ({ data }: XiTableProps) {
             <TableRow>
               <TableCell
                 sx={{
-                  fontWeight: 'bold',
                   backgroundColor: '#f5f5f5',
+                  fontWeight: 'bold',
                   width: '100px'
                 }}
               >
                 Index
               </TableCell>
               <TableCell
-                sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
+                sx={{ backgroundColor: '#f5f5f5', fontWeight: 'bold' }}
               >
                 Value(s)
               </TableCell>

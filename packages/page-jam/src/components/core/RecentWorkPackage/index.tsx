@@ -37,7 +37,7 @@ function WorkPackageListItem ({ coreIndex, state }: WorkPackageListItemProps) {
           count = item.report.package_spec.exports_count;
         }
       });
-    } catch (err) {}
+    } catch (_err) {}
 
     return count;
   };
@@ -51,7 +51,7 @@ function WorkPackageListItem ({ coreIndex, state }: WorkPackageListItemProps) {
           hash = item.report.package_spec.hash;
         }
       });
-    } catch (err) {}
+    } catch (_err) {}
 
     return hash;
   };
@@ -67,7 +67,7 @@ function WorkPackageListItem ({ coreIndex, state }: WorkPackageListItemProps) {
           });
         }
       });
-    } catch (err) {}
+    } catch (_err) {}
 
     return results;
   };
@@ -75,32 +75,32 @@ function WorkPackageListItem ({ coreIndex, state }: WorkPackageListItemProps) {
   return (
     <Link
       key={packageHash()}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      style={{ color: 'inherit', textDecoration: 'none' }}
       to={`/jam/workpackage/${packageHash()}/`}
     >
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 1.5,
-          borderRadius: 1,
-          transition: 'background-color 0.2s',
           '&:hover': { backgroundColor: '#f9f9f9' },
-          borderBottom: '1px solid #ddd'
+          alignItems: 'center',
+          borderBottom: '1px solid #ddd',
+          borderRadius: 1,
+          display: 'flex',
+          p: 1.5,
+          transition: 'background-color 0.2s'
         }}
       >
         {/* Left icon */}
         <Box
           sx={{
-            width: 40,
-            height: 40,
-            borderRadius: 1,
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundColor: '#fff',
             border: '1px solid #ddd',
-            mr: 2
+            borderRadius: 1,
+            display: 'flex',
+            height: 40,
+            justifyContent: 'center',
+            mr: 2,
+            width: 40
           }}
         >
           <AssignmentIcon fontSize='small' />
@@ -145,7 +145,7 @@ export function RecentWorkPackages ({ coreIndex,
     <Paper variant='outlined'>
       <Typography
         gutterBottom
-        sx={{ mb: 2, px: 1.5, py: 2, borderBottom: '1px solid #ccc', m: 0 }}
+        sx={{ borderBottom: '1px solid #ccc', m: 0, mb: 2, px: 1.5, py: 2 }}
         variant='h6'
       >
         Recent Work Packages
@@ -164,7 +164,7 @@ export function RecentWorkPackages ({ coreIndex,
         )
         : (
           <Typography
-            sx={{ p: 2, '&:hover': { backgroundColor: '#f9f9f9' } }}
+            sx={{ '&:hover': { backgroundColor: '#f9f9f9' }, p: 2 }}
             variant='subtitle2'
           >
           No work packages

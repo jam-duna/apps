@@ -1,6 +1,7 @@
 // Copyright 2017-2025 @polkadot/app-jam authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable camelcase */
 'use client';
 
 import type { AccountItem } from '../../../types/index.js';
@@ -24,14 +25,14 @@ export default function AccountAccordion ({ accounts }: AccountAccordionProps) {
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       sx={{
-        px: 0,
-        py: 0.75,
-        minHeight: 'auto',
         '& .MuiAccordionSummary-content': { m: 0, p: 0 },
-        cursor: 'default'
+        cursor: 'default',
+        minHeight: 'auto',
+        px: 0,
+        py: 0.75
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+      <Box sx={{ alignItems: 'center', display: 'flex', flexShrink: 0 }}>
         <Tooltip
           sx={{ ml: 0.5, mr: 1.5 }}
           title={tooltipText}
@@ -39,7 +40,7 @@ export default function AccountAccordion ({ accounts }: AccountAccordionProps) {
           <InfoOutlinedIcon fontSize='small' />
         </Tooltip>
         <Typography
-          sx={{ whiteSpace: 'nowrap', minWidth: '170px' }}
+          sx={{ minWidth: '170px', whiteSpace: 'nowrap' }}
           variant='body1'
         >
           {title}
@@ -66,9 +67,9 @@ export default function AccountAccordion ({ accounts }: AccountAccordionProps) {
               {/* Service Section */}
               <Accordion
                 sx={{
+                  '&:before': { display: 'none' },
                   border: 'none',
                   boxShadow: 'none',
-                  '&:before': { display: 'none' },
                   mb: 2,
                   px: 0
                 }}
@@ -110,9 +111,9 @@ export default function AccountAccordion ({ accounts }: AccountAccordionProps) {
               {/* Preimages Section */}
               <Accordion
                 sx={{
+                  '&:before': { display: 'none' },
                   border: 'none',
                   boxShadow: 'none',
-                  '&:before': { display: 'none' },
                   mb: 2,
                   px: 0
                 }}
@@ -149,9 +150,9 @@ export default function AccountAccordion ({ accounts }: AccountAccordionProps) {
               {/* Lookup Meta Section */}
               <Accordion
                 sx={{
+                  '&:before': { display: 'none' },
                   border: 'none',
                   boxShadow: 'none',
-                  '&:before': { display: 'none' },
                   mb: 2,
                   px: 0
                 }}
@@ -187,9 +188,9 @@ export default function AccountAccordion ({ accounts }: AccountAccordionProps) {
               {/* Storage Section */}
               <Accordion
                 sx={{
+                  '&:before': { display: 'none' },
                   border: 'none',
                   boxShadow: 'none',
-                  '&:before': { display: 'none' },
                   mb: 2,
                   px: 0
                 }}

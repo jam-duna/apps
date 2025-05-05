@@ -30,15 +30,15 @@ export function Core (param: CoreProps) {
           gap={0.5}
           justifyContent='center'
           sx={{
-            cursor: 'pointer',
-            width: '100%',
-            height: '100%',
-            transition: 'all 0.3s ease-in-out',
-            backgroundColor: '#e91e63a0',
-            color: '#ffffff',
             ':hover': {
               backgroundColor: '#e91e6380'
-            }
+            },
+            backgroundColor: '#e91e63a0',
+            color: '#ffffff',
+            cursor: 'pointer',
+            height: '100%',
+            transition: 'all 0.3s ease-in-out',
+            width: '100%'
           }}
         >
           <CoreIcon
@@ -72,15 +72,15 @@ export function Core (param: CoreProps) {
           gap={1}
           justifyContent='start'
           sx={{
-            cursor: 'pointer',
-            width: '70px',
-            paddingInline: '5px',
-            transition: 'all 0.3s ease-in-out',
-            backgroundColor: '#ffffff',
-            color: '#444444',
             ':hover': {
               backgroundColor: '#ffffff'
-            }
+            },
+            backgroundColor: '#ffffff',
+            color: '#444444',
+            cursor: 'pointer',
+            paddingInline: '5px',
+            transition: 'all 0.3s ease-in-out',
+            width: '70px'
           }}
         >
           <Typography
@@ -104,15 +104,15 @@ export function Core (param: CoreProps) {
         gap={0.5}
         justifyContent='center'
         sx={{
-          cursor: 'pointer',
-          width: '100%',
-          height: '100%',
-          transition: 'all 0.3s ease-in-out',
-          backgroundColor: '#0000',
-          color: '#444444',
           ':hover': {
             backgroundColor: '#0000'
-          }
+          },
+          backgroundColor: '#0000',
+          color: '#444444',
+          cursor: 'pointer',
+          height: '100%',
+          transition: 'all 0.3s ease-in-out',
+          width: '100%'
         }}
       >
         <CoreIcon

@@ -16,6 +16,7 @@ export default function DetailToggleButtons ({ onTabChange,
   return (
     <Box sx={{ mb: 2 }}>
       <Button
+        // eslint-disable-next-line react/jsx-no-bind
         onClick={() => onTabChange('block')}
         sx={{ mr: 1 }}
         variant={selectedTab === 'block' ? 'contained' : 'outlined'}
@@ -28,6 +29,7 @@ export default function DetailToggleButtons ({ onTabChange,
         </Typography>
       </Button>
       <Button
+        // eslint-disable-next-line react/jsx-no-bind
         onClick={() => onTabChange('state')}
         variant={selectedTab === 'state' ? 'contained' : 'outlined'}
       >
